@@ -1,0 +1,53 @@
+{
+    "name": "modules/core",
+    "type": "library",
+    "description": "A Generic module for the application Core functionalities",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0",
+    "license": "proprietary",
+    "keywords": [
+        "core",
+        "module"
+    ],
+    "authors": [
+        {
+            "name": "Erland Muchasaj",
+            "email": "erland.muchasaj@gmail.com",
+            "homepage": "https://erlandmuchasaj.tech/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "erland.muchasaj@gmail.com"
+    },
+    "require": {
+        "spatie/laravel-activitylog": "^4.3.1"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Modules\\Core\\": "src",
+            "Modules\\Core\\Database\\Factories\\": "database/factories",
+            "Modules\\Core\\Database\\Seeders\\": "database/seeders"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Core\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Core\\Providers\\AppServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    }
+}
