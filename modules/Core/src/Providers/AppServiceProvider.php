@@ -9,10 +9,20 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Modules\Core\Console\Commands\AppVersion;
 use Modules\Core\Console\Commands\Install;
+use Modules\Core\Http\Middleware\AddXHeader;
+use Modules\Core\Http\Middleware\Api\IdempotencyMiddleware;
+use Modules\Core\Http\Middleware\CheckForDemoMode;
+use Modules\Core\Http\Middleware\IPFireWall;
+use Modules\Core\Http\Middleware\LocaleMiddleware;
+use Modules\Core\Http\Middleware\RememberLocale;
+use Modules\Core\Models\Announcement\Announcement;
+use Modules\Core\Observers\AnnouncementObserver;
+use Modules\Core\Repositories\AnnouncementRepository;
 use Modules\Core\Traits\CanPublishConfiguration;
 
 class AppServiceProvider extends ServiceProvider
@@ -56,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
      * @return array
      */
     protected array $observers = [
-        // Model::class => ModelObserver::class,
+        Announcement::class => AnnouncementObserver::class,
     ];
 
     /**
@@ -64,14 +74,26 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected array $middleware = [];
+    protected array $middleware = [
+        AddXHeader::class,
+        CheckForDemoMode::class,
+        LocaleMiddleware::class,
+        IPFireWall::class,
+    ];
 
     /**
      * The application's route middleware groups.
      *
      * @var array
      */
-    protected array $middlewareGroups = [];
+    protected array $middlewareGroups = [
+        'web'=> [
+            RememberLocale::class,
+        ],
+        'api' => [
+            IdempotencyMiddleware::class,
+        ],
+    ];
 
     /**
      * The application's route middleware.
@@ -97,19 +119,20 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap services.
      *
      *
+     * @param AnnouncementRepository $announcementRepository
      * @return void
      * @throws BindingResolutionException
      */
-    public function boot(): void
+    public function boot(AnnouncementRepository $announcementRepository): void
     {
-//        // view composers
-//        View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {
-//            $view->with('announcements', $announcementRepository->getForFrontend());
-//        });
-//
-//        View::composer(['backend.layouts.app'], function ($view) use ($announcementRepository) {
-//            $view->with('announcements', $announcementRepository->getForBackend());
-//        });
+        // view composers
+        View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {
+            $view->with('announcements', $announcementRepository->getForFrontend());
+        });
+
+        View::composer(['backend.layouts.app'], function ($view) use ($announcementRepository) {
+            $view->with('announcements', $announcementRepository->getForBackend());
+        });
 
         // publish migration
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
@@ -253,7 +276,6 @@ class AppServiceProvider extends ServiceProvider
                 # $this->app['router']->pushMiddlewareToGroup($group, $middleware);
             }
         }
-
         return $this;
     }
 
@@ -365,16 +387,39 @@ class AppServiceProvider extends ServiceProvider
             return "<?php {$variable} = {$value}; ?>";
         });
 
+        /*
+         * The block of code inside this directive indicates
+         * the project is currently running in read only mode.
+         */
+        Blade::if('demo', function () {
+            return config('app.demo');
+        });
+
+        /*
+         * The block of code inside this directive indicates
+         * the chosen language requests RTL support.
+         */
+        Blade::if('rtl', function ($session_identifier = 'lang-rtl') {
+            return session()->has($session_identifier);
+        });
+
+
         return $this;
     }
 
     /**
      * bootObservers
-     * @return static
+     * @return $this
      */
     private function bootObservers(): static
     {
-        // Model::observe(ModelObserver::class);
+        foreach ($this->observers as $className => $observerName) {
+            $classObj = app($className);
+            if (!is_null($classObj)) {
+                $classObj::observe($observerName);
+            }
+        }
+
         return $this;
     }
 
@@ -387,6 +432,7 @@ class AppServiceProvider extends ServiceProvider
         // $this->app->instance(ModelService::class, new ModelService(
         //     new ModelEloquentRepository($this->app)
         // ));
+
         return $this;
     }
 
@@ -436,7 +482,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param  string $file
+     * @param string $file
      * @return string
      */
     private function getConfigFilename(string $file): string

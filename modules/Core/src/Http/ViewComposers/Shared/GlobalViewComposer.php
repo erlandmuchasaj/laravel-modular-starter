@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 
 class GlobalViewComposer
 {
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $currentUser = auth()->user();
 

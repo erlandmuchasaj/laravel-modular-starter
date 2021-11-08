@@ -1,15 +1,15 @@
 <?php
-
-use App\Http\Controllers\Auth\NewPasswordController;
-use Illuminate\Routing\Router;
+use Modules\Core\Http\Controllers\LanguageController;
 
 Route::get('/core-test', function () {
     //    dd('HERE', locale());
     return view('welcome');
 });
 
-Route::group(['as' => 'users.', 'prefix' => '/users'], function (Router $router) {
-    Route::get('/core-test/{token}', [NewPasswordController::class, 'create'])
-        ->name('test.reset');
-});
+Route::get('/lang/{lang}', [LanguageController::class, 'swap'])
+    ->name('lang.swap')
+    ->where('lang', '[a-z]+');
+
+
+
 

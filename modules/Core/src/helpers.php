@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,30 +33,35 @@ if (!function_exists('setAllLocale')) {
      */
     function setAllLocale(string $locale) : void
     {
-        // set laravel localization (lumen)
-        app('translator')->setLocale($locale);
 
-        // Set the Laravel locale
-        app()->setLocale($locale);
+        if (App::isLocale('en')) {
 
-        // setLocale to use Carbon source locales. Enables diffForHumans() localized
-        Carbon::setLocale($locale);
+            // set laravel localization (lumen)
+            app('translator')->setLocale($locale);
 
-        // setLocale for php. Enables ->formatLocalized() with localized values for dates
-        setlocale(LC_TIME, $locale);
-        // setlocale(LC_TIME, config('app.locales')[$locale][1]);
+            // Set the Laravel locale
+            App::setLocale($locale);
 
-        /*
-         * Set the session variable for whether the app is using RTL support
-         * For use in the blade directive in BladeServiceProvider
-         */
-        if (!app()->runningInConsole()) {
-            if (config('app.locales')[$locale][2]) {
-                session(['lang-rtl' => true]);
-            } else {
-                session()->forget('lang-rtl');
+            // setLocale to use Carbon source locales. Enables diffForHumans() localized
+            Carbon::setLocale($locale);
+
+            // setLocale for php. Enables ->formatLocalized() with localized values for dates
+            setlocale(LC_TIME, $locale);
+            // setlocale(LC_TIME, config('app.locales')[$locale][1]);
+
+            /*
+             * Set the session variable for whether the app is using RTL support
+             * For use in the blade directive in BladeServiceProvider
+             */
+            if (!app()->runningInConsole()) {
+                if (config('app.locales')[$locale][2]) {
+                    session(['lang-rtl' => true]);
+                } else {
+                    session()->forget('lang-rtl');
+                }
             }
         }
+
     }
 }
 
@@ -393,4 +399,34 @@ if (!function_exists('class_has_trait')) {
         return in_array($traitName, class_uses_recursive($className));
     }
 }
+
+if (! function_exists('checkDatabaseConnection')) {
+    /**
+     * Check if connection to DB is successfully
+     * @return bool
+     */
+    function checkDatabaseConnection(): bool
+    {
+        try {
+            DB::connection()->reconnect();
+
+            return true;
+        } catch (Exception $ex) {
+            return false;
+        }
+    }
+}
+
+if (! function_exists('escapeSlashes')) {
+    /**
+     * Access the escapeSlashes helper.
+     */
+    function escapeSlashes(string $path): string
+    {
+        $path = str_replace('\\', DIRECTORY_SEPARATOR, $path);
+        $path = str_replace('//', DIRECTORY_SEPARATOR, $path);
+        return trim($path, DIRECTORY_SEPARATOR);
+    }
+}
+
 

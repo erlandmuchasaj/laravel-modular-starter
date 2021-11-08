@@ -7,7 +7,7 @@ use Illuminate\Encryption\Encrypter;
 
 class EncryptedCsrfTokenComposer
 {
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $encryptedCsrfToken = app(Encrypter::class)->encrypt(csrf_token());
 

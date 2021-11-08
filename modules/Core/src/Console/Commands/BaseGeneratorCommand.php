@@ -2,9 +2,9 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
-use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
 abstract class BaseGeneratorCommand extends GeneratorCommand
@@ -12,7 +12,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function qualifyClass($name): string
@@ -28,14 +28,14 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         $name = str_replace('/', '\\', $name);
 
         return $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name
         );
     }
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
@@ -46,7 +46,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Determine if the class already exists.
      *
-     * @param  string  $rawName
+     * @param string $rawName
      * @return bool
      */
     protected function alreadyExists($rawName): bool
@@ -57,7 +57,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function getPath($name): string
@@ -66,7 +66,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
 
         $moduleName = Str::ucfirst(strval($this->argument('module')));
 
-        return "modules/{$moduleName}" . str_replace('\\', '/', $name).'.php';
+        return "modules/{$moduleName}" . str_replace('\\', '/', $name) . '.php';
 
         # return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
     }
@@ -74,12 +74,12 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Build the directory for the class if necessary.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     protected function makeDirectory($path): string
     {
-        if (! $this->files->isDirectory(dirname($path))) {
+        if (!$this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
 
@@ -89,7 +89,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      *
      * @throws FileNotFoundException
@@ -104,8 +104,8 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
      * @return $this
      */
     protected function replaceNamespace(&$stub, $name): static
@@ -130,7 +130,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function getNamespace($name): string
@@ -141,13 +141,13 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
      * @return string
      */
     protected function replaceClass($stub, $name): string
     {
-        $class = str_replace($this->getNamespace($name).'\\', '', $name);
+        $class = str_replace($this->getNamespace($name) . '\\', '', $name);
 
         return str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
     }
@@ -155,7 +155,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Alphabetically sorts the imports for the given stub.
      *
-     * @param  string  $stub
+     * @param string $stub
      * @return string
      */
     protected function sortImports($stub): string
@@ -202,7 +202,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         // $config = $this->laravel['config'];
         $config = app('config');
 
-        $provider = $config->get('auth.guards.'.$config->get('auth.defaults.guard').'.provider');
+        $provider = $config->get('auth.guards.' . $config->get('auth.defaults.guard') . '.provider');
 
         return $config->get("auth.providers.{$provider}.model");
     }
@@ -210,7 +210,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     /**
      * Checks whether the given name is reserved.
      *
-     * @param  string  $name
+     * @param string $name
      * @return bool
      */
     protected function isReservedName($name): bool
