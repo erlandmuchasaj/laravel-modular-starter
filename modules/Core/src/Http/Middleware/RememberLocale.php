@@ -3,7 +3,7 @@
 namespace Modules\Core\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class RememberLocale
 {

@@ -4,7 +4,6 @@ namespace Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CheckForDemoMode
