@@ -44,7 +44,7 @@ class AnnouncementPolicy
      */
     public function view(?User $user, Announcement $announcement): bool
     {
-        if ($announcement->published) {
+        if ($announcement->enabled) {
             return true;
         }
 

@@ -15,6 +15,10 @@ class CreateAnnouncementsTable extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
             $table->enum('area', ['frontend', 'backend'])->nullable()->comment('when area is null it means is for both');
             $table->enum('type', ['info', 'danger', 'warning', 'success'])->default('info');
             $table->text('message');

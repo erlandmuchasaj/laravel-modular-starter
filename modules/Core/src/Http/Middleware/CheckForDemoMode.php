@@ -4,7 +4,7 @@ namespace Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckForDemoMode
 {
@@ -32,7 +32,7 @@ class CheckForDemoMode
                 $request->isMethod('patch') ||
                 $request->isMethod('delete')
             ) {
-                abort_if($request->path() !== 'login', ResponseAlias::HTTP_UNAUTHORIZED);
+                abort_if($request->path() !== 'login', Response::HTTP_UNAUTHORIZED);
             }
 
             // Block any other specific get requests that may alter data
@@ -40,7 +40,7 @@ class CheckForDemoMode
                 collect($this->disallowed)
                     ->each(function ($item) use ($request) {
                         if (str_contains($request->path(), $item)) {
-                            abort(ResponseAlias::HTTP_UNAUTHORIZED);
+                            abort(Response::HTTP_UNAUTHORIZED);
                         }
                     });
             }

@@ -2,8 +2,21 @@
 
 namespace Modules\Core\Repositories;
 
+
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Modules\Core\Events\Announcement\AnnouncementCreated;
+use Modules\Core\Events\Announcement\AnnouncementDeleted;
+use Modules\Core\Events\Announcement\AnnouncementDisabled;
+use Modules\Core\Events\Announcement\AnnouncementEnabled;
+use Modules\Core\Events\Announcement\AnnouncementPermanentDeleted;
+use Modules\Core\Events\Announcement\AnnouncementRestored;
+use Modules\Core\Events\Announcement\AnnouncementUpdated;
+use Modules\Core\Exceptions\GeneralException;
 use Modules\Core\Models\Announcement\Announcement;
+use Throwable;
 
 /**
  * Class AnnouncementRepository.
@@ -19,6 +32,174 @@ class AnnouncementRepository extends BaseRepository
     {
         $this->model = $announcement;
     }
+
+    /**
+     * @param array $data
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return Announcement
+     */
+    public function create(array $data): Announcement
+    {
+
+        return DB::transaction(function () use ($data) {
+            // Before create event
+            $announcement = $this->model::create($data);
+
+            if ($announcement) {
+
+               // Fire announcement created event after create event
+               event(new AnnouncementCreated($announcement));
+
+               // Return the country object
+                return $announcement;
+            }
+
+            throw new GeneralException(__('There was a problem creating announcement.'));
+        }, 3);
+    }
+
+    /**
+     * @param Announcement  $announcement
+     * @param array $data
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return Announcement
+     */
+    public function update(Announcement $announcement, array $data) : Announcement
+    {
+        return DB::transaction(function () use ($announcement, $data) {
+            if ($announcement->update($data)) {
+                // Add selected roles/permissions
+                event(new AnnouncementUpdated($announcement));
+
+                return $announcement;
+            }
+            throw new GeneralException(__('Announcement could not be updated'));
+        }, 3);
+    }
+
+    /**
+     * @param Announcement  $announcement
+     * @param int  $status
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return Announcement
+     */
+    public function mark(Announcement $announcement, int $status) : Announcement
+    {
+        $announcement->enabled = $status;
+        if ($announcement->save()) {
+
+            switch ($status) {
+                case 0:
+                    event(new AnnouncementDisabled($announcement));
+                    break;
+                case 1:
+                    event(new AnnouncementEnabled($announcement));
+                    break;
+            }
+
+            return $announcement;
+        }
+
+        throw new GeneralException(__('Announcement status could not be changed!'));
+    }
+
+    /**
+     * @param Announcement  $announcement
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return bool
+     */
+    public function delete(Announcement $announcement): bool
+    {
+        return DB::transaction(function () use ($announcement) {
+            // Soft Delete associated relationships if any
+
+            if ($announcement->delete()) {
+
+                event(new AnnouncementDeleted($announcement));
+
+                return true;
+            }
+
+            throw new GeneralException(__('Announcement could not be deleted'));
+        }, 3);
+    }
+
+    /**
+     * @param Announcement  $announcement
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return Announcement
+     */
+    public function restore(Announcement $announcement) : Announcement
+    {
+        if ($announcement->deleted_at === null) {
+            throw new GeneralException(__('Announcement is already restored.'));
+        }
+
+        return DB::transaction(function () use ($announcement) {
+            // Delete associated relationships if any
+            //
+
+            if ($announcement->restore()) {
+
+                event(new AnnouncementRestored($announcement));
+
+                return $announcement;
+            }
+
+            throw new GeneralException(__('Announcement can not be restored'));
+        }, 3);
+    }
+
+    /**
+     * @param Announcement  $announcement
+     *
+     * @throws GeneralException
+     * @throws Exception
+     * @throws Throwable
+     *
+     * @return Announcement
+     */
+    public function forceDelete(Announcement $announcement) : Announcement
+    {
+        if ($announcement->deleted_at === null) {
+            throw new GeneralException(__('Announcement should be deleted first.'));
+        }
+
+        return DB::transaction(function () use ($announcement) {
+            // Delete associated relationships if any
+            //
+
+            if ($announcement->forceDelete()) {
+
+                event(new AnnouncementPermanentDeleted($announcement));
+
+                return $announcement;
+            }
+
+            throw new GeneralException(__('Announcement could not be permanently deleted.'));
+        }, 3);
+    }
+
 
     /**
      * Get all the enabled announcements

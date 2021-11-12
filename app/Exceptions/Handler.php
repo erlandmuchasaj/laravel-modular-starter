@@ -42,17 +42,18 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            if (config('app.sentry_support') && app()->environment('production')) {
-                if (app()->bound('sentry') && $this->shouldReport($e)) {
-                    //if (auth('api')->user()) {
-                    //    \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
-                    //        $scope->setUser(['user' => auth('api')->id(), 'email' => auth('api')->user()->email]);
-                    //    });
-                    //}
-                    app('sentry')->captureException($e);
-                }
-            }
+            //    throwable
         });
+    }
+
+    public function report(Throwable $e)
+    {
+        if (config('app.sentry_support') && app()->environment('production')) {
+            if (app()->bound('sentry') && $this->shouldReport($e)) {
+                app('sentry')->captureException($e);
+            }
+        }
+        parent::report($e);
     }
 
     /**
@@ -76,7 +77,7 @@ class Handler extends ExceptionHandler
             ];
 
             if ($request->expectsJson()) {
-                return response()->json($response, 401);
+                return response()->json($response, Response::HTTP_UNAUTHORIZED);
             }
 
             return redirect()
@@ -92,7 +93,7 @@ class Handler extends ExceptionHandler
             ];
 
             if ($request->expectsJson()) {
-                return response()->json($response, 404);
+                return response()->json($response, Response::HTTP_NOT_FOUND);
             }
 
             return redirect()

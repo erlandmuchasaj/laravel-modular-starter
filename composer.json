@@ -34,7 +34,8 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "modules/core": "~1.0"
+        "modules/core": "~1.0",
+        "sentry/sentry-laravel": "^2.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
