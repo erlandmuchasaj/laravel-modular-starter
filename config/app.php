@@ -17,7 +17,7 @@ return [
 
     'version' => env('APP_VERSION', 'Laravel '.app()->version()),
 
-    'slug' => 'laravel-starter',
+    'slug' => 'emcms',
 
     /*
     |--------------------------------------------------------------------------
@@ -150,7 +150,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -344,6 +344,217 @@ return [
     */
 
     'testing' => env('APP_TESTING', false),
+
+    /*
+     | Whether announcements are enabled or not.
+     */
+
+    'announcements' => env('APP_ANNOUNCEMENTS', true),
+
+    /*
+    | Whether registration is enabled
+    | or verification is enabled
+    | or Reset is enabled
+    */
+
+    'login' => env('ENABLE_LOGIN', true),
+    'register' => env('ENABLE_REGISTRATION', true),
+    'reset' => env('ENABLE_RESET', true),
+    'verify' => env('ENABLE_VERIFICATION', true),
+    'confirm' => env('ENABLE_CONFIRM', true),
+    'remember_me' => env('ENABLE_REMEMBER_ME', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | User single sign in token
+    |--------------------------------------------------------------------------
+    |
+    | When active, a user can only have one session active at a time
+    | That is all other sessions for that user will be deleted when they log in
+    | (They can only be logged into one place at a time, all others will be logged out)
+    | AuthenticateSession middleware must be enabled
+    |
+    */
+
+    'single_login' => env('SINGLE_LOGIN', false),
+
+    'social_login' => env('SOCIAL_LOGIN', true),
+
+    'disable_autologin' => env('DISABLE_AUTOLOGIN', false),
+
+    'retype_password_when_deleting' => env('RETYPE_PASSWORD_WHEN_DELETING', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Socialite session variable name
+    |--------------------------------------------------------------------------
+    |
+    | Contains the name of the currently logged in provider in the users session
+    | Makes it so social logins can not change passwords, etc.
+    */
+
+    'socialite_session_name' => 'socialite_provider',
+
+    /*
+     | Whether a user can change their email address after
+     | their account has already been created
+     */
+
+    'change_email' => env('CHANGE_EMAIL', true),
+
+    /*
+     | Whether the user has to confirm their email when signing up
+     | and also when they change they email
+     */
+
+    'confirm_email' => env('CONFIRM_EMAIL', true),
+
+    /*
+     | Whether a user can Deactivate / Remove
+     | his/her account
+     | NOTE: all accounts are softly deleted.
+     */
+
+    'deactivate_account' => env('DEACTIVATE_ACCOUNT', true),
+
+
+    /*
+     | Whether admins need 2FA enabled to visit the backend
+     | Weather the 2FA is enabled or not site-wide
+     */
+
+    'admin_requires_2fa' => env('ADMIN_REQUIRES_2FA', true),
+    '2fa_status' => env('2FA_STATUS', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Captcha configuration
+    |--------------------------------------------------------------------------
+    |
+    | Get your credentials at: https://www.google.com/recaptcha/admin
+    */
+    'captcha' => [
+        'registration' => env('REGISTRATION_CAPTCHA_STATUS', false),
+        'login' => env('LOGIN_CAPTCHA_STATUS', false),
+    ],
+
+    /*
+     | When creating users from the backend, only allow the assigning of roles and not individual permissions
+     */
+
+    'only_roles' => false,
+
+    /*
+     | How many days before users have to change their passwords
+     | false is off
+     */
+
+    'password_expires_days' => env('PASSWORD_EXPIRES_DAYS', 180),
+
+    /*
+    | Whether new users need to be approved by an administrator before logging in
+    | If this is set to true, then confirm_email is not in effect
+    | alias of [ requires_approval - requires_verification]
+    */
+
+    'requires_approval' => env('REQUIRES_APPROVAL', false),
+
+    /*
+    | Whether impersonate functionality is enabled
+    */
+
+    'impersonate' => env('ENABLE_IMPERSONATION', true),
+
+    /*
+    | Indicates if user avatar is required
+    | Default size of the avatar if none is supplied
+    */
+    'avatar' => [
+        'required' => env('REQUIRED_AVATAR', false),
+        'size' => 80,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login History
+    |--------------------------------------------------------------------------
+    |
+    |  IF we want to keep trac of all user login history
+    |
+    */
+
+    'last_ip' => env('LOG_LAST_IP', false),
+
+    'login_history' => env('LOGIN_HISTORY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password History
+    |--------------------------------------------------------------------------
+    |
+    | The number of most recent previous passwords to check against when changing/resetting a password
+    | false is off which doesn't log password changes or check against them
+    |
+    */
+
+    'password_history' => env('PASSWORD_HISTORY', 3),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Analytics
+    |--------------------------------------------------------------------------
+    |
+    | Found in views/includes/partials/ga.blade.php
+    */
+
+    'google_analytics' => env('GOOGLE_ANALYTICS', 'UA-XXXXX-X'),
+    'google_tagmanager' => env('GOOGLE_TAGMANAGER', 'GTM-XXXXXXX'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Idempotency
+    |--------------------------------------------------------------------------
+    |
+    | In the context of REST APIs,
+    | when making multiple identical requests has the same effect
+    | as making a single request – then that REST API is called idempotent..
+    |
+    */
+
+    'idempotency' => [
+        'key' =>  env('IDEMPOTENT_KEY', 'Idempotency-Key'),
+        'cache_time' => 60,
+        'methods' => [
+            'POST', // POST is NOT idempotent.
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | File manager user limit
+    |--------------------------------------------------------------------------
+    |
+    | Specify in -MB- how many data a user can upload
+    */
+
+    'file_limit' => 16,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Activate or deactivate packages on the fly
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'package' => [
+        'log-viewer' => true,
+        'telescope' => true,
+        'horizon' => true,
+        'activitylog' => true,
+        'socialite' => true,
+        'laravel-impersonate' => true,
+        'geoip' => true,
+    ],
 
     /*
     |--------------------------------------------------------------------------

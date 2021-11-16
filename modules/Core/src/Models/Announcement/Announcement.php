@@ -5,16 +5,8 @@ namespace Modules\Core\Models\Announcement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+
 use Modules\Core\Database\Factories\AnnouncementFactory;
-use Modules\Core\Models\Announcement\Traits\AccessorTrait;
-use Modules\Core\Models\Announcement\Traits\MethodTrait;
-use Modules\Core\Models\Announcement\Traits\MutatorTrait;
-use Modules\Core\Models\Announcement\Traits\RelationsTrait;
-use Modules\Core\Models\Announcement\Traits\ScopesTrait;
-use ReflectionClass;
-use ReflectionException;
-use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 

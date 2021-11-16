@@ -56,6 +56,9 @@ class AnnouncementController extends Controller
 
         Event::dispatch('core.announcement.create.after', $announcement);
 
+        # To listen fo specific events we listen on boot() method os EventServiceProvider
+        // Event::listen('core.announcement.create.after', 'Modules\Core\Listeners\Announcement@sendNewAnnouncementMail');
+
         if ($request->expectsJson()) {
             // For rest API responses
             return (new AnnouncementResource($announcement))

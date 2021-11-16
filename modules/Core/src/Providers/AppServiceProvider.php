@@ -60,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
     protected array $providers = [
         EventServiceProvider::class,
         SeedServiceProvider::class,
+        ConsoleServiceProvider::class,
     ];
 
     /**

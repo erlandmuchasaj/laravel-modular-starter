@@ -16,6 +16,7 @@ class ManageAnnouncementRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // here we can check if user is loggedin and is admin.
         return auth()->check();
     }
 

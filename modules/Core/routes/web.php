@@ -1,4 +1,5 @@
 <?php
+
 use Modules\Core\Http\Controllers\LanguageController;
 
 Route::get('/core-test', function () {

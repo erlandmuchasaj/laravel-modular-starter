@@ -1,0 +1,36 @@
+<?php
+
+namespace DummyNamespace;
+
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class DummyClass extends Exception
+{
+    /**
+     * Report the exception.
+     *
+     * @return void
+     */
+    public function report()
+    {
+        //
+    }
+
+    /**
+     * Render the exception as an HTTP response.
+     *
+     * @param  Request  $request
+     * @return Response|JsonResponse
+     */
+    public function render(Request $request): Response|JsonResponse
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['Error']);
+        }
+
+        return response('Error');
+    }
+}

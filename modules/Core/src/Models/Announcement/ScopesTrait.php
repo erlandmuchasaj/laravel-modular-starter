@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Models\Announcement\Traits;
+namespace Modules\Core\Models\Announcement;
 
 use Illuminate\Database\Eloquent\Builder;
 

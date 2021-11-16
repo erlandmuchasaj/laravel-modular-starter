@@ -152,6 +152,7 @@ return [
     | of "email". This simply helps us make our message more expressive.
     |
     */
+    'pwned' => 'Your password is insufficiently secure as it has been found in known password breaches, please choose a new one',
 
     'attributes' => [],
 

@@ -33,6 +33,30 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     }
 
     /**
+     * Qualify the given model class base name.
+     *
+     * @param  string  $model
+     * @return string
+     */
+    protected function qualifyModel(string $model): string
+    {
+        $model = ltrim($model, '\\/');
+
+        $model = str_replace('/', '\\', $model);
+
+        $rootNamespace = $this->rootNamespace();
+
+
+        if (Str::startsWith($model, $rootNamespace)) {
+            return $model;
+        }
+
+        return is_dir(app_path('Models'))
+            ? $rootNamespace.'\\Models\\'.$model
+            : $rootNamespace.$model;
+    }
+
+    /**
      * Get the default namespace for the class.
      *
      * @param string $rootNamespace
@@ -64,27 +88,15 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        $moduleName = Str::ucfirst(strval($this->argument('module')));
+        $moduleName = $this->getModuleInput();
 
-        return "modules/{$moduleName}" . str_replace('\\', '/', $name) . '.php';
+        return base_path().'/'. "modules/{$moduleName}/src" . str_replace('\\', '/', $name).'.php';
+
+        # return "modules/{$moduleName}" . str_replace('\\', '/', $name) . '.php';
 
         # return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
     }
 
-    /**
-     * Build the directory for the class if necessary.
-     *
-     * @param string $path
-     * @return string
-     */
-    protected function makeDirectory($path): string
-    {
-        if (!$this->files->isDirectory(dirname($path))) {
-            $this->files->makeDirectory(dirname($path), 0777, true, true);
-        }
-
-        return $path;
-    }
 
     /**
      * Build the class with the given name.
@@ -176,6 +188,16 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
      *
      * @return string
      */
+    protected function getModuleInput(): string
+    {
+        return Str::of(strval($this->argument('module')))->trim()->studly();
+    }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
     protected function getNameInput(): string
     {
         return trim(strval($this->argument('name')));
@@ -188,7 +210,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
      */
     protected function rootNamespace(): string
     {
-        $moduleName = Str::ucfirst(strval($this->argument('module')));
+        $moduleName = $this->getModuleInput();
         return "Modules\\{$moduleName}";
     }
 
