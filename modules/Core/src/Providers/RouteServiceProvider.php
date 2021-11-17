@@ -6,7 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Modules\Core\Utils\EmCms;
 
-abstract class RoutingServiceProvider extends ServiceProvider
+abstract class RouteServiceProvider extends ServiceProvider
 {
 
     /**

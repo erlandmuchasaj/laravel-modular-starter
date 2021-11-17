@@ -1,0 +1,50 @@
+{
+    "name": "modules/SnakeModuleName",
+    "type": "library",
+    "description": "A Generic module for the EMCMS application functionalities",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0",
+    "license": "proprietary",
+    "keywords": [
+        "emcms",
+        "module"
+    ],
+    "authors": [
+        {
+            "name": "Erland Muchasaj",
+            "email": "erland.muchasaj@gmail.com",
+            "homepage": "https://erlandmuchasaj.tech/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "erland.muchasaj@gmail.com"
+    },
+    "require": {},
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Modules\\ModuleName\\": "src/",
+            "Modules\\ModuleName\\Database\\Factories\\": "database/factories/",
+            "Modules\\ModuleName\\Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\ModuleName\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\ModuleName\\Providers\\AppServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

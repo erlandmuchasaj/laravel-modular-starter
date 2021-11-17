@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\MigrationCreator;
@@ -86,9 +85,9 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     public function provides(): array
     {
-        $this->commands[] = 'migrator';
-        $this->commands[] = 'modules.migration.creator';
-        $this->commands[] = 'modules.command.migrate.make';
+        // $this->commands[] = 'migrator';
+        // $this->commands[] = 'modules.migration.creator';
+        // $this->commands[] = 'modules.command.migrate.make';
         return $this->commands;
     }
 
