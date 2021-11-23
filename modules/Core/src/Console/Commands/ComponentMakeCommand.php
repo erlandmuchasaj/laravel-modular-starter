@@ -123,7 +123,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/view-component.stub';
+        return $this->resolveStubPath('/stubs/view-component.stub');
     }
 
     /**

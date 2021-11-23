@@ -49,19 +49,6 @@ class SeederMakeCommand extends BaseGeneratorCommand
     }
 
     /**
-     * Resolve the fully-qualified path to the stub.
-     *
-     * @param string $stub
-     * @return string
-     */
-    protected function resolveStubPath(string $stub): string
-    {
-        return is_file($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
-    }
-
-    /**
      * Get the destination class path.
      *
      * @param  string  $name

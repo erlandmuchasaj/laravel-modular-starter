@@ -87,8 +87,8 @@ class NotificationMakeCommand extends BaseGeneratorCommand
     protected function getStub(): string
     {
         return $this->option('markdown')
-            ? __DIR__.'/stubs/markdown-notification.stub'
-            : __DIR__.'/stubs/notification.stub';
+            ? $this->resolveStubPath('/stubs/markdown-notification.stub')
+            : $this->resolveStubPath('/stubs/notification.stub');
     }
 
     /**

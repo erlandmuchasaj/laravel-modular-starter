@@ -32,7 +32,7 @@ class ProviderMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/stubs/provider.stub';
+        return $this->resolveStubPath('/stubs/provider.stub');
     }
 
     /**

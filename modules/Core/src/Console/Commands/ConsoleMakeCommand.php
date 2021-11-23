@@ -49,11 +49,7 @@ class ConsoleMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        $relativePath = '/stubs/console.stub';
-
-        return file_exists($customPath = $this->laravel->basePath(trim($relativePath, '/')))
-            ? $customPath
-            : __DIR__.$relativePath;
+        return $this->resolveStubPath('/stubs/console.stub');
     }
 
     /**
@@ -65,19 +61,6 @@ class ConsoleMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\\Console\\Commands';
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments(): array
-    {
-        return [
-            ['module', InputArgument::REQUIRED, 'Module name'],
-            ['name', InputArgument::REQUIRED, 'The name of the command'],
-        ];
     }
 
     /**

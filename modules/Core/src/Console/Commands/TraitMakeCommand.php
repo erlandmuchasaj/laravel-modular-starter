@@ -35,7 +35,7 @@ class TraitMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/stubs/trait.stub';
+        return $this->resolveStubPath('/stubs/trait.stub');
     }
 
     /**
@@ -51,19 +51,6 @@ class TraitMakeCommand extends BaseGeneratorCommand
         } else {
             return $rootNamespace.'\\Traits';
         }
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments(): array
-    {
-        return [
-            ['module', InputArgument::REQUIRED, 'Module name'],
-            ['name', InputArgument::REQUIRED, 'Trait name'],
-        ];
     }
 
     /**

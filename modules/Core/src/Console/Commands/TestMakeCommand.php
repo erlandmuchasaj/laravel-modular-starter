@@ -12,9 +12,7 @@ class TestMakeCommand extends BaseGeneratorCommand
      *
      * @var string
      */
-    protected $name = 'module:make-test {module : The name of the module}
-                                        {name : The name of the class}
-                                        {--unit : Create a unit test}';
+    protected $name = 'module:make-test';
 
     /**
      * The console command description.
@@ -45,19 +43,6 @@ class TestMakeCommand extends BaseGeneratorCommand
     }
 
     /**
-     * Resolve the fully-qualified path to the stub.
-     *
-     * @param string $stub
-     * @return string
-     */
-    protected function resolveStubPath(string $stub): string
-    {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
-    }
-
-    /**
      * Get the destination class path.
      *
      * @param  string  $name
@@ -67,11 +52,9 @@ class TestMakeCommand extends BaseGeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        // return base_path('tests').str_replace('\\', '/', $name).'.php';
+        $moduleName = Str::of(strval($this->argument('module')))->trim()->studly();
 
-        $moduleName = Str::ucfirst(strval($this->argument('module')));
-
-        return base_path() . "/modules/{$moduleName}/tests" . str_replace('\\', '/', $name).'.php';
+        return base_path() . "/modules/{$moduleName}/tests/" . str_replace('\\', '/', $name).'.php';
     }
 
     /**
@@ -96,9 +79,9 @@ class TestMakeCommand extends BaseGeneratorCommand
      */
     protected function rootNamespace(): string
     {
-        $moduleName = Str::ucfirst(strval($this->argument('module')));
+        $moduleName = Str::of(strval($this->argument('module')))->trim()->studly();
 
-        return "Modules\\{$moduleName}\\Tests";
+        return "Modules\\{$moduleName}\\Tests\\";
     }
 
     /**

@@ -12,6 +12,9 @@ Basically one module is another Laravel application with all its components, vie
 routes, middleware, events, database, seeds and much, much more. 
 You will fill right at home.
 
+
+`php artisan module:make <module-name>`
+
 - First Duplicate the Example folder from  ``` /modules/Example ``` and rename it to the */modules/CustomModule* you are building.
   The name should follow PSR4 naming conventions (CamelCase).
 - Then Go inside the newly created module and rename *Example* to *CustomModule* accordingly.

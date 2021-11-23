@@ -44,7 +44,7 @@ class EventMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/stubs/event.stub';
+        return $this->resolveStubPath('/stubs/event.stub');
     }
 
     /**

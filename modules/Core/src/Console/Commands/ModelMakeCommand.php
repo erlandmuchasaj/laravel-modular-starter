@@ -196,24 +196,9 @@ class ModelMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        if ($this->option('traits')) {
-            return __DIR__.'/stubs/model-with-traits.stub';
-        } else {
-            return __DIR__.'/stubs/model.stub';
-        }
-    }
-
-    /**
-     * Resolve the fully-qualified path to the stub.
-     *
-     * @param  string  $stub
-     * @return string
-     */
-    protected function resolveStubPath(string $stub): string
-    {
-        return file_exists($customPath = $this->laravel->basePath('modules/Core' . trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
+        return $this->option('traits')
+            ? $this->resolveStubPath('/stubs/model-with-traits.stub')
+            : $this->resolveStubPath('/stubs/model.stub');
     }
 
     /**

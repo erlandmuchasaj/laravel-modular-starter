@@ -298,7 +298,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $content = $this->files->get("composer.json");
         $phpArray = json_decode($content, true);
         $phpArray['require']['modules/'.$snakeModuleName] = '~1.0';
-        $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT));
+        $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 
 
