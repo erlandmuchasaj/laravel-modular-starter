@@ -2,10 +2,8 @@
 
 namespace Modules\Core\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -35,27 +33,6 @@ class ModuleMakeCommand extends GeneratorCommand
     protected $type = 'Module';
 
     /**
-     * The console command name.
-     *
-     * @var Filesystem
-     */
-    // protected Filesystem $files;
-
-    /**
-     * Create a new controller creator command instance.
-     *
-     * @param Filesystem $files
-     * @return void
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct($files);
-
-        // $this->files = $files;
-    }
-
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -81,7 +58,7 @@ class ModuleMakeCommand extends GeneratorCommand
         // language and that the class name will actually be valid. If it is not valid we
         // can error now and prevent from polluting the filesystem using invalid files.
         if ($this->isReservedName($moduleName)) {
-            $this->error('The name "'.$moduleName.'" is reserved by PHP.');
+            $this->error('The name "' . $moduleName . '" is reserved by PHP.');
             return;
         }
 
@@ -154,47 +131,39 @@ class ModuleMakeCommand extends GeneratorCommand
          */
 
         $this->files->put("modules/{$moduleName}/bootstrap/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/config/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/config/config.php", "<?php \n\n/*\n * You can place your custom module configuration in here.\n */\n \nreturn [\n\n];\n");
 
         $this->files->put("modules/{$moduleName}/database/factories/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/database/migrations/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/database/seeders/.gitkeep", "");
 
-        $this->files->put("modules/{$moduleName}/resources/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/lang/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/lang/en/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
-        $this->files->put("modules/{$moduleName}/resources/views/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/components/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/errors/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/views/layouts/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/routes/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/routes/api.php", "<?php \n\n/*\n * You can place your custom module routes for api.\n */");
         $this->files->put("modules/{$moduleName}/routes/web.php", "<?php \n\n/*\n * You can place your custom module routes for web.\n */");
-        $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n ");
+        $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");
 
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", __DIR__ . "/stubs/module/Providers/AppServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\EventServiceProvider", __DIR__ . "/stubs/module/Providers/EventServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\RouteServiceProvider", __DIR__ . "/stubs/module/Providers/RouteServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\SeedServiceProvider", __DIR__ . "/stubs/module/Providers/SeedServiceProvider.stub");
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", $this->getStub() . "/Providers/AppServiceProvider.stub");
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\EventServiceProvider", $this->getStub() . "/Providers/EventServiceProvider.stub");
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\RouteServiceProvider", $this->getStub() . "/Providers/RouteServiceProvider.stub");
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\SeedServiceProvider", $this->getStub() . "/Providers/SeedServiceProvider.stub");
 
-        $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get(__DIR__ . "/stubs/module/CHANGELOG.stub"));
-        $this->files->put("modules/{$moduleName}/README.md", $this->files->get(__DIR__ . "/stubs/module/README.stub"));
-        $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get(__DIR__ . "/stubs/module/LICENSE.stub"));
+        $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get($this->getStub() . "/CHANGELOG.stub"));
+        $this->files->put("modules/{$moduleName}/README.md", $this->files->get($this->getStub() . "/README.stub"));
+        $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get($this->getStub() . "/LICENSE.stub"));
 
         $this->writeComposerFile($moduleName);
 
         $this->requireModule($moduleName);
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
 
         exec("composer update");
     }
-
 
     /**
      * Get the desired class name from the input.
@@ -209,13 +178,13 @@ class ModuleMakeCommand extends GeneratorCommand
     /**
      * Build the directory for the class if necessary.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     protected function makeDirectory($path): string
     {
         if (!$this->files->isDirectory($path)) {
-            $this->files->makeDirectory($path, 0755, true, true);
+            $this->files->makeDirectory($path, 0777, true, true);
         }
 
         return $path;
@@ -232,6 +201,7 @@ class ModuleMakeCommand extends GeneratorCommand
             ['module', InputArgument::REQUIRED, 'Module name'],
         ];
     }
+
     /**
      * Get the stub file for the generator.
      *
@@ -239,7 +209,7 @@ class ModuleMakeCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/stubs/module';
+        return __DIR__ . '/stubs/module';
     }
 
     /**
@@ -257,9 +227,9 @@ class ModuleMakeCommand extends GeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        $class = str_replace($this->getNamespace($name).'\\', '', $name);
+        $class = str_replace($this->getNamespace($name) . '\\', '', $name);
 
-        $filePath = "modules". DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR . "Providers" . DIRECTORY_SEPARATOR . $class.".php";
+        $filePath = "modules" . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . "Providers" . DIRECTORY_SEPARATOR . $class . ".php";
 
         return $this->files->put(
             $filePath,
@@ -275,7 +245,7 @@ class ModuleMakeCommand extends GeneratorCommand
      */
     public function writeComposerFile(string $moduleName): void
     {
-        $content = $this->files->get(__DIR__ . "/stubs/module/composer.stub");
+        $content = $this->files->get($this->getStub() . "/composer.stub");
 
         $snakeModuleName = Str::kebab($moduleName);
 
@@ -297,35 +267,8 @@ class ModuleMakeCommand extends GeneratorCommand
         $snakeModuleName = Str::kebab($moduleName);
         $content = $this->files->get("composer.json");
         $phpArray = json_decode($content, true);
-        $phpArray['require']['modules/'.$snakeModuleName] = '~1.0';
-        $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
-    }
-
-
-    /**
-     * Replace the namespace for the given stub.
-     *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return $this
-     */
-    protected function replaceNamespace(&$stub, $name): static
-    {
-        $searches = [
-            ['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],
-            ['{{ namespace }}', '{{ rootNamespace }}', '{{ namespacedUserModel }}'],
-            ['{{namespace}}', '{{rootNamespace}}', '{{namespacedUserModel}}'],
-        ];
-
-        foreach ($searches as $search) {
-            $stub = str_replace(
-                $search,
-                [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()],
-                $stub
-            );
-        }
-
-        return $this;
+        $phpArray['require']['modules/' . $snakeModuleName] = '~1.0';
+        $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     /**
@@ -344,42 +287,6 @@ class ModuleMakeCommand extends GeneratorCommand
         );
 
         return $this;
-    }
-
-    /**
-     * Replace the class name for the given stub.
-     *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return string
-     */
-    protected function replaceClass($stub, $name): string
-    {
-        $class = str_replace($this->getNamespace($name).'\\', '', $name);
-
-        return str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
-    }
-
-    /**
-     * Get the full namespace for a given class, without the class name.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getNamespace($name): string
-    {
-        return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
-    }
-
-    /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function rootNamespace(): string
-    {
-        $moduleName = $this->getModuleInput();
-        return "Modules\\{$moduleName}";
     }
 
 }

@@ -12,6 +12,7 @@ use Modules\Core\Console\Commands\{CastMakeCommand,
     ConsoleMakeCommand,
     EventMakeCommand,
     ExceptionMakeCommand,
+    FactoryMakeCommand,
     JobMakeCommand,
     ListenerMakeCommand,
     ControllerMakeCommand,
@@ -65,6 +66,7 @@ class ConsoleServiceProvider extends ServiceProvider
         MiddlewareMakeCommand::class,
         MailMakeCommand::class,
         SeederMakeCommand::class,
+        FactoryMakeCommand::class,
         ModuleMakeCommand::class,
     ];
 

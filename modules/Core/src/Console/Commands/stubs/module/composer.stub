@@ -21,7 +21,9 @@
     "support": {
         "email": "erland.muchasaj@gmail.com"
     },
-    "require": {},
+    "require": {
+        "modules/core": "~1.0"
+    },
     "require-dev": {},
     "autoload": {
         "psr-4": {

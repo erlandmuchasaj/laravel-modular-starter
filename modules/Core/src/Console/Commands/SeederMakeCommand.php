@@ -3,6 +3,7 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Str;
 
 class SeederMakeCommand extends BaseGeneratorCommand
 {
@@ -56,11 +57,34 @@ class SeederMakeCommand extends BaseGeneratorCommand
      */
     protected function getPath($name): string
     {
-        if (is_dir($this->laravel->databasePath().'/seeds')) {
-            return $this->laravel->databasePath().'/seeds/'.$name.'.php';
-        } else {
-            return $this->laravel->databasePath().'/seeders/'.$name.'.php';
-        }
+        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+
+        $moduleName = $this->getModuleInput();;
+
+        return base_path() . "/modules/{$moduleName}/database/seeders/" . str_replace('\\', '/', $name).'.php';
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace): string
+    {
+        return $rootNamespace.'\\Seeders';
+    }
+
+
+    /**
+     * Get the root namespace for the class.
+     *
+     * @return string
+     */
+    protected function rootNamespace(): string
+    {
+        $moduleName = $this->getModuleInput();
+        return "Modules\\{$moduleName}\\Database\\";
     }
 
     /**
@@ -72,5 +96,22 @@ class SeederMakeCommand extends BaseGeneratorCommand
     protected function qualifyClass($name): string
     {
         return $name;
+    }
+
+    /**
+     * Build the class with the given name.
+     *
+     * @param  string  $name
+     * @return string
+     *
+     * @throws FileNotFoundException
+     */
+    protected function buildClass($name): string
+    {
+        $stub = $this->files->get($this->getStub());
+
+        $namespace = $this->getDefaultNamespace(trim($this->rootNamespace(), '\\')).'\\'.$name;
+
+        return $this->replaceNamespace($stub, $namespace)->replaceClass($stub, $name);
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
-namespace  Modules\Core\Database\Factories;
+namespace Modules\Core\Database\Factories;
 
-use Modules\Core\Models\Announcement\Announcement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AnnouncementFactory extends Factory
@@ -21,14 +20,12 @@ class AnnouncementFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
-
-                'area' => $this->faker->randomElement(['frontend', 'backend', null]),
-                'type' => $this->faker->randomElement(['success', 'danger', 'warning', 'info']),
-                'message' => $this->faker->realText(180),
-                'enabled' => $this->faker->boolean(),
-                'ends_at' => now()->subDay()
+            'area' => $this->faker->randomElement(['frontend', 'backend', null]),
+            'type' => $this->faker->randomElement(['success', 'danger', 'warning', 'info']),
+            'message' => $this->faker->realText(180),
+            'enabled' => $this->faker->boolean(),
+            'ends_at' => now()->subDay()
         ];
     }
 }
