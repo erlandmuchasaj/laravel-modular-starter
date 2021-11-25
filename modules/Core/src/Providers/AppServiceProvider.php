@@ -37,13 +37,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected string $module = 'core';
+    protected string $module = 'Core';
 
     /**
      * The root namespace to assume when generating URLs to actions.
      * @var string
      */
-    protected string $namespace = 'Modules\\Core\\Http\\Controllers';
+    private string $namespace = 'Modules\\Core\\Http\\Controllers';
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -115,7 +115,6 @@ class AppServiceProvider extends ServiceProvider
     protected array $routeMiddleware = [
         // 'subscription.is_customer' => hasBeenCustomer::class,
     ];
-
 
     /**
      * The available command shortname.
@@ -189,7 +188,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->scoped("{$this->base}.isInstalled", function () {
-            return true === config("{$this->base}.{$this->module}.config.is_installed");
+            return true === config("{$this->base}.{$this->module(true)}.config.is_installed");
         });
 
         $this->app->scoped("{$this->base}.onBackend", function () {
@@ -197,11 +196,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->scoped("{$this->base}.ModulesList", function () {
-            return config("{$this->base}.{$this->module}.config.CoreModules");
+            return config("{$this->base}.{$this->module(true)}.config.CoreModules");
         });
 
         // Publish configs
-        $this->publishConfig($this->module, 'config');
+        $this->publishConfig($this->module(true), 'config');
 
         // Register Bindings
         $this->registerBindings();
@@ -305,8 +304,8 @@ class AppServiceProvider extends ServiceProvider
      */
     private function bootValidators(): static
     {
-        Validator::extend('indisposable', 'Modules\\Core\\Validators\\Indisposable@validate');
-        Validator::extend('check_domain', 'Modules\\Core\\Validators\\DomainName@validate');
+        Validator::extend('indisposable', 'Modules\\'.$this->module().'\\Validators\\Indisposable@validate');
+        Validator::extend('check_domain', 'Modules\\'.$this->module().'\\Validators\\DomainName@validate');
         Validator::extend('extensions', function ($attribute, $value, $parameters) {
             return in_array($value->getClientOriginalExtension(), $parameters);
         });
@@ -326,9 +325,9 @@ class AppServiceProvider extends ServiceProvider
         // api routes
         $api = __DIR__ . '/../../routes/api.php';
         if (file_exists($api)) {
-            Route::middleware(config("{$this->base}.{$this->module}.config.middleware.api", []))
-                ->as(config("{$this->base}.{$this->module}.config.api_group"))
-                ->prefix(config("{$this->base}.{$this->module}.config.api_prefix"))
+            Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.api", []))
+                ->as(config("{$this->base}.{$this->module(true)}.config.api_group"))
+                ->prefix(config("{$this->base}.{$this->module(true)}.config.api_prefix"))
                 ->namespace($this->namespace . '\\Api')
                 ->group($api);
         }
@@ -338,9 +337,9 @@ class AppServiceProvider extends ServiceProvider
         if (file_exists($web)) {
             # $this->loadRoutesFrom($web);
             # The versions below give you a little more control.
-            Route::middleware(config("{$this->base}.{$this->module}.config.middleware.web", []))
-                ->as(config("{$this->base}.{$this->module}.config.web_group"))
-                ->prefix(config("{$this->base}.{$this->module}.config.web_prefix"))
+            Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.web", []))
+                ->as(config("{$this->base}.{$this->module(true)}.config.web_group"))
+                ->prefix(config("{$this->base}.{$this->module(true)}.config.web_prefix"))
                 ->namespace($this->namespace)
                 ->group($web);
         }
@@ -441,7 +440,7 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../database/migrations';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . ucfirst($this->module) . DIRECTORY_SEPARATOR . 'database'. DIRECTORY_SEPARATOR . 'migrations');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database'. DIRECTORY_SEPARATOR . 'migrations');
 
         $this->loadMigrationsFrom($path);
 
@@ -463,13 +462,13 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/views';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module(true) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
 
-        $this->loadViewsFrom($path, Str::lower($this->module));
+        $this->loadViewsFrom($path, $this->module(true));
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("views/vendor/{$this->base}/{$this->module}"),
+                $path => resource_path("views/vendor/{$this->base}/{$this->module(true)}"),
             ], 'views');
         }
 
@@ -489,13 +488,13 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/lang';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
 
-        $this->loadTranslationsFrom($path, Str::lower($this->module));
+        $this->loadTranslationsFrom($path, $this->module(true));
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("lang/vendor/{$this->module}"),
+                $path => resource_path("lang/vendor/{$this->module(true)}"),
             ], 'lang');
         }
 
@@ -511,11 +510,11 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
 
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
+            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
             # $this->loadFactoriesFrom($path);
             if ($this->app->runningInConsole()) {
                 $this->publishes([
-                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . Str::ucfirst($this->module) . 'ModuleSeeder.php'),
+                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),
                 ], 'seeds');
             }
         }
@@ -531,7 +530,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $url = app(Request::class)->path();
         // "{$this->base}.{$this->module}.config.backend_prefix"
-        if (str_contains($url, config("{$this->base}.{$this->module}.config.backend_prefix"))) {
+        if (str_contains($url, config("{$this->base}.{$this->module(true)}.config.backend_prefix"))) {
             return true;
         }
 
@@ -555,6 +554,20 @@ class AppServiceProvider extends ServiceProvider
     private function getConfigFilename(string $file): string
     {
         return strval(preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($file)));
+    }
+
+    /**
+     * Get module case according to different usage cases.
+     * Studly or snake case.
+     * @param bool $snake
+     * @return string
+     */
+    private function module(bool $snake = false): string
+    {
+        if ($snake === true){
+            return Str::snake($this->module);
+        }
+        return Str::studly($this->module);
     }
 
 }

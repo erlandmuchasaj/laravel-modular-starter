@@ -10,7 +10,9 @@ abstract class RouteServiceProvider extends ServiceProvider
 {
 
     /**
-     * The root namespace to assume when generating URLs to actions.
+     * The base platform name.
+     * This should not be changed.
+     *
      * @var string
      */
     private string $base = EmCms::NAME;
@@ -47,11 +49,6 @@ abstract class RouteServiceProvider extends ServiceProvider
     /**
      * @return string
      */
-    abstract protected function getBackRoute(): string;
-
-    /**
-     * @return string
-     */
     abstract protected function getApiRoute(): string;
 
 
@@ -72,17 +69,17 @@ abstract class RouteServiceProvider extends ServiceProvider
             $this->loadApiRoutes($router);
         });
 
-        # Web API
+        # Web
         $router->group([
             'namespace' => $this->namespace,
             'middleware' => ['web'],
         ], function (Router $router) {
             $this->loadWebRoutes($router);
-            $this->loadBackRoutes($router);
         });
     }
 
     /**
+     * Load all web routes.
      * @param Router $router
      */
     private function loadWebRoutes(Router $router): void
@@ -100,24 +97,7 @@ abstract class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param Router $router
-     */
-    private function loadBackRoutes(Router $router): void
-    {
-        $backend = $this->getBackRoute();
-        if ($backend && file_exists($backend)) {
-            $router->group([
-                'namespace' => 'Back',
-                'as' => config("{$this->base}.{$this->module}.config.back_group"),
-                'prefix' => config("{$this->base}.{$this->module}.config.back_prefix"),
-                'middleware' => config("{$this->base}.{$this->module}.config.middleware.back", []),
-            ], function (Router $router) use ($backend) {
-                require $backend;
-            });
-        }
-    }
-
-    /**
+     * Load /Api routes
      * @param Router $router
      */
     private function loadApiRoutes(Router $router): void

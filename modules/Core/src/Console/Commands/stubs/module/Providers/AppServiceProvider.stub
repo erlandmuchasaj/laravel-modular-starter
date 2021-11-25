@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
      * @return array
      */
     protected array $providers = [
+        RouteServiceProvider::class,
         EventServiceProvider::class,
         SeedServiceProvider::class,
     ];
@@ -88,7 +89,6 @@ class AppServiceProvider extends ServiceProvider
      */
     protected array $routeMiddleware = [
     ];
-
 
     /**
      * The available command shortname.
@@ -146,7 +146,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Publish configs
-        $this->publishConfig($this->module, 'config');
+        $this->publishConfig($this->module(true), 'config');
 
         // Register providers
         $this->registerProviders();
@@ -182,11 +182,11 @@ class AppServiceProvider extends ServiceProvider
      */
     private function registerFacades(): void
     {
-        //        $loader = AliasLoader::getInstance();
-        //        $loader->alias('core', CoreFacade::class);
-        //        $this->app->singleton('core', function () {
-        //            return app()->make(Core::class);
-        //        });
+        //  $loader = AliasLoader::getInstance();
+        //  $loader->alias('core', CoreFacade::class);
+        //  $this->app->singleton('core', function () {
+        //      return app()->make(Core::class);
+        //  });
     }
 
     /**
@@ -318,7 +318,7 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../database/migrations';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . ucfirst($this->module) . DIRECTORY_SEPARATOR . 'database'. DIRECTORY_SEPARATOR . 'migrations');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database'. DIRECTORY_SEPARATOR . 'migrations');
 
         $this->loadMigrationsFrom($path);
 
@@ -340,13 +340,13 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/views';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module(true) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
 
-        $this->loadViewsFrom($path, Str::lower($this->module));
+        $this->loadViewsFrom($path, $this->module(true));
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("views/vendor/{$this->base}/{$this->module}"),
+                $path => resource_path("views/vendor/{$this->base}/{$this->module(true)}"),
             ], 'views');
         }
 
@@ -366,13 +366,13 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/lang';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
 
-        $this->loadTranslationsFrom($path, Str::lower($this->module));
+        $this->loadTranslationsFrom($path, $this->module(true));
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("lang/vendor/{$this->module}"),
+                $path => resource_path("lang/vendor/{$this->module(true)}"),
             ], 'lang');
         }
 
@@ -388,16 +388,31 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
 
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . Str::ucfirst($this->module) . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
+            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
             # $this->loadFactoriesFrom($path);
             if ($this->app->runningInConsole()) {
                 $this->publishes([
-                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . Str::ucfirst($this->module) . 'ModuleSeeder.php'),
+                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),
                 ], 'seeds');
             }
         }
 
         return $this;
     }
+
+    /**
+     * Get module case according to different usage cases.
+     * Studly or snake case.
+     * @param bool $snake
+     * @return string
+     */
+    private function module(bool $snake = false): string
+    {
+        if ($snake === true){
+            return Str::snake($this->module);
+        }
+        return Str::studly($this->module);
+    }
+
 
 }

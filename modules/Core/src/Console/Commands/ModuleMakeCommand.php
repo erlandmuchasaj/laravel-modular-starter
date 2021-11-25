@@ -148,8 +148,10 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/routes/api.php", "<?php \n\n/*\n * You can place your custom module routes for api.\n */");
-        $this->files->put("modules/{$moduleName}/routes/web.php", "<?php \n\n/*\n * You can place your custom module routes for web.\n */");
+
+        $stubRoute = $this->files->get($this->getStub() . "/route.stub");
+        $this->files->put("modules/{$moduleName}/routes/api.php", $this->writeFile($stubRoute, $moduleName));
+        $this->files->put("modules/{$moduleName}/routes/web.php", $this->writeFile($stubRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");
 
         $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", $this->getStub() . "/Providers/AppServiceProvider.stub");
@@ -160,6 +162,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get($this->getStub() . "/CHANGELOG.stub"));
         $this->files->put("modules/{$moduleName}/README.md", $this->files->get($this->getStub() . "/README.stub"));
         $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get($this->getStub() . "/LICENSE.stub"));
+
 
         $this->writeComposerFile($moduleName);
 
@@ -247,6 +250,29 @@ class ModuleMakeCommand extends GeneratorCommand
         $content = str_replace(['ModuleName', '{{ class }}', '{{class}}'], $moduleName, $content);
 
         $this->files->put("modules/{$moduleName}/composer.json", $content);
+    }
+
+
+    /**
+     * @param string $stub
+     * @param string $moduleName
+     * @return string
+     */
+    public function writeFile(string $stub, string $moduleName): string
+    {
+        $snakeModuleName = Str::kebab($moduleName);
+
+        $stub = str_replace(
+            ['DummyModuleName', '{{ moduleName }}', '{{moduleName}}'],
+            $moduleName,
+            $stub
+        );
+
+        return str_replace(
+            ['DummySnakeModuleName', '{{ snakeModuleName }}', '{{snakeModuleName}}'],
+            $snakeModuleName,
+            $stub
+        );
     }
 
     /**
