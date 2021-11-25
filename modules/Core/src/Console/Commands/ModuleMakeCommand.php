@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleMakeCommand extends GeneratorCommand
 {
@@ -81,14 +82,14 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}");
         $this->makeDirectory("modules/{$moduleName}/bootstrap");
         $this->makeDirectory("modules/{$moduleName}/config");
-        $this->makeDirectory("modules/{$moduleName}/database");
+        // $this->makeDirectory("modules/{$moduleName}/database");
         $this->makeDirectory("modules/{$moduleName}/database/factories");
         $this->makeDirectory("modules/{$moduleName}/database/migrations");
         $this->makeDirectory("modules/{$moduleName}/database/seeders");
-        $this->makeDirectory("modules/{$moduleName}/resources");
-        $this->makeDirectory("modules/{$moduleName}/resources/lang");
+        // $this->makeDirectory("modules/{$moduleName}/resources");
+        // $this->makeDirectory("modules/{$moduleName}/resources/lang");
         $this->makeDirectory("modules/{$moduleName}/resources/lang/en");
-        $this->makeDirectory("modules/{$moduleName}/resources/views");
+        // $this->makeDirectory("modules/{$moduleName}/resources/views");
         $this->makeDirectory("modules/{$moduleName}/resources/views/components");
         $this->makeDirectory("modules/{$moduleName}/resources/views/errors");
         $this->makeDirectory("modules/{$moduleName}/resources/views/layouts");
@@ -98,32 +99,36 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}/routes");
         $this->makeDirectory("modules/{$moduleName}/tests");
 
-        $this->makeDirectory("modules/{$moduleName}/src");
-        $this->makeDirectory("modules/{$moduleName}/src/Console");
-        $this->makeDirectory("modules/{$moduleName}/src/Console/Commands");
-        $this->makeDirectory("modules/{$moduleName}/src/Enums");
-        $this->makeDirectory("modules/{$moduleName}/src/Events");
-        $this->makeDirectory("modules/{$moduleName}/src/Exceptions");
-        $this->makeDirectory("modules/{$moduleName}/src/Http");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers/Api");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware/Api");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Requests");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Resources");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/ViewComposers");
-        $this->makeDirectory("modules/{$moduleName}/src/Jobs");
-        $this->makeDirectory("modules/{$moduleName}/src/Listeners");
+        // $this->makeDirectory("modules/{$moduleName}/src");
+        // $this->makeDirectory("modules/{$moduleName}/src/Http");
+        // $this->makeDirectory("modules/{$moduleName}/src/Console");
         $this->makeDirectory("modules/{$moduleName}/src/Models");
-        $this->makeDirectory("modules/{$moduleName}/src/Notifications");
-        $this->makeDirectory("modules/{$moduleName}/src/Observers");
-        $this->makeDirectory("modules/{$moduleName}/src/Policies");
         $this->makeDirectory("modules/{$moduleName}/src/Providers");
-        $this->makeDirectory("modules/{$moduleName}/src/Repositories");
-        $this->makeDirectory("modules/{$moduleName}/src/Rules");
-        $this->makeDirectory("modules/{$moduleName}/src/Services");
-        $this->makeDirectory("modules/{$moduleName}/src/Traits");
-        $this->makeDirectory("modules/{$moduleName}/src/Validators");
+        $this->makeDirectory("modules/{$moduleName}/src/Exceptions");
+        $this->makeDirectory("modules/{$moduleName}/src/Console/Commands");
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers");
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware");
+
+        if ($this->option('all')) {
+            $this->makeDirectory("modules/{$moduleName}/src/Enums");
+            $this->makeDirectory("modules/{$moduleName}/src/Events");
+            $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers/Api");
+            $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware/Api");
+            $this->makeDirectory("modules/{$moduleName}/src/Http/Requests");
+            $this->makeDirectory("modules/{$moduleName}/src/Http/Resources");
+            $this->makeDirectory("modules/{$moduleName}/src/Http/ViewComposers");
+            $this->makeDirectory("modules/{$moduleName}/src/Jobs");
+            $this->makeDirectory("modules/{$moduleName}/src/Listeners");
+            $this->makeDirectory("modules/{$moduleName}/src/Notifications");
+            $this->makeDirectory("modules/{$moduleName}/src/Observers");
+            $this->makeDirectory("modules/{$moduleName}/src/Policies");
+            $this->makeDirectory("modules/{$moduleName}/src/Repositories");
+            $this->makeDirectory("modules/{$moduleName}/src/Rules");
+            $this->makeDirectory("modules/{$moduleName}/src/Services");
+            $this->makeDirectory("modules/{$moduleName}/src/Traits");
+            $this->makeDirectory("modules/{$moduleName}/src/Utils");
+            $this->makeDirectory("modules/{$moduleName}/src/Validators");
+        }
 
         /**
          * Add .gitkeep files in folders in order to keep them in repositories
@@ -188,18 +193,6 @@ class ModuleMakeCommand extends GeneratorCommand
         }
 
         return $path;
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments(): array
-    {
-        return [
-            ['module', InputArgument::REQUIRED, 'Module name'],
-        ];
     }
 
     /**
@@ -289,4 +282,27 @@ class ModuleMakeCommand extends GeneratorCommand
         return $this;
     }
 
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments(): array
+    {
+        return [
+            ['module', InputArgument::REQUIRED, 'Module name'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['all', 'a', InputOption::VALUE_NONE, 'Generate a module with all folder structure.'],
+        ];
+    }
 }

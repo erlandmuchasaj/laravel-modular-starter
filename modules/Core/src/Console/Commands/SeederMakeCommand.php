@@ -72,19 +72,7 @@ class SeederMakeCommand extends BaseGeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\\Seeders';
-    }
-
-
-    /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function rootNamespace(): string
-    {
-        $moduleName = $this->getModuleInput();
-        return "Modules\\{$moduleName}\\Database\\";
+        return $rootNamespace.'\\Database\\Seeders';
     }
 
     /**
