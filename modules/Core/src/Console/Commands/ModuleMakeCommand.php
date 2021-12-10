@@ -6,7 +6,6 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -36,14 +35,14 @@ class ModuleMakeCommand extends GeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle(): int
+    public function handle(): ?bool
     {
         $this->generateModuleStructure();
 
-        return CommandAlias::SUCCESS;
+        return true;
     }
 
     /**

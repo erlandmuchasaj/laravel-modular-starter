@@ -33,18 +33,20 @@ class ComponentMakeCommand extends BaseGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle()
+    public function handle(): ?bool
     {
         if (parent::handle() === false && !$this->option('force')) {
-            return;
+            return null;
         }
 
         if (!$this->option('inline')) {
             $this->writeView();
         }
+
+        return true;
     }
 
     /**

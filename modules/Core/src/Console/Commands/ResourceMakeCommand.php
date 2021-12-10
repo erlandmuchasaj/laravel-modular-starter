@@ -32,16 +32,16 @@ class ResourceMakeCommand extends BaseGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle()
+    public function handle(): ?bool
     {
         if ($this->collection()) {
             $this->type = 'Resource collection';
         }
 
-        parent::handle();
+        return parent::handle();
     }
 
     /**

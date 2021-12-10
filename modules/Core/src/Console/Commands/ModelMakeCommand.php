@@ -32,13 +32,13 @@ class ModelMakeCommand extends BaseGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle(): void
+    public function handle(): ?bool
     {
         if (parent::handle() === false && ! $this->option('force')) {
-            return;
+            return false;
         }
 
 
@@ -77,6 +77,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
             $this->createModelTraits();
         }
 
+        return true;
     }
 
     /**

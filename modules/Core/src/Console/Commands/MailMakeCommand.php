@@ -33,18 +33,20 @@ class MailMakeCommand extends BaseGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle()
+    public function handle(): ?bool
     {
         if (parent::handle() === false && ! $this->option('force')) {
-            return;
+            return false;
         }
 
         if ($this->option('markdown')) {
             $this->writeMarkdownTemplate();
         }
+
+        return true;
     }
 
     /**

@@ -107,10 +107,10 @@ class MigrateMakeCommand extends BaseCommand
      * @param string $name
      * @param string $table
      * @param bool $create
-     * @return string
+     * @return void
      * @throws Exception
      */
-    protected function writeMigration(string $name, string $table, bool $create): string
+    protected function writeMigration(string $name, string $table, bool $create): void
     {
         $file = $this->creator->create(
             $name, $this->getMigrationPath(), $table, $create

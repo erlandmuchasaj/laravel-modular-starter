@@ -31,12 +31,12 @@ class SeederMakeCommand extends BaseGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return bool|null
      * @throws FileNotFoundException
      */
-    public function handle()
+    public function handle(): ?bool
     {
-        parent::handle();
+        return parent::handle();
     }
 
     /**
