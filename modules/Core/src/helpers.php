@@ -326,8 +326,9 @@ if (!function_exists('humanFilesize')) {
     /**
      * Show Human readable file size
      * @param int $size
-     * @oaram int $precision
+     * @param int $precision
      * @return string
+     * @oaram int $precision
      */
     function humanFilesize(int $size, int $precision = 2): string
     {
@@ -429,4 +430,25 @@ if (! function_exists('escapeSlashes')) {
     }
 }
 
+if (! function_exists('validate')) {
+    /**
+     * Validate some data.
+     *
+     * @param array|string $fields
+     * @param array|string $rules
+     *
+     * @return bool
+     */
+    function validate(array|string $fields, array|string $rules): bool
+    {
+        if (!is_array($fields)) {
+            $fields = ['default' => $fields];
+        }
 
+        if (!is_array($rules)) {
+            $rules = ['default' => $rules];
+        }
+
+        return Validator::make($fields, $rules)->passes();
+    }
+}
