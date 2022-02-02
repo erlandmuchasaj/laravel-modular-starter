@@ -228,7 +228,7 @@ class Sanatize {
 
         $string = strval(preg_replace('/\s+/', ' ', $string));
 
-        return self::replaceAccentedChars(trim($string ));
+        return self::replaceAccentedChars(trim($string));
     }
 
     /**

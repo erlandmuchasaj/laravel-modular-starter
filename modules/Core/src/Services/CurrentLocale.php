@@ -49,7 +49,7 @@ class CurrentLocale
      */
     public static function isValidLocale(string $locale): bool
     {
-        if (!is_string($locale)) {
+        if (empty($locale)) {
             return false;
         }
 

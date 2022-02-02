@@ -44,7 +44,7 @@ class AnnouncementController extends Controller
      * @throws GeneralException
      * @throws Throwable
      *
-     * @throw GeneralException
+     * @throws GeneralException
      */
     public function store(ManageAnnouncementRequest $request): RedirectResponse|JsonResponse
     {

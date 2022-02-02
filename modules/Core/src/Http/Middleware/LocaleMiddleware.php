@@ -4,6 +4,8 @@ namespace Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class LocaleMiddleware.
@@ -17,6 +19,8 @@ class LocaleMiddleware
      * @param Closure $next
      *
      * @return mixed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function handle(Request $request, Closure $next): mixed
     {

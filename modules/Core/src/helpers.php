@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -110,16 +111,18 @@ if (!function_exists('diff_for_humans')) {
 
 if (!function_exists('convertToLocal')) {
     /**
-     * convertToLocal
-     * Used when displaying dates to frontend
-     * **Display dates in user timezone on Frontend
+     * Used when displaying dates to frontend convert date from UTC to Local time.
+     * Display dates in user timezone on Frontend - Convert UTC time to User time
      *
-     * @param mixed|null $date
-     * @param string $format
+     * @param mixed|null $date - practically the date in UTC timezone or coming from DB
+     * @param string $fromFormat - the default format in our DB
+     * @example Carbon::now($userTimezone)->setTimezone(config('app.timezone'))
+     * @example $query->where(‘from’, Carbon::now($userTimezone)->setTimezone(config(‘app.timezone’))) *
+     * @return Carbon|null
      *
-     * @return string|null
+     * @throws InvalidFormatException
      */
-    function convertToLocal(mixed $date = null, string $format = 'D M j G:i:s T Y'): ?string
+    function convertToLocal(mixed $date = null, string $fromFormat = 'Y-m-d H:i:s'): ?Carbon
     {
         if (is_null($date)) {
             return $date;
@@ -127,45 +130,55 @@ if (!function_exists('convertToLocal')) {
 
         $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
         # $userTimezone = auth()->user()->timezone ?? config('app.timezone');
+        # $timezone = $tz ?: config('app.timezone');
 
         if (!($date instanceof Carbon)) {
             if (is_numeric($date)) {
                 # assuming is a timestamp 12547896857
                 $date = Carbon::createFromTimestamp($date, config('app.timezone'));
             } else {
-                $date = Carbon::parse($date, config('app.timezone'));
+                // $date = Carbon::parse($date, config('app.timezone'));
+                $date = Carbon::createFromFormat($fromFormat, $date, config('app.timezone'));
             }
         }
 
-        return $date->setTimezone($userTimezone)->format($format);
+        return $date->setTimezone($userTimezone);
     }
 }
 
 if (!function_exists('convertFromLocal')) {
     /**
-     * convertFromLocal
+     * convertFromLocal aka ConvertDateFromLocalToUTC
      *
-     * Saving the users input to the database in UTC
+     * Saving the users input (Local time) to the database in UTC - Convert user time to UTC
      * This will take a date/time, set it to the users' timezone then return it as UTC in a Carbon instance.
      *
      * @param mixed|null $date
+     * @param string $fromFormat
+     *
      * @return Carbon|null
+     *
+     * @throws InvalidFormatException
      */
-    function convertFromLocal(mixed $date = null): ?Carbon
+    function convertFromLocal(mixed $date = null, string $fromFormat = 'Y-m-d H:i:s'): ?Carbon
     {
         if (is_null($date)) {
             return $date;
         }
+        // @param \DateTimeZone|string|null $tz
 
+        // bu default we check if there is a user timezone of not we get teh default timezone.
         $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
         # $userTimezone = auth()->user()->timezone ?? config('app.timezone');
+        # $timezone = $tz ?: config('app.timezone');
 
         if (!($date instanceof Carbon)) {
             if (is_numeric($date)) {
                 # assuming is a timestamp 12547896857
                 $date = Carbon::createFromTimestamp($date, $userTimezone);
             } else {
-                $date = Carbon::parse($date, $userTimezone);
+                // $date = Carbon::parse($date, $userTimezone);
+                $date = Carbon::createFromFormat($fromFormat, $date, $userTimezone);
             }
         }
 
