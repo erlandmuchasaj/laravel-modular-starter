@@ -7,10 +7,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Modules\Core\Enums\Notification;
-use Modules\Core\Exceptions\GeneralException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Modules\Core\Enums\Notification;
+use Modules\Core\Exceptions\GeneralException;
 
 class Handler extends ExceptionHandler
 {
