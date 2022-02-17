@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use Modules\Core\Http\Controllers\LanguageController;
 
 Route::get('/core-test', function () {
-    //    dd('HERE', locale());
     return view('welcome');
 });
 

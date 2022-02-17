@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,18 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        Model::unguard();
-//        Schema::disableForeignKeyConstraints();
-//        $this->call(TimezonesTableSeeder::class);
-//        $this
-//            ->call("TimezonesTableSeeder")
-//            ->call("LanguagesTableSeeder")
-//            ->call("CurrenciesTableSeeder")
-//            ->call("ZonesTableSeeder")
-//            ->call("CountriesTableSeeder")
-//            ->call("StatesTableSeeder");
-//
-//        Schema::enableForeignKeyConstraints();
-//        Model::reguard();
+        // \App\Models\User::factory(10)->create();
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/DummySnakeModuleName', function () {
+Route::get('/DummySnakeModuleName', function (Request $request) {
     return 'DummyModuleName module configured successfully!';
 })->name('{{snakeModuleName}}');

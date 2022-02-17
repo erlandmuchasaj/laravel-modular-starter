@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,11 +31,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         # when we go live we might want to force SSL
         # on the requests and responses
-        if (App::environment('production') && config('app.ssl')) {
+        if (app()->environment('production') && config('app.ssl')) {
             URL::forceScheme('https');
+        }
+
+        // prevent user to send accidental arrays
+        if (!app()->environment('production')) {
+            Mail::alwaysTo('foo@example.org');
         }
 
         Schema::defaultStringLength(191);

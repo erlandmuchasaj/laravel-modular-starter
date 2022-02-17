@@ -3,6 +3,7 @@
 namespace Modules\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Modules\Core\Models\Announcement\Announcement;
 
 class DatabaseSeeder extends Seeder

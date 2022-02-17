@@ -116,7 +116,7 @@ class AppServiceProvider extends ServiceProvider
         $this->bootBladeDirective();
 
         // boot Validators
-        $this->bootValidators();
+        // $this->bootValidators();
 
         // boot middleware
         $this->bootMiddleware();
@@ -257,7 +257,7 @@ class AppServiceProvider extends ServiceProvider
      * bootBladeDirective
      *
      * @return static
-     * @todo
+     * @todo check
      */
     private function bootBladeDirective(): static
     {
@@ -334,7 +334,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register views & Publish views.
      * @return static
-     * @todo
+     * @todo check
      */
     private function bootViews(): static
     {
@@ -372,7 +372,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("lang/vendor/{$this->module(true)}"),
+                $path => app()->langPath("vendor/{$this->module(true)}"),
             ], 'lang');
         }
 

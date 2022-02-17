@@ -14,23 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // $input = ['date_from' => '29/01/2022 03:55:00'];
-    // $tz = \Carbon\CarbonTimeZone::createFromMinuteOffset('-150');
-    // // $date = \Carbon\Carbon::createFromFormat('d/m/Y H:i', $input['date_from'], $tz);
-    // $date = \Carbon\Carbon::parse( $input['date_from'], $tz);
-    // dd($input, $tz, $date,  $date->setTimezone(config('app.timezone'))->format('Y, m, d H:i:s'));
 
-    // dd('HERE', locale(), app()->basePath('stubs'));
+    // if (version_compare(app()->version(), '9.0.0') >= 0) {
+    //     echo 'I am at least 9.0.0, my version: ' . app()->version() . "\n";
+    // }
+    // dd(app()->version(), app()->langPath('vendor/core'), resource_path("lang/vendor/core"));
+
     return view('welcome');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
-});
-
-require __DIR__.'/auth.php';

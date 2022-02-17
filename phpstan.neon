@@ -7,10 +7,11 @@ parameters:
         # - app
         - modules
 
-    # The level 8 is the highest level, Normalized version is level 3,
-    level: 8
+    # The level 9 is the highest level
+    level: 5
 
     ignoreErrors:
+        - '#PHPDoc tag @var#'
         - '#Unsafe usage of new static#'
 
     excludePaths:

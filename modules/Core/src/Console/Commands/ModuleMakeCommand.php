@@ -85,10 +85,17 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}/database/factories");
         $this->makeDirectory("modules/{$moduleName}/database/migrations");
         $this->makeDirectory("modules/{$moduleName}/database/seeders");
-        // $this->makeDirectory("modules/{$moduleName}/resources");
-        // $this->makeDirectory("modules/{$moduleName}/resources/lang");
-        $this->makeDirectory("modules/{$moduleName}/resources/lang/en");
-        // $this->makeDirectory("modules/{$moduleName}/resources/views");
+
+        if (version_compare(app()->version(), '9.0.0') >= 0) {
+            // echo 'I am at least 9.0.0, my version: ' . app()->version() . "\n";
+            $this->makeDirectory("modules/{$moduleName}/lang/en");
+            $this->files->put("modules/{$moduleName}/lang/en.json", "");
+            $this->files->put("modules/{$moduleName}/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
+        } else {
+            $this->makeDirectory("modules/{$moduleName}/resources/lang/en");
+            $this->files->put("modules/{$moduleName}/resources/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
+        }
+
         $this->makeDirectory("modules/{$moduleName}/resources/views/components");
         $this->makeDirectory("modules/{$moduleName}/resources/views/errors");
         $this->makeDirectory("modules/{$moduleName}/resources/views/layouts");
@@ -98,9 +105,9 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}/routes");
         $this->makeDirectory("modules/{$moduleName}/tests");
 
-        // $this->makeDirectory("modules/{$moduleName}/src");
-        // $this->makeDirectory("modules/{$moduleName}/src/Http");
-        // $this->makeDirectory("modules/{$moduleName}/src/Console");
+        $this->makeDirectory("modules/{$moduleName}/src");
+        $this->makeDirectory("modules/{$moduleName}/src/Http");
+        $this->makeDirectory("modules/{$moduleName}/src/Console");
         $this->makeDirectory("modules/{$moduleName}/src/Models");
         $this->makeDirectory("modules/{$moduleName}/src/Providers");
         $this->makeDirectory("modules/{$moduleName}/src/Exceptions");
@@ -141,7 +148,6 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/database/migrations/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/database/seeders/.gitkeep", "");
 
-        $this->files->put("modules/{$moduleName}/resources/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
         $this->files->put("modules/{$moduleName}/resources/views/components/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/errors/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", "");
@@ -149,6 +155,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", "");
 
         $stubRoute = $this->files->get($this->getStub() . "/route.stub");
+
         $this->files->put("modules/{$moduleName}/routes/api.php", $this->writeFile($stubRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/routes/web.php", $this->writeFile($stubRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");

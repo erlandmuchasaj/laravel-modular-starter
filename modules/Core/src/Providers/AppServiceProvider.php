@@ -494,7 +494,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => resource_path("lang/vendor/{$this->module(true)}"),
+                $path => app()->langPath("vendor/{$this->module(true)}"),
             ], 'lang');
         }
 
