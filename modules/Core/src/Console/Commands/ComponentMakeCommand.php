@@ -6,6 +6,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ComponentMakeCommand extends BaseGeneratorCommand
 {
@@ -15,6 +16,17 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      * @var string
      */
     protected $name = 'module:make-component';
+
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     */
+    protected static $defaultName = 'module:make-component';
+
 
     /**
      * The console command description.
@@ -38,15 +50,23 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      */
     public function handle(): ?bool
     {
-        if (parent::handle() === false && !$this->option('force')) {
+        if ($this->option('view')) {
+            $this->writeView(function () {
+                $this->info($this->type.' created successfully.');
+            });
             return null;
+        }
+
+
+        if (parent::handle() === false && !$this->option('force')) {
+            return false;
         }
 
         if (!$this->option('inline')) {
             $this->writeView();
         }
 
-        return true;
+        return CommandAlias::SUCCESS;
     }
 
     /**
@@ -149,6 +169,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
         return [
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the component already exists'],
             ['inline', null, InputOption::VALUE_NONE, 'Create a component that renders an inline view'],
+            ['view', null, InputOption::VALUE_NONE, 'Create an anonymous component with only a view'],
         ];
     }
 }

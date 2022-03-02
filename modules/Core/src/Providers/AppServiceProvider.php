@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+
+use Modules\Core\Traits\CanPublishConfiguration;
 use Modules\Core\Console\Commands\AppVersion;
 use Modules\Core\Console\Commands\Install;
 use Modules\Core\Http\Middleware\AddXHeader;
@@ -25,7 +27,6 @@ use Modules\Core\Models\Announcement\Announcement;
 use Modules\Core\Observers\AnnouncementObserver;
 use Modules\Core\Policies\AnnouncementPolicy;
 use Modules\Core\Repositories\AnnouncementRepository;
-use Modules\Core\Traits\CanPublishConfiguration;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -127,7 +128,7 @@ class AppServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Bootstrap services.
+     * Bootstrap your package's services.
      *
      *
      * @param AnnouncementRepository $announcementRepository
@@ -144,6 +145,10 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['backend.layouts.app'], function ($view) use ($announcementRepository) {
             $view->with('announcements', $announcementRepository->getForBackend());
         });
+
+        // This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
+        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
+        Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));
 
         // publish migrations
         $this->bootMigrations();
