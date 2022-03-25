@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Modules\Core\Events\Announcement\AnnouncementCreated;
 use Modules\Core\Events\Announcement\AnnouncementDeleted;
 use Modules\Core\Events\Announcement\AnnouncementDisabled;
@@ -97,22 +98,27 @@ class AnnouncementRepository extends BaseRepository
      */
     public function mark(Announcement $announcement, int $status) : Announcement
     {
-        $announcement->enabled = $status;
-        if ($announcement->save()) {
 
-            switch ($status) {
-                case 0:
-                    event(new AnnouncementDisabled($announcement));
-                    break;
-                case 1:
-                    event(new AnnouncementEnabled($announcement));
-                    break;
+        return DB::transaction(function () use ($announcement, $status) {
+
+            $announcement->enabled = $status;
+
+            if ($announcement->save()) {
+
+                switch ($status) {
+                    case 0:
+                        event(new AnnouncementDisabled($announcement));
+                        break;
+                    case 1:
+                        event(new AnnouncementEnabled($announcement));
+                        break;
+                }
+
+                return $announcement;
             }
 
-            return $announcement;
-        }
-
-        throw new GeneralException(__('Announcement status could not be changed!'));
+            throw new GeneralException(__('Announcement status could not be changed!'));
+        }, 3);
     }
 
     /**
@@ -156,8 +162,6 @@ class AnnouncementRepository extends BaseRepository
         }
 
         return DB::transaction(function () use ($announcement) {
-            // Delete associated relationships if any
-            //
 
             if ($announcement->restore()) {
 
@@ -187,7 +191,6 @@ class AnnouncementRepository extends BaseRepository
 
         return DB::transaction(function () use ($announcement) {
             // Delete associated relationships if any
-            //
 
             if ($announcement->forceDelete()) {
 
@@ -199,7 +202,6 @@ class AnnouncementRepository extends BaseRepository
             throw new GeneralException(__('Announcement could not be permanently deleted.'));
         }, 3);
     }
-
 
     /**
      * Get all the enabled announcements
@@ -217,10 +219,12 @@ class AnnouncementRepository extends BaseRepository
             return collect(new Announcement);
         }
 
-        return $this->model::enabled()
-            ->forArea($this->model::TYPE_FRONTEND)
-            ->inTimeFrame()
-            ->get();
+        return Cache::remember("get_for_frontend_announcements", now()->addMinutes(20), function () {
+            return $this->model::enabled()
+                ->forArea($this->model::TYPE_FRONTEND)
+                ->inTimeFrame()
+                ->get();
+        });
     }
 
     /**
@@ -240,9 +244,11 @@ class AnnouncementRepository extends BaseRepository
             return collect(new Announcement);
         }
 
-        return $this->model::enabled()
-            ->forArea($this->model::TYPE_BACKEND)
-            ->inTimeFrame()
-            ->get();
+        cache()->remember('get_for_backend', now()->addMinutes(20), function () {
+            return $this->model::enabled()
+                ->forArea($this->model::TYPE_BACKEND)
+                ->inTimeFrame()
+                ->get();
+        });
     }
 }

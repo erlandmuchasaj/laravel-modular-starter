@@ -104,6 +104,7 @@ https://gist.github.com/dillinghamio/7f3b776e0ff1007cc877d63d6aaee10d
  - Avoid executing DB queries in service providers
  - Avoid reading session data in service providers
  - Avoid resolving bindings in the register method
+ - Avoid reading sessions on Repositories or Services.
  - Scoped instances vs. Singletons
 
 ```php
@@ -158,3 +159,5 @@ If you want a default value, null coalesce is a better choice:
     return $user->profile->nickname ?? randomNickname();
 ```
 
+#@TODO:
+- Add a Cache Layer when reading data.

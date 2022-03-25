@@ -59,9 +59,9 @@ class AddXHeader
     private function decorateResponse(mixed $response): void
     {
         // Check if we should/can add header
-        if (method_exists((object) $response, 'header')) {
-            // Info: http://erlandmuchasaj.com/
-            $response->header('X-LaravelStarter', 'Erland Muchasaj');
+        if (method_exists((object) $response,'header')) {
+            // Info: https://erlandmuchasaj.tech/
+            $response->header('X-Man', 'Ndershkuesi');
 
             // Info: https://scotthelme.co.uk/a-new-security-header-referrer-policy/
             $response->header('Referrer-Policy', 'no-referrer-when-downgrade');
