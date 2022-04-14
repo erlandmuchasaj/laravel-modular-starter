@@ -51,6 +51,11 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     abstract protected function getApiRoute(): string;
 
+    /**
+     * @return string
+     */
+    abstract protected function getChannelsRoute(): string;
+
 
     /**
      * Define the routes for the application.
@@ -76,6 +81,10 @@ abstract class RouteServiceProvider extends ServiceProvider
         ], function (Router $router) {
             $this->loadWebRoutes($router);
         });
+
+        #Channels
+        $this->loadChannelsRoutes();
+
     }
 
     /**
@@ -112,4 +121,16 @@ abstract class RouteServiceProvider extends ServiceProvider
             });
         }
     }
+
+    /**
+     * Load BroadCast Channel routes
+     */
+    private function loadChannelsRoutes(): void
+    {
+        $channels = $this->getChannelsRoute();
+        if ($channels && file_exists($channels)) {
+            require $channels;
+        }
+    }
+
 }

@@ -29,5 +29,12 @@ class RouteServiceProvider extends CoreRouteServiceProvider
         return __DIR__.'/../../routes/api.php';
     }
 
+    /**
+     * @return string
+     */
+    protected function getChannelsRoute(): string
+    {
+        return __DIR__.'/../../routes/channels.php';
+    }
 
 }

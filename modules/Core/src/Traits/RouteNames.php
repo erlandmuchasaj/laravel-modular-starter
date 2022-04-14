@@ -2,7 +2,8 @@
 
 namespace Modules\Core\Traits;
 
-use Route;
+
+use Illuminate\Support\Facades\Route;
 
 trait RouteNames
 {

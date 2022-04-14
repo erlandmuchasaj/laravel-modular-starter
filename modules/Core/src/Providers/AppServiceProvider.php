@@ -146,6 +146,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with('announcements', $announcementRepository->getForBackend());
         });
 
+        // Load core route channels.
+        $channels = base_path("modules/{$this->module}/routes/channels.php");
+        if ($channels && file_exists($channels)) {
+            require $channels;
+        }
+
         // This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
         // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
         Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));

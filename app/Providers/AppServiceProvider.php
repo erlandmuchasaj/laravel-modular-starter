@@ -42,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Mail::alwaysTo('foo@example.org');
         }
 
+        // Handle SQL Error schema migrate
         Schema::defaultStringLength(191);
 
         # Remove 'data' from json api responses

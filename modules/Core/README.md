@@ -1,5 +1,48 @@
 **CORE module**
 
+## SETUP:
+- Add ``Modules\Core\Exceptions\GeneralException::class`` on ``app/Exception/Handler.php``
+```php
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array<int, class-string<Throwable>>
+     */
+    protected $dontReport = [
+        GeneralException::class,
+    ];
+```
+
+- Uncomment `BroadcastServiceProvider` in the array of providers in config/app.php,
+we use it for Real time event notification
+
+```php
+        /**
+         * Application Service Providers...
+         */
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,  // Uncomment this line
+        //
+```
+
+- Uncomment `AuthenticateSession` in the array of $middlewareGroups in app/Http/Kernel.php,
+we use it for Session management
+
+```php
+    /**
+     * The application's route middleware groups.
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class, // Uncomment this line
+    ];
+```
+
+
 ## Modules
 
 Here we will describe the whole process of Cloning adding new modules to the system without,
@@ -140,15 +183,15 @@ $this->app->scoped(Transistor::class, function ($app) {
 3. All API endpoint are prefixed with api.
 4. All API endpoints are namespaced under /Api
 5. Use PHP stan to test your code 
+
 ```
 ./vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
-
-
 ```php
 // null coalesce
 return $user->profile->twitter_id ?? null;
+
 // optional
 return optional($user->profile)->twitter_id;
 ```

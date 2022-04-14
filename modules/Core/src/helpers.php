@@ -1,11 +1,14 @@
 <?php
+
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
-if (! function_exists('locale')) {
+if (!function_exists('locale')) {
     function locale(string $locale = null): string
     {
         if (is_null($locale)) {
@@ -32,10 +35,9 @@ if (!function_exists('setAllLocale')) {
      *
      * @param string $locale
      */
-    function setAllLocale(string $locale) : void
+    function setAllLocale(string $locale): void
     {
-
-        if (App::isLocale('en')) {
+        if (App::getLocale() !== $locale) {
 
             // set laravel localization (lumen)
             app('translator')->setLocale($locale);
@@ -45,6 +47,7 @@ if (!function_exists('setAllLocale')) {
 
             // setLocale to use Carbon source locales. Enables diffForHumans() localized
             Carbon::setLocale($locale);
+
 
             // setLocale for php. Enables ->formatLocalized() with localized values for dates
             setlocale(LC_TIME, $locale);
@@ -71,7 +74,7 @@ if (!function_exists('gravatar')) {
      * Gravatar URL
      * Generate a gravatar for a user
      *
-     * @param  string $name
+     * @param string $name
      * @return string
      */
     function gravatar(string $name): string
@@ -92,18 +95,20 @@ if (!function_exists('display_price')) {
      * @$price - Added hack in for when the variants are being created it passes over the new ISO currency code
      * which breaks number_format
      */
-    function display_price(int|string $price, int $decimals = 2): string {
+    function display_price(int|string $price, int $decimals = 2): string
+    {
         if (!is_numeric($price)) {
             return $price;
         }
 
-        $price =  preg_replace("/^([0-9]+\.?[0-9]*)(\s[A-Z]{3})$/", "$1", (string) $price);
-        return number_format((float) $price, $decimals, '.', ',');
+        $price = preg_replace("/^([0-9]+\.?[0-9]*)(\s[A-Z]{3})$/", "$1", (string)$price);
+        // return number_format((float) $price, $decimals, '.', ',');
+        return number_format((float)$price, $decimals);
     }
 }
 
 if (!function_exists('diff_for_humans')) {
-    function diff_for_humans(Carbon $date) : string
+    function diff_for_humans(Carbon $date): string
     {
         return $date->diffForHumans();
     }
@@ -116,11 +121,11 @@ if (!function_exists('convertToLocal')) {
      *
      * @param mixed|null $date - practically the date in UTC timezone or coming from DB
      * @param string $fromFormat - the default format in our DB
-     * @example Carbon::now($userTimezone)->setTimezone(config('app.timezone'))
-     * @example $query->where(‘from’, Carbon::now($userTimezone)->setTimezone(config(‘app.timezone’))) *
      * @return Carbon|null
      *
      * @throws InvalidFormatException
+     * @example Carbon::now($userTimezone)->setTimezone(config('app.timezone'))
+     * @example $query->where(‘from’, Carbon::now($userTimezone)->setTimezone(config(‘app.timezone’))) *
      */
     function convertToLocal(mixed $date = null, string $fromFormat = 'Y-m-d H:i:s'): ?Carbon
     {
@@ -137,6 +142,7 @@ if (!function_exists('convertToLocal')) {
                 # assuming is a timestamp 12547896857
                 $date = Carbon::createFromTimestamp($date, config('app.timezone'));
             } else {
+                // $date = new Carbon($date, config('app.timezone'));
                 // $date = Carbon::parse($date, config('app.timezone'));
                 $date = Carbon::createFromFormat($fromFormat, $date, config('app.timezone'));
             }
@@ -177,6 +183,7 @@ if (!function_exists('convertFromLocal')) {
                 # assuming is a timestamp 12547896857
                 $date = Carbon::createFromTimestamp($date, $userTimezone);
             } else {
+                // $date = new Carbon($date, $userTimezone);
                 // $date = Carbon::parse($date, $userTimezone);
                 $date = Carbon::createFromFormat($fromFormat, $date, $userTimezone);
             }
@@ -186,7 +193,7 @@ if (!function_exists('convertFromLocal')) {
     }
 }
 
-if (! function_exists('home_route')) {
+if (!function_exists('home_route')) {
     /**
      * Return the route to the "/" page depending on authentication/authorization status.
      *
@@ -221,7 +228,6 @@ if (!function_exists('storage_asset')) {
      */
     function storage_asset(string $path = null, string $disk = null, string $type = 'not-available'): string
     {
-        $url = null;
         if ($path !== null) {
             if ($disk === null) {
                 $disk = config('filesystems.default');
@@ -278,7 +284,7 @@ if (!function_exists('getFacebookShareLink')) {
      */
     function getFacebookShareLink(string $url, string $title): string
     {
-        return 'https://www.facebook.com/sharer/sharer.php?u=' . $url .'&t=' . rawurlencode($title);
+        return 'https://www.facebook.com/sharer/sharer.php?u=' . $url . '&t=' . rawurlencode($title);
     }
 }
 
@@ -354,7 +360,7 @@ if (!function_exists('humanFilesize')) {
             $i++;
         }
 
-        return round($size, $precision).$units[$i];
+        return round($size, $precision) . $units[$i];
     }
 }
 
@@ -367,7 +373,7 @@ if (!function_exists('str_tease')) {
      * specified moreTextIndicator.
      *
      * @param string $string
-     * @param int    $length
+     * @param int $length
      * @param string $moreTextIndicator
      *
      * @return string
@@ -390,9 +396,9 @@ if (!function_exists('str_tease')) {
             return $string;
         }
 
-        $ww = wordwrap($string, $length, "\n");
+        $ww = wordwrap($string, $length);
 
-        return substr($ww, 0, (int) strpos($ww, "\n")).$moreTextIndicator;
+        return substr($ww, 0, (int)strpos($ww, "\n")) . $moreTextIndicator;
     }
 }
 
@@ -414,7 +420,7 @@ if (!function_exists('class_has_trait')) {
     }
 }
 
-if (! function_exists('checkDatabaseConnection')) {
+if (!function_exists('checkDatabaseConnection')) {
     /**
      * Check if connection to DB is successfully
      * @return bool
@@ -423,15 +429,15 @@ if (! function_exists('checkDatabaseConnection')) {
     {
         try {
             DB::connection()->reconnect();
-
             return true;
         } catch (Exception $ex) {
+            report($ex);
             return false;
         }
     }
 }
 
-if (! function_exists('escapeSlashes')) {
+if (!function_exists('escapeSlashes')) {
     /**
      * Access the escapeSlashes helper.
      */
@@ -443,7 +449,7 @@ if (! function_exists('escapeSlashes')) {
     }
 }
 
-if (! function_exists('validate')) {
+if (!function_exists('validate')) {
     /**
      * Validate some data.
      *

@@ -13,4 +13,4 @@ All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The EMCMS is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
