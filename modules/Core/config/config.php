@@ -23,15 +23,9 @@ return [
     */
     'CoreModules' => [
         'core',
-        'dashboard',
         'media',
-        'menu',
-        'page',
         'setting',
-        'tag',
-        'translation',
         'user',
-        'workshop',
     ],
 
     /*
@@ -53,8 +47,8 @@ return [
     | Middleware
     |--------------------------------------------------------------------------
     | You can customise the Middleware that should be loaded.
-    | The localizationRedirect middleware is automatically loaded for both
-    | Backend and Frontend routes.
+    | The localizationRedirect middleware is automatically
+    | loaded for both Backend and Frontend routes.
     | Note that this middleware will be assigned on all routes.
     */
     'middleware' => [

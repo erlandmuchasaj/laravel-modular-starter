@@ -86,7 +86,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     protected function getArguments(): array
     {
         return [
-            ['module', InputArgument::REQUIRED, 'Module name'],
+            ['module', InputArgument::REQUIRED, 'The name of module will be used.'],
             ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }

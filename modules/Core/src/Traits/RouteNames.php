@@ -3,7 +3,9 @@
 namespace Modules\Core\Traits;
 
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use JetBrains\PhpStorm\Pure;
 
 trait RouteNames
 {
@@ -19,7 +21,7 @@ trait RouteNames
     {
         $routeNames = $this->getRouteNames();
 
-        $except = $except ?? [];
+        $except =  Arr::wrap($except);
 
         return $this->sortRoutesByName($routeNames, $except);
     }
@@ -48,10 +50,10 @@ trait RouteNames
      * @param array|null $except
      * @return array
      */
-    public function sortRoutesByPrefix(array $routeNames, array $except = null): array
+    #[Pure] public function sortRoutesByPrefix(array $routeNames, array $except = null): array
     {
         $routes = [];
-        $except = $except ?? [];
+        $except =  Arr::wrap($except);
 
         foreach ($routeNames as $routeName) {
             $routeNameArray = explode('.', $routeName);
@@ -71,10 +73,10 @@ trait RouteNames
      * @param array|null $except
      * @return array
      */
-    private function sortRoutesByName(array $routeNames, array $except = null): array
+    #[Pure] private function sortRoutesByName(array $routeNames, array $except = null): array
     {
         $routes = [];
-        $except = $except ?? [];
+        $except =  Arr::wrap($except);
 
         foreach ($routeNames as $routeName) {
             if (!in_array($routeName, $except)) {

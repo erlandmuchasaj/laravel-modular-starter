@@ -27,9 +27,9 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "Modules\\ModuleName\\": "src/",
-            "Modules\\ModuleName\\Database\\Factories\\": "database/factories/",
-            "Modules\\ModuleName\\Database\\Seeders\\": "database/seeders/"
+            "Modules\\ModuleName\\": "src",
+            "Modules\\ModuleName\\Database\\Factories\\": "database/factories",
+            "Modules\\ModuleName\\Database\\Seeders\\": "database/seeders"
         },
         "files": [
             "src/helpers.php"
@@ -39,6 +39,9 @@
         "psr-4": {
             "Modules\\ModuleName\\Tests\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "laravel": {

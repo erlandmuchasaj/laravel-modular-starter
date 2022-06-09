@@ -80,7 +80,7 @@ if (!function_exists('gravatar')) {
     function gravatar(string $name): string
     {
         $gravatarId = md5(strtolower(trim($name)));
-        return 'https://gravatar.com/avatar/' . $gravatarId . '?s=240';
+        return 'https://gravatar.com/avatar/' . $gravatarId . '?s=90';
     }
 }
 
@@ -133,9 +133,9 @@ if (!function_exists('convertToLocal')) {
             return $date;
         }
 
-        $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
-        # $userTimezone = auth()->user()->timezone ?? config('app.timezone');
-        # $timezone = $tz ?: config('app.timezone');
+        # $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
+        $userTimezone = auth()->user()->timezone ?? config('app.timezone');
+
 
         if (!($date instanceof Carbon)) {
             if (is_numeric($date)) {
@@ -171,12 +171,10 @@ if (!function_exists('convertFromLocal')) {
         if (is_null($date)) {
             return $date;
         }
-        // @param \DateTimeZone|string|null $tz
 
-        // bu default we check if there is a user timezone of not we get teh default timezone.
-        $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
-        # $userTimezone = auth()->user()->timezone ?? config('app.timezone');
-        # $timezone = $tz ?: config('app.timezone');
+        // by default, we check if there is a user timezone, if not we get the default timezone.
+        // $userTimezone = optional(auth()->user())->timezone ?? config('app.timezone');
+        $userTimezone = auth()->user()->timezone ?? config('app.timezone');
 
         if (!($date instanceof Carbon)) {
             if (is_numeric($date)) {

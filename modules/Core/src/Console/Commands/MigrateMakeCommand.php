@@ -16,7 +16,7 @@ class MigrateMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:migration  {module : The name of the module}
+    protected $signature = 'module:make-migration  {module : The name of the module}
                                             {name : The name of the migration}
                                             {--create= : The table to be created}
                                             {--table= : The table to migrate}
@@ -29,7 +29,7 @@ class MigrateMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Create a new migration file';
+    protected $description = 'Create a new migration file for module.';
 
     /**
      * The migration creator instance.
@@ -93,6 +93,16 @@ class MigrateMakeCommand extends BaseCommand
             [$table, $create] = TableGuesser::guess($name);
         }
 
+        // if we are still not able to determine table name
+        // then the name of the migration file
+        // will be the new table name
+        if (!$table) {
+            $table = $name;
+            // $table = Str::plural($name);
+
+            $create = true;
+        }
+
         // Now we are ready to write the migration out to disk. Once we've written
         // the migration out, we will dump-autoload for the entire framework to
         // make sure that the migrations are registered by the class loaders.
@@ -136,7 +146,6 @@ class MigrateMakeCommand extends BaseCommand
                 : $targetPath;
         }
 
-        // return parent::getMigrationPath();
         return "modules" . DIRECTORY_SEPARATOR . $this->getModuleInput() . DIRECTORY_SEPARATOR . "database" . DIRECTORY_SEPARATOR . "migrations";
     }
 
@@ -147,7 +156,6 @@ class MigrateMakeCommand extends BaseCommand
      */
     protected function getModuleInput(): string
     {
-        return Str::of(strval($this->argument('module')))->trim()->studly();
-        // return Str::of(strval($this->input->getArgument('module')))->trim()->studly();
+        return Str::of(strval($this->input->getArgument('module')))->trim()->studly();
     }
 }

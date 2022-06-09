@@ -106,10 +106,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
+        logger('AppServiceProvider::boot => '. $this->module);
 
         // This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
-        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
+        // ex: <x-module::calendar /> <x-module::alert /> <x-module::forms.input /> # for sub directories.
+        // where module is the lowercase module name
         Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));
 
         // publish migrations
@@ -151,6 +152,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        logger('AppServiceProvider::register => '. $this->module);
+
         // Publish configs
         $this->publishConfig($this->module(true), 'config');
 

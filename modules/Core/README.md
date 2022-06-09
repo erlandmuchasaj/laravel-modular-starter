@@ -121,10 +121,10 @@ If you discover a security vulnerability within The Starter project, please send
 All security vulnerabilities will be promptly addressed.
 
 ## Packages we might use
-https://github.com/cviebrock/eloquent-sluggable
-https://github.com/antonioribeiro/countries-laravel
-https://github.com/jpmurray/awesome-spark#code-snippets
-https://gist.github.com/dillinghamio/7f3b776e0ff1007cc877d63d6aaee10d
+- https://github.com/cviebrock/eloquent-sluggable
+- https://github.com/antonioribeiro/countries-laravel
+- https://github.com/jpmurray/awesome-spark#code-snippets
+- https://gist.github.com/dillinghamio/7f3b776e0ff1007cc877d63d6aaee10d
 
 
 ## Performance TIPS
@@ -183,6 +183,16 @@ $this->app->scoped(Transistor::class, function ($app) {
 3. All API endpoint are prefixed with api.
 4. All API endpoints are namespaced under /Api
 5. Use PHP stan to test your code 
+6. Use **GET/POST/PUT/PATCH/DELETE** for HTTP calls.
+   1. **GET** to retrieve data from backend should return 200
+   2. **POST** to send data to backend aka create new entity should return 201
+   3. **PUT** to update an entity to backend should return 200
+   4. **PATCH** to update a field on an entity on backend, should return 200
+   5. **DELETE** to remove an entity from DB and should return 204
+7. Use ``use Symfony\Component\HttpFoundation\Response`` for HTTP status codes
+   1. example: `Response::HTTP_OK` or `HTTP_CREATED` or `HTTP_ACCEPTED` or `HTTP_NO_CONTENT` or `HTTP_NO_CONTENT` etc.
+   2. Most commonly use status codes: 200, 201, 202, 203, 204, 208, 301, 302, 303, 307, 308, 400, 401, 402, 403, 404, 405, 408, 413, 415, 422, 429,
+8. All related packages should publish the config inside the corresponding module they belong to.
 
 ```
 ./vendor/bin/phpstan analyse --memory-limit=2G

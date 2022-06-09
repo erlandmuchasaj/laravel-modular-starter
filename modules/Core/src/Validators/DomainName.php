@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Validators;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Validation\Validator;
 
 class DomainName
@@ -29,7 +28,7 @@ class DomainName
             $value = substr($value, 8);
         }
 
-        ///Not even a single . this will eliminate things like abcd, since http://abcd is reported valid
+        // Not even a single . this will eliminate things like abcd, since http://abcd is reported valid
         if (!substr_count($value, '.')) {
             return false;
         }
@@ -41,8 +40,8 @@ class DomainName
         // remove last /
         $value = rtrim($value, '/\\');
 
-        return (preg_match("/^([a-zd](-*[a-zd])*)(.([a-zd](-*[a-zd])*))*$/i", $value) //valid characters check
+        return (preg_match("/^([a-z\d](-*[a-z\d])*)(.([a-z\d](-*[a-z\d])*))*$/i", $value) //valid characters check
             && preg_match("/^.{1,253}$/", $value) //overall length check
-            && preg_match("/^[^.]{1,63}(.[^.]{1,63})*$/", $value) ); //length of every label
+            && preg_match("/^[^.]{1,63}(.[^.]{1,63})*$/", $value)); //length of every label
     }
 }

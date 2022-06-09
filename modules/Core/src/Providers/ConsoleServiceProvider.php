@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\MigrationCreator;
@@ -28,6 +29,7 @@ use Modules\Core\Console\Commands\{CastMakeCommand,
     RequestMakeCommand,
     ResourceMakeCommand,
     RuleMakeCommand,
+    ScopeMakeCommand,
     SeederMakeCommand,
     TraitMakeCommand,
     TestMakeCommand};
@@ -44,6 +46,7 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected array $commands = [
         CastMakeCommand::class,
+        ScopeMakeCommand::class,
         ChannelMakeCommand::class,
         ConsoleMakeCommand::class,
         ComponentMakeCommand::class,

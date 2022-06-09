@@ -11,7 +11,7 @@ abstract class RouteServiceProvider extends ServiceProvider
 
     /**
      * The base platform name.
-     * This should not be changed.
+     * This SHOULD NOT be changed.
      *
      * @var string
      */
@@ -68,11 +68,20 @@ abstract class RouteServiceProvider extends ServiceProvider
         # rest api
         $router->group([
             'namespace' => $this->namespace,
-            'prefix' => config("{$this->base}.{$this->module}.config.api_prefix"),
-            'middleware' => config("{$this->base}.{$this->module}.config.middleware.api", []),
+            'prefix' => 'api',
+            'middleware' => ['api'],
         ], function (Router $router) {
             $this->loadApiRoutes($router);
         });
+
+        // $router->group([
+        //     'namespace' => $this->namespace,
+        //     'prefix' => config("{$this->base}.{$this->module}.config.api_prefix"),
+        //     'middleware' => config("{$this->base}.{$this->module}.config.middleware.api", []),
+        // ], function (Router $router) {
+        //     $this->loadApiRoutes($router);
+        // });
+
 
         # Web
         $router->group([

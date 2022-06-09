@@ -29,7 +29,7 @@ trait CanPublishConfiguration
 
         if (app()->runningInConsole()) {
             $this->publishes([
-                $this->getModuleConfigFilePath($module, $fileName) => config_path(Str::lower("{$this->base}/{$module}/{$fileName}") . '.php'),
+                $this->getModuleConfigFilePath($module, $fileName) => config_path(Str::lower($this->base . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $fileName) . '.php'),
             ], 'config');
         }
     }
@@ -42,7 +42,7 @@ trait CanPublishConfiguration
      */
     private function getModuleConfigFilePath(string $module, string $file): string
     {
-        return $this->getModulePath($module) . "/config/{$file}.php";
+        return $this->getModulePath($module) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "{$file}.php";
     }
 
     /**

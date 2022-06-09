@@ -137,7 +137,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(AnnouncementRepository $announcementRepository): void
     {
-        // view composers
+
+        logger('AppServiceProvider::boot => '. $this->module);
+
+        # view composers
         View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {
             $view->with('announcements', $announcementRepository->getForFrontend());
         });
@@ -147,13 +150,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Load core route channels.
-        $channels = base_path("modules/{$this->module}/routes/channels.php");
+        $channels = base_path("modules" . DIRECTORY_SEPARATOR . $this->module . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "channels.php");
         if ($channels && file_exists($channels)) {
             require $channels;
         }
 
-        // This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
-        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
+        # This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
+        # ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
         Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));
 
         // publish migrations
@@ -178,7 +181,7 @@ class AppServiceProvider extends ServiceProvider
         $this->bootObservers();
 
         // boot Services
-        // $this->bootServices();
+        $this->bootServices();
 
         // boot Factories
         $this->bootFactories();
@@ -198,11 +201,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->scoped("{$this->base}.isInstalled", function () {
+        logger('AppServiceProvider::register => '. $this->module);
+
+        $this->app->scoped("{$this->base}.isInstalled", function ($app) {
             return true === config("{$this->base}.{$this->module(true)}.config.is_installed");
         });
 
-        $this->app->scoped("{$this->base}.onBackend", function () {
+        $this->app->scoped("{$this->base}.onBackend", function ($app) {
             return $this->onBackend();
         });
 
@@ -241,7 +246,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Bouncer as a singleton.
+     * Register Aliases.
      *
      * @return void
      */
@@ -251,6 +256,10 @@ class AppServiceProvider extends ServiceProvider
         //        $loader->alias('core', CoreFacade::class);
         //
         //        $this->app->singleton('core', function () {
+        //            return app()->make(Core::class);
+        //        });
+
+        //        $this->app->scoped('core', function () {
         //            return app()->make(Core::class);
         //        });
     }
@@ -434,12 +443,11 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * bootServices
-     * @return static
+     * @return void
      */
-    private function bootServices(): static
+    private function bootServices(): void
     {
         //
-        return $this;
     }
 
     /**
@@ -541,7 +549,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $url = app(Request::class)->path();
         // "{$this->base}.{$this->module}.config.backend_prefix"
-        if (str_contains($url, config("{$this->base}.{$this->module(true)}.config.backend_prefix"))) {
+        if (Str::contains($url, config("{$this->base}.{$this->module(true)}.config.backend_prefix"))) {
             return true;
         }
 
