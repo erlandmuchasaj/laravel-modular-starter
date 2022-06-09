@@ -1,5 +1,5 @@
 {
-    "name": "modules/SnakeModuleName",
+    "name": "modules/user",
     "type": "library",
     "description": "A Generic module for the EMCMS application functionalities",
     "minimum-stability": "stable",
@@ -8,8 +8,7 @@
     "license": "proprietary",
     "keywords": [
         "emcms",
-        "module",
-        "SnakeModuleName"
+        "module"
     ],
     "authors": [
         {
@@ -23,14 +22,14 @@
         "email": "erland.muchasaj@gmail.com"
     },
     "require": {
-        "modules/core": "^1.0"
+        "modules/core": "~1.0"
     },
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "Modules\\ModuleName\\": "src",
-            "Modules\\ModuleName\\Database\\Factories\\": "database/factories",
-            "Modules\\ModuleName\\Database\\Seeders\\": "database/seeders"
+            "Modules\\User\\": "src",
+            "Modules\\User\\Database\\Factories\\": "database/factories",
+            "Modules\\User\\Database\\Seeders\\": "database/seeders"
         },
         "files": [
             "src/helpers.php"
@@ -38,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\ModuleName\\Tests\\": "tests"
+            "Modules\\User\\Tests\\": "tests"
         }
     },
     "config": {
@@ -47,7 +46,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\ModuleName\\Providers\\AppServiceProvider"
+                "Modules\\User\\Providers\\AppServiceProvider"
             ],
             "aliases": {
             }

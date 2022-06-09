@@ -37,6 +37,16 @@
     array (
     ),
   ),
+  'modules/user' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Modules\\User\\Providers\\AppServiceProvider',
+    ),
+    'aliases' => 
+    array (
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 

@@ -81,7 +81,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}");
         $this->makeDirectory("modules/{$moduleName}/bootstrap");
         $this->makeDirectory("modules/{$moduleName}/config");
-        // $this->makeDirectory("modules/{$moduleName}/database");
+        $this->makeDirectory("modules/{$moduleName}/database");
         $this->makeDirectory("modules/{$moduleName}/database/factories");
         $this->makeDirectory("modules/{$moduleName}/database/migrations");
         $this->makeDirectory("modules/{$moduleName}/database/seeders");
@@ -114,17 +114,19 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}/src/Console/Commands");
         $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers");
         $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware");
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Requests");
 
         if ($this->option('all')) {
             $this->makeDirectory("modules/{$moduleName}/src/Enums");
+            $this->makeDirectory("modules/{$moduleName}/src/Broadcasting");
             $this->makeDirectory("modules/{$moduleName}/src/Events");
             $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers/Api");
             $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware/Api");
-            $this->makeDirectory("modules/{$moduleName}/src/Http/Requests");
             $this->makeDirectory("modules/{$moduleName}/src/Http/Resources");
             $this->makeDirectory("modules/{$moduleName}/src/Http/ViewComposers");
             $this->makeDirectory("modules/{$moduleName}/src/Jobs");
             $this->makeDirectory("modules/{$moduleName}/src/Listeners");
+            $this->makeDirectory("modules/{$moduleName}/src/Mail");
             $this->makeDirectory("modules/{$moduleName}/src/Notifications");
             $this->makeDirectory("modules/{$moduleName}/src/Observers");
             $this->makeDirectory("modules/{$moduleName}/src/Policies");
@@ -294,7 +296,7 @@ class ModuleMakeCommand extends GeneratorCommand
         $snakeModuleName = Str::kebab($moduleName);
         $content = $this->files->get("composer.json");
         $phpArray = json_decode($content, true);
-        $phpArray['require']['modules/' . $snakeModuleName] = '~1.0';
+        $phpArray['require']['modules/' . $snakeModuleName] = '^1.0';
         $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

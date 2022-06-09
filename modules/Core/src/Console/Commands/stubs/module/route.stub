@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Route;
 | Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register DummySnakeModuleName module routes for your application. These
-| routes are loaded by the RouteServiceProvider.
+| Here is where you can register DummySnakeModuleName module routes for your application.
+| These routes are loaded by the RouteServiceProvider.
 | Now create something great!
 |
 */
