@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // schedule->command('activitylog:clean')->quarterly();
         // $schedule->command('telescope:prune --hours=48')->daily();
+        // $schedule->command('sanctum:prune-expired --hours=24')->daily();
         // $schedule->command('inspire')->hourly();
     }
 

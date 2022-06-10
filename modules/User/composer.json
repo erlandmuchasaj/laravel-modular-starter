@@ -22,7 +22,8 @@
         "email": "erland.muchasaj@gmail.com"
     },
     "require": {
-        "modules/core": "~1.0"
+        "modules/core": "^1.0",
+        "laravel/sanctum": "^2.14"
     },
     "require-dev": {},
     "autoload": {

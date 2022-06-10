@@ -2,12 +2,14 @@
 
 namespace Modules\Core\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -139,6 +141,14 @@ class AppServiceProvider extends ServiceProvider
     {
 
         logger('AppServiceProvider::boot => '. $this->module);
+
+        // Create custom rate limiters
+        // to use @example: Route::middleware(['throttle:uploads'])
+        RateLimiter::for('uploads', function (Request $request) {
+            return $request->user()
+                ? Limit::perMinute(100)->by($request->user()->id)
+                : Limit::perMinute(10)->by($request->ip());
+        });
 
         # view composers
         View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {

@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
         EventServiceProvider::class,
         SeedServiceProvider::class,
+        \Laravel\Sanctum\SanctumServiceProvider::class,
     ];
 
     /**
