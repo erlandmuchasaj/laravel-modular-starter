@@ -4,6 +4,7 @@ namespace Modules\Core\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Foundation\CachesRoutes;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -352,26 +353,28 @@ class AppServiceProvider extends ServiceProvider
      */
     private function bootRoutes(): static
     {
-        // api routes
-        $api = __DIR__ . '/../../routes/api.php';
-        if (file_exists($api)) {
-            Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.api", []))
-                ->as(config("{$this->base}.{$this->module(true)}.config.api_group"))
-                ->prefix(config("{$this->base}.{$this->module(true)}.config.api_prefix"))
-                ->namespace($this->namespace . '\\Api')
-                ->group($api);
-        }
+        if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
+            // api routes
+            $api = __DIR__ . '/../../routes/api.php';
+            if (file_exists($api)) {
+                Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.api", []))
+                    ->as(config("{$this->base}.{$this->module(true)}.config.api_group"))
+                    ->prefix(config("{$this->base}.{$this->module(true)}.config.api_prefix"))
+                    ->namespace($this->namespace . '\\Api')
+                    ->group($api);
+            }
 
-        // web routes
-        $web = __DIR__ . '/../../routes/web.php';
-        if (file_exists($web)) {
-            # $this->loadRoutesFrom($web);
-            # The versions below give you a little more control.
-            Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.web", []))
-                ->as(config("{$this->base}.{$this->module(true)}.config.web_group"))
-                ->prefix(config("{$this->base}.{$this->module(true)}.config.web_prefix"))
-                ->namespace($this->namespace)
-                ->group($web);
+            // web routes
+            $web = __DIR__ . '/../../routes/web.php';
+            if (file_exists($web)) {
+                # $this->loadRoutesFrom($web);
+                # The versions below give you a little more control.
+                Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.web", []))
+                    ->as(config("{$this->base}.{$this->module(true)}.config.web_group"))
+                    ->prefix(config("{$this->base}.{$this->module(true)}.config.web_prefix"))
+                    ->namespace($this->namespace)
+                    ->group($web);
+            }
         }
 
         return $this;
@@ -427,7 +430,7 @@ class AppServiceProvider extends ServiceProvider
     private function bootPolicies(): static
     {
         # Gate::policy(Announcement::class, AnnouncementPolicy::class);
-        foreach ($this->policies as $className => $policyName) {
+        foreach ((array) $this->policies as $className => $policyName) {
             Gate::policy($className, $policyName);
         }
 
@@ -441,7 +444,7 @@ class AppServiceProvider extends ServiceProvider
     private function bootObservers(): static
     {
         # Announcement::observe(AnnouncementObserver::class);
-        foreach ($this->observers as $className => $observerName) {
+        foreach ((array) $this->observers as $className => $observerName) {
             $classObj = app($className);
             if (!is_null($classObj)) {
                 $classObj::observe($observerName);
@@ -540,7 +543,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
 
             $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
-            # $this->loadFactoriesFrom($path);
+            // $this->loadFactoriesFrom($path);
             if ($this->app->runningInConsole()) {
                 $this->publishes([
                     __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),

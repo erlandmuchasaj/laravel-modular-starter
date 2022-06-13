@@ -25,6 +25,16 @@ class Announcement extends Model
 
     public const TYPE_BACKEND = 'backend';
 
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'announcements';
+
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -53,6 +63,14 @@ class Announcement extends Model
     protected $casts = [
         'enabled' => 'boolean',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['parsed_body'];
+
 
     protected static bool $logFillable = true;
 

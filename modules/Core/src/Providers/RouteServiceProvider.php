@@ -65,33 +65,40 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        # rest api
-        $router->group([
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
-            'middleware' => ['api'],
-        ], function (Router $router) {
-            $this->loadApiRoutes($router);
-        });
-
+        // # rest api
         // $router->group([
         //     'namespace' => $this->namespace,
-        //     'prefix' => config("{$this->base}.{$this->module}.config.api_prefix"),
-        //     'middleware' => config("{$this->base}.{$this->module}.config.middleware.api", []),
+        //     'prefix' => 'api',
+        //     'middleware' => ['api'],
         // ], function (Router $router) {
         //     $this->loadApiRoutes($router);
         // });
 
+        // If the routes have not been cached, we will include them in a route group
+        // so that all the routes will be conveniently registered to the given
+        // controller namespace. After that we will load the Spark routes file.
+        if (! $this->app->routesAreCached()) {
+            # API
+            $router->group([
+                'namespace' => $this->namespace,
+                'prefix' => config("{$this->base}.{$this->module}.config.api_prefix"),
+                'middleware' => config("{$this->base}.{$this->module}.config.middleware.api", []),
+            ], function (Router $router) {
+                $this->loadApiRoutes($router);
+            });
 
-        # Web
-        $router->group([
-            'namespace' => $this->namespace,
-            'middleware' => ['web'],
-        ], function (Router $router) {
-            $this->loadWebRoutes($router);
-        });
+            # Web
+            $router->group([
+                'namespace' => $this->namespace,
+                'middleware' => ['web'],
+            ], function (Router $router) {
+                $this->loadWebRoutes($router);
+            });
+        }
 
-        #Channels
+
+
+        # Channels
         $this->loadChannelsRoutes();
 
     }

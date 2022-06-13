@@ -47,6 +47,12 @@ class Install extends Command
      */
     public function handle(): int
     {
+
+        if ($this->emcmsAlreadyInstalled()) {
+            $this->line('EMCMS module is already installed for this project.');
+            return CommandAlias::FAILURE;
+        }
+
         $this->checkForEnvFile();
 
         // running `php artisan migrate`
@@ -75,7 +81,8 @@ class Install extends Command
         $this->info((string) $result);
 
         $this->info('-----------------------------');
-        $this->info('Now, run `php artisan serve` to start using StarterApp');
+        $this->info('Now, run `php artisan serve` to start using EMCMS system.');
+        $this->comment('Create something amazing!');
         $this->info('Cheers!');
 
         return CommandAlias::SUCCESS;
@@ -140,6 +147,19 @@ class Install extends Command
             $key . $value,
             (string) file_get_contents($path)
         ));
+    }
+
+
+    /**
+     * Determine if EMCMS module system is already installed.
+     *
+     * @return bool
+     */
+    protected function emcmsAlreadyInstalled(): bool
+    {
+        $composer = json_decode(file_get_contents(base_path('composer.json')), true);
+
+        return isset($composer['require']['modules/core']);
     }
 
     // /**
