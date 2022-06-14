@@ -156,11 +156,12 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", "");
         $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", "");
 
-        $stubRoute = $this->files->get($this->getStub() . "/route.stub");
-        $stubBroadcastChannel = $this->files->get($this->getStub() . "/channels.stub");
+        $stubWebRoute = $this->files->get($this->getStub() . "/routes/web.stub");
+        $stubApiRoute = $this->files->get($this->getStub() . "/routes/api.stub");
+        $stubBroadcastChannel = $this->files->get($this->getStub() . "/routes/channels.stub");
 
-        $this->files->put("modules/{$moduleName}/routes/api.php", $this->writeFile($stubRoute, $moduleName));
-        $this->files->put("modules/{$moduleName}/routes/web.php", $this->writeFile($stubRoute, $moduleName));
+        $this->files->put("modules/{$moduleName}/routes/web.php", $this->writeFile($stubWebRoute, $moduleName));
+        $this->files->put("modules/{$moduleName}/routes/api.php", $this->writeFile($stubApiRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/routes/channels.php", $this->writeFile($stubBroadcastChannel, $moduleName));
         $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");
 

@@ -65,38 +65,27 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        // # rest api
-        // $router->group([
-        //     'namespace' => $this->namespace,
-        //     'prefix' => 'api',
-        //     'middleware' => ['api'],
-        // ], function (Router $router) {
-        //     $this->loadApiRoutes($router);
-        // });
-
         // If the routes have not been cached, we will include them in a route group
         // so that all the routes will be conveniently registered to the given
-        // controller namespace. After that we will load the Spark routes file.
+        // controller namespace. After that we will load the EMCMS routes file.
         if (! $this->app->routesAreCached()) {
-            # API
+            # mapApiRoutes
             $router->group([
+                'prefix' => 'api',
+                'middleware' => ['api'],
                 'namespace' => $this->namespace,
-                'prefix' => config("{$this->base}.{$this->module}.config.api_prefix"),
-                'middleware' => config("{$this->base}.{$this->module}.config.middleware.api", []),
             ], function (Router $router) {
                 $this->loadApiRoutes($router);
             });
 
-            # Web
+            # mapWebRoutes
             $router->group([
-                'namespace' => $this->namespace,
                 'middleware' => ['web'],
+                'namespace' => $this->namespace,
             ], function (Router $router) {
                 $this->loadWebRoutes($router);
             });
         }
-
-
 
         # Channels
         $this->loadChannelsRoutes();
@@ -111,11 +100,7 @@ abstract class RouteServiceProvider extends ServiceProvider
     {
         $frontend = $this->getWebRoute();
         if ($frontend && file_exists($frontend)) {
-            $router->group([
-                'as' => config("{$this->base}.{$this->module}.config.web_group"),
-                'prefix' => config("{$this->base}.{$this->module}.config.web_prefix"),
-                'middleware' => config("{$this->base}.{$this->module}.config.middleware.web", []),
-            ], function (Router $router) use ($frontend) {
+            $router->group([], function (Router $router) use ($frontend) {
                 require $frontend;
             });
         }
@@ -131,7 +116,7 @@ abstract class RouteServiceProvider extends ServiceProvider
         if ($api && file_exists($api)) {
             $router->group([
                 'namespace' => 'Api',
-                'as' => config("{$this->base}.{$this->module}.config.api_group"),
+                'as' => 'api.',
             ], function (Router $router) use ($api) {
                 require $api;
             });

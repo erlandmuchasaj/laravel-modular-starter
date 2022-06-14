@@ -24,7 +24,6 @@ return [
     'CoreModules' => [
         'core',
         'media',
-        'setting',
         'user',
     ],
 
@@ -36,9 +35,6 @@ return [
     'web_prefix' => '',
     'web_group' => '',
 
-    'back_prefix' => 'admin',
-    'back_group' => 'admin.',
-
     'api_prefix' => 'api',
     'api_group' => 'api.', // we need the trailing . to form the route names like api.auth.login
 
@@ -49,7 +45,8 @@ return [
     | You can customise the Middleware that should be loaded.
     | The localizationRedirect middleware is automatically
     | loaded for both Backend and Frontend routes.
-    | Note that this middleware will be assigned on all routes.
+    | Note that this middleware will be
+    | assigned on all routes.
     */
     'middleware' => [
         'back' => [

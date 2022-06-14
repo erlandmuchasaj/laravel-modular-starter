@@ -6,6 +6,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\CachesRoutes;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
@@ -83,6 +84,10 @@ class AppServiceProvider extends ServiceProvider
      */
     protected array $observers = [
         Announcement::class => AnnouncementObserver::class,
+    ];
+
+    protected  array $aliases = [
+        'announcement' => Announcement::class,
     ];
 
     /**
@@ -230,10 +235,13 @@ class AppServiceProvider extends ServiceProvider
         $this->publishConfig($this->module(true), 'config');
 
         // Register Bindings
-        $this->registerBindings();
+        # $this->registerBindings();
 
         // Register Facades
-        $this->registerFacades();
+        # $this->registerFacades();
+
+        // Register Aliases
+        # $this->registerAliases();
 
         // Register Commands
         $this->registerCommands();
@@ -257,7 +265,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Aliases.
+     * Register Facades.
      *
      * @return void
      */
@@ -265,7 +273,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //        $loader = AliasLoader::getInstance();
         //        $loader->alias('core', CoreFacade::class);
-        //
+
         //        $this->app->singleton('core', function () {
         //            return app()->make(Core::class);
         //        });
@@ -273,6 +281,20 @@ class AppServiceProvider extends ServiceProvider
         //        $this->app->scoped('core', function () {
         //            return app()->make(Core::class);
         //        });
+    }
+
+
+    /**
+     * Register Aliases.
+     *
+     * @return void
+     */
+    public function registerAliases(): void
+    {
+        $loader = AliasLoader::getInstance();
+        foreach ( (array) $this->aliases as $aliasName => $aliasClass) {
+            $loader->alias($aliasName, $aliasClass);
+        }
     }
 
     /**
