@@ -124,7 +124,7 @@ class AppServiceProvider extends ServiceProvider
         $this->bootBladeDirective();
 
         // boot Validators
-        // $this->bootValidators();
+        $this->bootValidators();
 
         // boot middleware
         $this->bootMiddleware();
@@ -133,7 +133,7 @@ class AppServiceProvider extends ServiceProvider
         $this->bootObservers();
 
         // boot Services
-        // $this->bootServices();
+        $this->bootServices();
 
         // boot Factories
         $this->bootFactories();
@@ -255,11 +255,12 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * bootValidators
-     * @return static
+     *
+     * @return void
      */
-    private function bootValidators(): static
+    private function bootValidators(): void
     {
-        return $this;
+        // Add validators connected to this
     }
 
 
@@ -311,12 +312,11 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * bootServices
-     * @return static
+     * @return void
      */
-    private function bootServices(): static
+    private function bootServices(): void
     {
-        //
-        return $this;
+        // Boot your services here
     }
 
     /**
@@ -376,7 +376,8 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/lang';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'.
+            DIRECTORY_SEPARATOR . 'lang');
 
         $this->loadTranslationsFrom($path, $this->module(true));
 
@@ -398,8 +399,10 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
 
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
+            # $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' .
+            # DIRECTORY_SEPARATOR . 'factories');
             # $this->loadFactoriesFrom($path);
+
             if ($this->app->runningInConsole()) {
                 $this->publishes([
                     __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),

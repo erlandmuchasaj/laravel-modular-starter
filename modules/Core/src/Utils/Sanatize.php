@@ -186,7 +186,7 @@ class Sanatize {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'AE', 'CH', 'KH', 'OE', 'SH', 'SHH', 'YA', 'YE', 'YI', 'YO', 'YU', 'ZH'
         );
 
-        return strval(preg_replace($patterns, $replacements, $str));
+        return (string) preg_replace($patterns, $replacements, $str);
     }
 
     /**
@@ -226,7 +226,7 @@ class Sanatize {
             $string = (string) preg_replace('/^('.$blacklist.')$/Su', '', $string);
         }
 
-        $string = strval(preg_replace('/\s+/', ' ', $string));
+        $string = (string) preg_replace('/\s+/', ' ', $string);
 
         return self::replaceAccentedChars(trim($string));
     }

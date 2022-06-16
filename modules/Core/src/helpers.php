@@ -326,7 +326,7 @@ if (!function_exists('roman_year')) {
 
         foreach ($romanNumerals as $roman => $yearNumber) {
             // Divide to get  matches
-            $matches = intval($year / $yearNumber);
+            $matches = (int) ($year / $yearNumber);
 
             // Assign the roman char * $matches
             $result .= str_repeat($roman, $matches);
@@ -384,7 +384,7 @@ if (!function_exists('str_tease')) {
         $string = strip_tags($string);
 
         //replace multiple spaces
-        $string = strval(preg_replace("/\s+/", ' ', $string));
+        $string = (string) preg_replace("/\s+/", ' ', $string);
 
         if (strlen($string) == 0) {
             return '';

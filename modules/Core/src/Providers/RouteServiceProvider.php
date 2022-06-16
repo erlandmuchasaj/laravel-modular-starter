@@ -15,14 +15,14 @@ abstract class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    private string $base = EmCms::NAME;
+    private string $base = EmCms::NAME; /** @phpstan-ignore-line */
 
     /**
      * The module defining the routes
      *
      * @var string
      */
-    private string $module = 'core';
+    private string $module = 'core'; /** @phpstan-ignore-line */
 
     /**
      * The root namespace to assume when generating URLs to actions.

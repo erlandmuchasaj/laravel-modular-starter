@@ -22,18 +22,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="{{ config('app.theme_color', '#ffffff') }}">
 
-    <title>@yield('title_prefix') @yield('title', config('app.name', 'EM Starter')) @yield('title_postfix')</title>
+    <title>@yield('title_prefix') @yield('title', config('app.name', 'EMCMS Starter')) @yield('title_postfix')</title>
 
     <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
     <meta name="language" content="{{ str_replace('_', '-', app()->getLocale()) }}"/>
     <meta name="base_url" content="{{ url('/') }}">
-    <meta name="generator" content="{{ config('app.name', 'EM Starter') }} {{ App::VERSION() }}">
+    <meta name="generator" content="{{ config('app.name', 'EMCMS Starter') }} {{ App::VERSION() }}">
     <link rel="canonical" href="@yield('canonical', request()->url())" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     {{-- if we want to add any other content on head --}}
     @yield('head')
@@ -41,7 +41,8 @@
     <!-- Styles -->
     @yield('css')
 
-    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+    {{-- Global css --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <!--AfterStyles -->
     @stack('afterCss')
@@ -53,38 +54,17 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    {{-- Here we have global JS configurations --}}
-    @include('common.globals')
 </head>
 <body class="@langrtl rtl @endlangrtl @yield('body_class', str_replace('.', '-', optional(Route::current())->getName()))">
-@include('common.demo')
-@include('common.impersonate')
-
-@if (config('app.announcements'))
-    @include('common.announcements')
-@endif
-
-<main id="app">
-    @include('frontend.layouts.includes.nav')
-    @include('common.notifications')
+    !-- Page Heading -->
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
+    <!-- Page Content -->
     <main>
-        @yield('content')
+        {{ $slot }}
     </main>
-</main>
-
-@yield('scriptBottomStart')
-<script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('/plugins/toastr/build/toastr.min.js') }}"></script>
-@yield('scriptBottomEnd')
-
-<!-- Custom Scripts -->
-<script src="{{ asset('/js/custom.js') }}"></script>
-
-{{-- Global toastr --}}
-@include('common.toastr')
-
-<!-- After Scripts - mainly used to stack js comming from partials-->
-@stack('afterJsScripts')
 </body>
 </html>
