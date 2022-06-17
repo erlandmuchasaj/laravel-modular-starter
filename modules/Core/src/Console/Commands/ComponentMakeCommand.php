@@ -33,7 +33,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      *
      * @var string
      */
-    protected $description = 'Create a new view component class';
+    protected $description = 'Create a new component-class for the specified module.';
 
     /**
      * The type of class being generated.
@@ -57,7 +57,6 @@ class ComponentMakeCommand extends BaseGeneratorCommand
             return null;
         }
 
-
         if (parent::handle() === false && !$this->option('force')) {
             return false;
         }
@@ -66,15 +65,17 @@ class ComponentMakeCommand extends BaseGeneratorCommand
             $this->writeView();
         }
 
-        return CommandAlias::SUCCESS;
+        return true;
     }
 
     /**
      * Write the view for the component.
      *
+     * @param  callable|null  $onSuccess
+     *
      * @return void
      */
-    protected function writeView()
+    protected function writeView(callable $onSuccess = null)
     {
         $path = $this->viewPath(
             str_replace('.', '/', 'components.' . $this->getView()) . '.blade.php'
@@ -96,6 +97,10 @@ class ComponentMakeCommand extends BaseGeneratorCommand
     <!-- ' . Inspiring::quote() . ' -->
 </div>'
         );
+
+        if ($onSuccess) {
+            $onSuccess();
+        }
     }
 
     /**

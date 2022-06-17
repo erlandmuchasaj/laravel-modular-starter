@@ -17,7 +17,7 @@ class CurrentLocale
         }
 
         try {
-            $cookieLocale = app(Encrypter::class)->decrypt(strval(request()->cookie('locale')));
+            $cookieLocale = app(Encrypter::class)->decrypt((string)request()->cookie('locale'));
 
             if (self::isValidLocale($cookieLocale)) {
                 return $cookieLocale;

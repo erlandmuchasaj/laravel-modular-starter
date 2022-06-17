@@ -199,7 +199,7 @@ $this->app->scoped(Transistor::class, function ($app) {
 ```
 
 ```php
-// null coalesce
+// null coalesce if you need a default value.
 return $user->profile->twitter_id ?? null;
 
 // optional

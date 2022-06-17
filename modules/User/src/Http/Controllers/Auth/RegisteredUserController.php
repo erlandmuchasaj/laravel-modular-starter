@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -20,7 +21,7 @@ class RegisteredUserController extends Controller
      *
      * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.register');
     }
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
      * @param Request $request
      * @return RedirectResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request)
     {

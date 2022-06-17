@@ -86,6 +86,11 @@ class AppServiceProvider extends ServiceProvider
         Announcement::class => AnnouncementObserver::class,
     ];
 
+    /**
+     * register module aliases.
+     *
+     * @return array
+     */
     protected  array $aliases = [
         'announcement' => Announcement::class,
     ];

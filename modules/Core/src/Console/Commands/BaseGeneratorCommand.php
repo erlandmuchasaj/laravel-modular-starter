@@ -64,7 +64,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
      */
     protected function getModuleInput(): string
     {
-        return Str::of(strval($this->argument('module')))->trim()->studly();
+        return Str::of((string) $this->argument('module'))->trim()->studly();
     }
 
     /**
