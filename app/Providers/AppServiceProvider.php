@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         # when we go live we might want to force SSL
         # on the requests and responses
@@ -46,7 +46,10 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Handle SQL Error schema migrate
-        Schema::defaultStringLength(191);
+        if (PHP_OS === 'WINNT' && !app()->isProduction()) {
+            Schema::defaultStringLength(191);
+        }
+//        Schema::defaultStringLength(191);
 
         # Remove 'data' from json api responses
         JsonResource::withoutWrapping();
