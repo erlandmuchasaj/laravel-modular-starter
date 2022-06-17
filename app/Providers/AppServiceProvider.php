@@ -36,17 +36,19 @@ class AppServiceProvider extends ServiceProvider
     {
         # when we go live we might want to force SSL
         # on the requests and responses
-        if (app()->environment('production') && config('app.ssl')) {
+        if ($this->app->isProduction() && config('app.ssl')) {
             URL::forceScheme('https');
         }
 
         // prevent user to send accidental arrays
-        if (!app()->environment('production')) {
+        if (!$this->app->isProduction()) {
             Mail::alwaysTo('foo@example.org');
         }
 
         // Handle SQL Error schema migrate
-        Schema::defaultStringLength(191);
+        if (PHP_OS === 'WINNT' && !$this->app->isProduction()) {
+            Schema::defaultStringLength(191);
+        }
 
         # Remove 'data' from json api responses
         JsonResource::withoutWrapping();
