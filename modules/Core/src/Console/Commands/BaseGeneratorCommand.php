@@ -3,6 +3,7 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -13,6 +14,27 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
      * app()->basePath()
      * base_path()
      */
+
+
+    /**
+     * Execute the console command.
+     *
+     * @return bool|null
+     *
+     * @throws FileNotFoundException
+     */
+    public function handle(): ?bool
+    {
+        // check if module is already created and file exists
+        if (!$this->moduleAlreadyExists()) {
+            $this->error('Module ' . $this->getModuleInput() . ' does not exists, Please create a module first.');
+            return false;
+        }
+
+        return  parent::handle();
+    }
+
+
 
     /**
      * Get the destination class path.
@@ -77,6 +99,25 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         $moduleName = $this->getModuleInput();
         return "Modules\\{$moduleName}\\";
     }
+
+
+    /**
+     * Check if module folder exists.
+     *
+     * @return boolean
+     */
+    private function moduleAlreadyExists(): bool
+    {
+        $moduleName = $this->getModuleInput();
+
+        // Next, We will check to see if the Module folder already exists.
+        // If it doesn't, we don't want to create other related data.
+        // So, we will bail out and  the code is untouched.
+
+        return $this->files->exists("modules/{$moduleName}");
+        // return file_exists(base_path() . "/modules/{$moduleName}");
+    }
+
 
     /**
      * Get the console command arguments.

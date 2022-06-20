@@ -20,15 +20,14 @@ class IsHttps
     {
         # when we go live we might want to force SSL
         # on the requests and responses
-        if (
-            (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
-            (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443) ||
-            (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] === 'https') ||
-            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
-            (app()->environment('production') && config('app.ssl'))
-        ) {
+        if (isSSL() && app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // if (app()->environment('production') && $request->isSecure()) {
+        //     URL::forceScheme('https');
+        // }
+
 
         return $response = $next($request);
     }

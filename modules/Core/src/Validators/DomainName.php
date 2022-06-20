@@ -17,14 +17,12 @@ class DomainName
      */
     public function validate(string $attribute, mixed $value, array $parameters, Validator $validator): bool
     {
-        $isSSL = false;
 
         if (stripos($value, 'http://') === 0) {
             $value = substr($value, 7);
         }
 
         if (stripos($value, 'https://') === 0) {
-            $isSSL = true;
             $value = substr($value, 8);
         }
 

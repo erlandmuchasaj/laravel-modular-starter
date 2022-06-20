@@ -41,7 +41,7 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
-        "sentry/sentry-laravel": "^2.11",
+        "sentry/sentry-laravel": "^2.12",
         "modules/core": "^1.0",
         "modules/user": "^1.0"
     },

@@ -469,3 +469,28 @@ if (!function_exists('validate')) {
         return Validator::make($fields, $rules)->passes();
     }
 }
+
+if (!function_exists('isSSL')) {
+    /**
+     * Check if the site is using SSL
+     *
+     * @return bool
+     */
+    function isSSL(): bool
+    {
+        if (
+            (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+            (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on') ||
+            (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) ||
+            (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] === 443) ||
+            (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] === 'https')
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+

@@ -1,7 +1,7 @@
 **CORE module**
 
-## SETUP:
-- Add ``Modules\Core\Exceptions\GeneralException::class`` on ``app/Exception/Handler.php``
+## SETUP
+  - Add ``Modules\Core\Exceptions\GeneralException::class`` on ``app/Exception/Handler.php``
 ```php
     /**
      * A list of the exception types that are not reported.
@@ -13,7 +13,7 @@
     ];
 ```
 
-- Uncomment `BroadcastServiceProvider` in the array of providers in config/app.php,
+  - Uncomment `BroadcastServiceProvider` in the array of providers in config/app.php,
 we use it for Real time event notification
 
 ```php
@@ -26,7 +26,7 @@ we use it for Real time event notification
         //
 ```
 
-- Uncomment `AuthenticateSession` in the array of $middlewareGroups in app/Http/Kernel.php,
+  - Uncomment `AuthenticateSession` in the array of $middlewareGroups in app/Http/Kernel.php,
 we use it for Session management
 
 ```php
@@ -58,12 +58,12 @@ You will fill right at home.
 
 `php artisan module:make <module-name>`
 
-- First Duplicate the Example folder from  ``` /modules/Example ``` and rename it to the */modules/CustomModule* you are building.
-  The name should follow PSR4 naming conventions (CamelCase).
-- Then Go inside the newly created module and rename *Example* to *CustomModule* accordingly.
-- Update module *composer.json* file to correspond to the newly created module.
-- *NOTE* Make sure to also update the *Namespaces* accordingly.
-- Update the main composer.json of the application with the newly created module.
+  - First Duplicate the Example folder from  ``` /modules/Example ``` and rename it to the ```/modules/CustomModule``` you are building.
+  - The name should follow PSR4 naming conventions (CamelCase).
+  - Then Go inside the newly created module and rename *Example* to *CustomModule* accordingly.
+  - Update module *composer.json* file to correspond to the newly created module.
+  - *NOTE* Make sure to also update the *Namespaces* accordingly.
+  - Update the main composer.json of the application with the newly created module.
 
 @TODO: I am working to create some commands to avoid any Typos and for easy access on all module functionalities.
 
@@ -86,8 +86,8 @@ You will fill right at home.
 }
 ```
 
-
 @TODO: I am working on providing an autoconfiguration for all modules,
+
 ```json
 {
   "repositories": [
@@ -99,16 +99,13 @@ You will fill right at home.
 }
  ```
 
-- The package is *auto-discovered* so there is no need to add it to *app/config.php* providers list.
-- Then run ```` composer update ```` and you are good to go!
-
+  - The package is *auto-discovered* so there is no need to add it to *app/config.php* providers list.
+  - Then run ````  composer update  ```` and you are good to go!
 
 To add a table to specific module use command:
 ``php artisan make:migration create_modules_table --path=modules/CustomModule/database/migrations``
 
-
 - Good Luck
-
 
 ## Code of Conduct
 
@@ -121,13 +118,14 @@ If you discover a security vulnerability within The Starter project, please send
 All security vulnerabilities will be promptly addressed.
 
 ## Packages we might use
-- https://github.com/cviebrock/eloquent-sluggable
-- https://github.com/antonioribeiro/countries-laravel
-- https://github.com/jpmurray/awesome-spark#code-snippets
-- https://gist.github.com/dillinghamio/7f3b776e0ff1007cc877d63d6aaee10d
 
+  - https://github.com/cviebrock/eloquent-sluggable
+  - https://github.com/antonioribeiro/countries-laravel
+  - https://github.com/jpmurray/awesome-spark#code-snippets
+  - https://gist.github.com/dillinghamio/7f3b776e0ff1007cc877d63d6aaee10d
 
 ## Performance TIPS
+
 - Cursor, Chunks, LazyCollections, sole(), $route->missing()
 ```php
     # NO
@@ -144,11 +142,12 @@ All security vulnerabilities will be promptly addressed.
 ```
 
 ## 5 Tips for the Laravel Service Container
- - Avoid executing DB queries in service providers
- - Avoid reading session data in service providers
- - Avoid resolving bindings in the register method
- - Avoid reading sessions on Repositories or Services.
- - Scoped instances vs. Singletons
+
+  - Avoid executing DB queries in service providers
+  - Avoid reading session data in service providers
+  - Avoid resolving bindings in the register method
+  - Avoid reading sessions on Repositories or Services.
+  - Scoped instances vs. Singletons
 
 ```php
 # Instead of this
@@ -177,7 +176,7 @@ $this->app->scoped(Transistor::class, function ($app) {
 ```
 
 
-## NOTES:
+## NOTES
 1. Always use named routes
 2. Try to avoid closure
 3. All API endpoint are prefixed with api.
@@ -212,5 +211,5 @@ If you want a default value, null coalesce is a better choice:
     return $user->profile->nickname ?? randomNickname();
 ```
 
-#@TODO:
+## @TODO
 - Add a Cache Layer when reading data.

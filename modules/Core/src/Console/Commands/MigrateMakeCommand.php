@@ -77,6 +77,13 @@ class MigrateMakeCommand extends BaseCommand
 
         $create = $this->input->getOption('create') ?: false;
 
+        $moduleName =  $this->getModuleInput();
+
+        if (!file_exists(base_path() . "/modules/{$moduleName}")) {
+            $this->error("Module {$moduleName} does not exists, You need to create a module first.");
+            return;
+        }
+
         // If no table was given as an option but a create option is given then we
         // will use the "create" option as the table name. This allows the devs
         // to pass a table name into this option as a short-cut for creating.
@@ -156,6 +163,6 @@ class MigrateMakeCommand extends BaseCommand
      */
     protected function getModuleInput(): string
     {
-        return Str::of(strval($this->input->getArgument('module')))->trim()->studly();
+        return Str::of((string) $this->input->getArgument('module'))->trim()->studly();
     }
 }
