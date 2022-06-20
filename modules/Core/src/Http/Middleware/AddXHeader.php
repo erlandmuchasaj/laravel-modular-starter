@@ -153,8 +153,11 @@ class AddXHeader
              * Clear-Site-Data
              *
              * Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data
+             * This works only o SSL connections.
              */
-            # $response->headers->set('Clear-Site-Data', 'cache, cookies, storage, executionContexts', true);
+            if (config('app.ssl')) {
+                $response->headers->set('Clear-Site-Data', 'cache, cookies, storage, executionContexts', true);
+            }
 
             /*
              * Content Security Policy
