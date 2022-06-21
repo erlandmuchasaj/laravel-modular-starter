@@ -164,7 +164,7 @@ class AddXHeader
              *
              * Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
              */
-            $response->headers->set('Content-Security-Policy', "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * 'self' data:; font-src * 'self' data: https://fonts.gstatic.com; media-src *; object-src *; prefetch-src *", true);
+            // $response->headers->set('Content-Security-Policy', "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * 'self' data:; font-src * 'self' data: https://fonts.gstatic.com; media-src *; object-src *; prefetch-src *", true);
 
             /*
              * Permissions Policy

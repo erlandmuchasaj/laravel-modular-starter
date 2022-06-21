@@ -37,16 +37,6 @@
     array (
     ),
   ),
-  'modules/test' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Modules\\Test\\Providers\\AppServiceProvider',
-    ),
-    'aliases' => 
-    array (
-    ),
-  ),
   'modules/user' => 
   array (
     'providers' => 

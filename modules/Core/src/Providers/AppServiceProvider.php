@@ -31,6 +31,7 @@ use Modules\Core\Models\Announcement\Announcement;
 use Modules\Core\Observers\AnnouncementObserver;
 use Modules\Core\Policies\AnnouncementPolicy;
 use Modules\Core\Repositories\AnnouncementRepository;
+use Modules\Core\View\Components\AppLayout;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -161,14 +162,14 @@ class AppServiceProvider extends ServiceProvider
                 : Limit::perMinute(10)->by($request->ip());
         });
 
-        # view composers
-        View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {
-            $view->with('announcements', $announcementRepository->getForFrontend());
-        });
-
-        View::composer(['backend.layouts.app'], function ($view) use ($announcementRepository) {
-            $view->with('announcements', $announcementRepository->getForBackend());
-        });
+        // # view composers
+        // View::composer(['frontend.layouts.app'], function ($view) use ($announcementRepository) {
+        //     $view->with('announcements', $announcementRepository->getForFrontend());
+        // });
+        //
+        // View::composer(['backend.layouts.app'], function ($view) use ($announcementRepository) {
+        //     $view->with('announcements', $announcementRepository->getForBackend());
+        // });
 
         // Load core route channels.
         $channels = base_path("modules" . DIRECTORY_SEPARATOR . $this->module . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "channels.php");
@@ -176,9 +177,10 @@ class AppServiceProvider extends ServiceProvider
             require $channels;
         }
 
-        # This will allow the usage of package components by their vendor namespace using the package-name:: syntax:
+        # This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
         # ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
         Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));
+        // Blade::componentNamespace('Modules\\Core\\Views\\Components', 'core');
 
         // publish migrations
         $this->bootMigrations();
@@ -525,6 +527,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom($path, $this->module(true));
 
+        // $this->loadViewComponentsAs($this->module(true), [
+        //     AppLayout::class,
+        // ]);
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 $path => resource_path("views/vendor/{$this->base}/{$this->module(true)}"),
@@ -569,7 +575,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
 
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
+            // $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
             // $this->loadFactoriesFrom($path);
             if ($this->app->runningInConsole()) {
                 $this->publishes([

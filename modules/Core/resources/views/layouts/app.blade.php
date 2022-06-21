@@ -7,13 +7,13 @@
  * civil and criminal law.
  *
  * @copyright (C) Erland Muchasaj
- * @author Erland Muchasaj <erland.muchasaj@rgmail.com>
+ * @author Erland Muchasaj <erland.muchasaj@gmail.com>
  * @link https://erlandmuchasaj.tech/
  */
 ?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @langrtl dir="rtl" @endlangrtl>
-@include('common.hiddenCredits')
+{{--@include('common.hiddenCredits')--}}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -27,7 +27,7 @@
     <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
     <meta name="language" content="{{ str_replace('_', '-', app()->getLocale()) }}"/>
     <meta name="base_url" content="{{ url('/') }}">
-    <meta name="generator" content="{{ config('app.name', 'EMCMS Starter') }} {{ App::VERSION() }}">
+    <meta name="generator" content="{{ config('app.name', 'EMCMS Starter') }} {{ app()->version() }}">
     <link rel="canonical" href="@yield('canonical', request()->url())" />
 
     <!-- Fonts -->
@@ -47,24 +47,22 @@
     <!--AfterStyles -->
     @stack('afterCss')
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body class="@langrtl rtl @endlangrtl @yield('body_class', str_replace('.', '-', optional(Route::current())->getName()))">
-    !-- Page Heading -->
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {{ $header }}
+{{--            {{ $header }}--}}
         </div>
     </header>
     <!-- Page Content -->
     <main>
-        {{ $slot }}
+{{--        {{ $slot }}--}}
     </main>
 </body>
 </html>

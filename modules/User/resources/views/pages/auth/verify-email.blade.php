@@ -1,8 +1,8 @@
-<x-guest-layout>
-    <x-auth-card>
+<x-core::guest-layout>
+    <x-user::auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-core::application-logo class="w-20 h-20 fill-current text-gray-500" />
             </a>
         </x-slot>
 
@@ -21,9 +21,9 @@
                 @csrf
 
                 <div>
-                    <x-button>
+                    <x-core::button>
                         {{ __('Resend Verification Email') }}
-                    </x-button>
+                    </x-core::button>
                 </div>
             </form>
 
@@ -35,5 +35,5 @@
                 </button>
             </form>
         </div>
-    </x-auth-card>
-</x-guest-layout>
+    </x-user::auth-card>
+</x-core::guest-layout>

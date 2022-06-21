@@ -2,6 +2,7 @@
 
 namespace Modules\Core\View\Components;
 
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -20,10 +21,10 @@ class AppLayout extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return View|string
+     * @return View|Closure|string
      */
-    public function render(): View|string
+    public function render(): View|string|Closure
     {
-        return view('components.app-layout');
+        return view('core::components.app-layout');
     }
 }
