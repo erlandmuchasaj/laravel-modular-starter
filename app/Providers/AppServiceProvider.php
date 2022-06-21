@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         # when we go live we might want to force SSL
         # on the requests and responses
