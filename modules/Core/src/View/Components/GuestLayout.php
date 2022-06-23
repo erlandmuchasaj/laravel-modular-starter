@@ -2,18 +2,20 @@
 
 namespace Modules\Core\View\Components;
 
+use Closure;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
 class GuestLayout extends Component
 {
     /**
-     * Get the view / contents that represents the component.
+     * Get the view / contents that represent the component.
      *
-     * @return View|string
+     * @return View|Closure|string
      */
-    public function render(): View|string
+    public function render(): View|string|Closure
     {
+        // dd('HERE');
         return view('core::layouts.guest');
     }
 }

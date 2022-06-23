@@ -32,6 +32,7 @@ use Modules\Core\Observers\AnnouncementObserver;
 use Modules\Core\Policies\AnnouncementPolicy;
 use Modules\Core\Repositories\AnnouncementRepository;
 use Modules\Core\View\Components\AppLayout;
+use Modules\Core\View\Components\GuestLayout;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -152,6 +153,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(AnnouncementRepository $announcementRepository): void
     {
 
+        // dd($this->module(), $this->module(true), GuestLayout::class);
+
         logger('AppServiceProvider::boot => '. $this->module);
 
         // Create custom rate limiters
@@ -179,8 +182,10 @@ class AppServiceProvider extends ServiceProvider
 
         # This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
         # ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
-        Blade::componentNamespace('Modules\\'.$this->module().'\\Views\\Components', $this->module(true));
-        // Blade::componentNamespace('Modules\\Core\\Views\\Components', 'core');
+        Blade::componentNamespace('\\Modules\\Core\\Views\\Components', 'core'); # does not work
+        // Blade::component('app-layout', AppLayout::class); // Works
+        // Blade::component('guest-layout', GuestLayout::class); // Works
+
 
         // publish migrations
         $this->bootMigrations();
@@ -225,6 +230,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         logger('AppServiceProvider::register => '. $this->module);
+
 
         $this->app->scoped("{$this->base}.isInstalled", function ($app) {
             return true === config("{$this->base}.{$this->module(true)}.config.is_installed");
@@ -289,7 +295,6 @@ class AppServiceProvider extends ServiceProvider
         //            return app()->make(Core::class);
         //        });
     }
-
 
     /**
      * Register Aliases.
@@ -364,8 +369,8 @@ class AppServiceProvider extends ServiceProvider
      */
     private function bootValidators(): static
     {
-        Validator::extend('indisposable', 'Modules\\'.$this->module().'\\Validators\\Indisposable@validate');
-        Validator::extend('check_domain', 'Modules\\'.$this->module().'\\Validators\\DomainName@validate');
+        Validator::extend('indisposable', 'Modules\\Core\\Validators\\Indisposable@validate');
+        Validator::extend('check_domain', 'Modules\\Core\\Validators\\DomainName@validate');
         Validator::extend('extensions', function ($attribute, $value, $parameters) {
             return in_array($value->getClientOriginalExtension(), $parameters);
         });
@@ -523,13 +528,9 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/views';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module(true) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
 
         $this->loadViewsFrom($path, $this->module(true));
-
-        // $this->loadViewComponentsAs($this->module(true), [
-        //     AppLayout::class,
-        // ]);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
