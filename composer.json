@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "laravel/emcms",
     "type": "project",
     "description": "Laravel Modular starter",
     "keywords": [
@@ -124,7 +124,10 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./modules/*"
+            "url": "./modules/*",
+            "options": {
+                "symlink": false
+            }
         }
     ]
 }

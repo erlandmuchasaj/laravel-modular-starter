@@ -426,8 +426,6 @@ class AppServiceProvider extends ServiceProvider
             return $this;
         }
 
-        # Blade::component('package-alert', AComponent::class);
-
         /**
          * Set variable.
          * Usage: @set($variable, value)

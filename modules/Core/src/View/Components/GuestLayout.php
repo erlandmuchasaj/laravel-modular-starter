@@ -15,7 +15,7 @@ class GuestLayout extends Component
      */
     public function render(): View|string|Closure
     {
-        // dd('HERE');
-        return view('core::layouts.guest');
+        // return view('core::layouts.guest');
+        return view('core::components.guest-layout');
     }
 }
