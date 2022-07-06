@@ -16,6 +16,17 @@ class FactoryMakeCommand extends BaseGeneratorCommand
     protected $name = 'module:make-factory';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-factory';
+
+    /**
      * The console command description.
      *
      * @var string
@@ -50,11 +61,9 @@ class FactoryMakeCommand extends BaseGeneratorCommand
     {
         $factory = class_basename(Str::ucfirst(str_replace('Factory', '', $name)));
 
-        $moduleName = $this->getModuleInput();
-
         $namespaceModel = $this->option('model')
-            ? $this->qualifyModel($this->option('model'))
-            : $this->qualifyModel($this->guessModelName($name));
+                        ? $this->qualifyModel($this->option('model'))
+                        : $this->qualifyModel($this->guessModelName($name));
 
         $model = class_basename($namespaceModel);
 
@@ -70,6 +79,8 @@ class FactoryMakeCommand extends BaseGeneratorCommand
             '{{ namespacedModel }}' => $namespaceModel,
             '{{namespacedModel}}' => $namespaceModel,
             'DummyModel' => $model,
+            '{{DummyModel}}' => $model,
+            '{{ DummyModel }}' => $model,
             '{{ model }}' => $model,
             '{{model}}' => $model,
             '{{ factory }}' => $factory,
@@ -91,7 +102,7 @@ class FactoryMakeCommand extends BaseGeneratorCommand
     {
         $name = (string) Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
 
-        $moduleName = $this->getModuleInput();;
+        $moduleName = $this->getModuleInput();
 
         return base_path() . "/modules/{$moduleName}/database/factories/" . str_replace('\\', '/', $name).'.php';
 
@@ -100,7 +111,8 @@ class FactoryMakeCommand extends BaseGeneratorCommand
     /**
      * Guess the model name from the Factory name or return a default model name.
      *
-     * @param string $name
+     * @param  string  $name
+     *
      * @return string
      */
     protected function guessModelName(string $name): string
@@ -111,14 +123,15 @@ class FactoryMakeCommand extends BaseGeneratorCommand
 
         $modelName = $this->qualifyModel(Str::after($name, $this->rootNamespace()));
 
+
         if (class_exists($modelName)) {
             return $modelName;
         }
 
-        if (is_dir(app_path('Models/'))) {
+        $modelPath = base_path() . "/modules/{$this->getModuleInput()}/src/Models/";
+        if (is_dir($modelPath)) {
             return $this->rootNamespace().'Models\Model';
         }
-
         return $this->rootNamespace().'Model';
     }
 

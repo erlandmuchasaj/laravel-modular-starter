@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ControllerMakeCommand extends BaseGeneratorCommand
 {
-
     use CreatesMatchingTest;
 
     /**
@@ -17,6 +16,17 @@ class ControllerMakeCommand extends BaseGeneratorCommand
      * @var string
      */
     protected $name = 'module:make-controller';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-controller';
 
     /**
      * The console command description.
@@ -59,7 +69,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
             $stub = str_replace('.stub', '.api.stub', $stub);
         }
 
-        $stub = $stub ?? '/stubs/controller.plain.stub';
+        $stub ??='/stubs/controller.plain.stub';
 
         return $this->resolveStubPath($stub);
     }
@@ -116,7 +126,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         if (! class_exists($parentModelClass)) {
             if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('module:make-model', ['name' => $parentModelClass]);
+                $this->call('module:make-model', ['module'=>  $this->getModuleInput(), 'name' => $parentModelClass]);
             }
         }
 
@@ -145,9 +155,11 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         if (! class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('module:make-model', ['name' => $modelClass]);
+                $this->call('module:make-model', ['module'=>  $this->getModuleInput(), 'name' => $modelClass]);
             }
         }
+
+        $replace = $this->buildFormRequestReplacements($replace, $modelClass);
 
         return array_merge($replace, [
             'DummyFullModelClass' => $modelClass,
@@ -179,6 +191,78 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         return $this->qualifyModel($model);
     }
 
+
+    /**
+     * Build the model replacement values.
+     *
+     * @param  array  $replace
+     * @param  string  $modelClass
+     *
+     * @return array
+     */
+    protected function buildFormRequestReplacements(array $replace, string $modelClass): array
+    {
+        [$namespace, $storeRequestClass, $updateRequestClass] = [
+            'Illuminate\\Http', 'Request', 'Request',
+        ];
+
+        if ($this->option('requests')) {
+
+            $namespace = 'Modules\\'.$this->getModuleInput().'\\Http\\Requests';
+
+            [$storeRequestClass, $updateRequestClass] = $this->generateFormRequests(
+                $modelClass, $storeRequestClass, $updateRequestClass
+            );
+        }
+
+        $namespacedRequests = $namespace.'\\'.$storeRequestClass.';';
+
+        if ($storeRequestClass !== $updateRequestClass) {
+            $namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
+        }
+
+        return array_merge($replace, [
+            '{{ storeRequest }}' => $storeRequestClass,
+            '{{storeRequest}}' => $storeRequestClass,
+            '{{ updateRequest }}' => $updateRequestClass,
+            '{{updateRequest}}' => $updateRequestClass,
+            '{{ namespacedStoreRequest }}' => $namespace.'\\'.$storeRequestClass,
+            '{{namespacedStoreRequest}}' => $namespace.'\\'.$storeRequestClass,
+            '{{ namespacedUpdateRequest }}' => $namespace.'\\'.$updateRequestClass,
+            '{{namespacedUpdateRequest}}' => $namespace.'\\'.$updateRequestClass,
+            '{{ namespacedRequests }}' => $namespacedRequests,
+            '{{namespacedRequests}}' => $namespacedRequests,
+        ]);
+    }
+
+    /**
+     * Generate the form requests for the given model and classes.
+     *
+     * @param  string  $modelClass
+     * @param  string  $storeRequestClass
+     * @param  string  $updateRequestClass
+     *
+     * @return array
+     */
+    protected function generateFormRequests(string $modelClass, string $storeRequestClass, string $updateRequestClass): array
+    {
+        $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
+
+        $this->call('module:make-request', [
+            'module'=>  $this->getModuleInput(),
+            'name' => $storeRequestClass,
+        ]);
+
+        $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
+
+        $this->call('module:make-request', [
+            'module' => $this->getModuleInput(),
+            'name' => $updateRequestClass,
+        ]);
+
+        return [$storeRequestClass, $updateRequestClass];
+    }
+
     /**
      * Get the console command options.
      *
@@ -194,6 +278,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
             ['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
             ['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
+            ['requests', 'R', InputOption::VALUE_NONE, 'Generate FormRequest classes for store and update.'],
         ];
     }
 }

@@ -15,6 +15,17 @@ class TestMakeCommand extends BaseGeneratorCommand
     protected $name = 'module:make-test';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-test';
+
+    /**
      * The console command description.
      *
      * @var string
@@ -81,7 +92,7 @@ class TestMakeCommand extends BaseGeneratorCommand
     {
         $moduleName = $this->getModuleInput();;
 
-        return "Modules\\{$moduleName}\\Tests\\";
+        return "Modules\\{$moduleName}\\Tests";
     }
 
     /**

@@ -7,12 +7,25 @@ use Symfony\Component\Console\Input\InputOption;
 
 class NotificationMakeCommand extends BaseGeneratorCommand
 {
+    use CreatesMatchingTest;
+
     /**
      * The console command name.
      *
      * @var string
      */
     protected $name = 'module:make-notification';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-notification';
 
     /**
      * The console command description.

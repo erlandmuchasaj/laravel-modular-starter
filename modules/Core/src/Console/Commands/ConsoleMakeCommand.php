@@ -2,17 +2,29 @@
 
 namespace Modules\Core\Console\Commands;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class ConsoleMakeCommand extends BaseGeneratorCommand
 {
+    use CreatesMatchingTest;
+
     /**
      * The console command name.
      *
      * @var string
      */
     protected $name = 'module:make-command';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-command';
 
     /**
      * The console command description.

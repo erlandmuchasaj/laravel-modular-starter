@@ -2,6 +2,8 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Input\InputOption;
+
 class CastMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -10,6 +12,17 @@ class CastMakeCommand extends BaseGeneratorCommand
      * @var string
      */
     protected $name = 'module:make-cast';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-cast';
 
     /**
      * The console command description.
@@ -32,6 +45,10 @@ class CastMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
+        if ($this->option('inbound')) {
+            return $this->resolveStubPath('/stubs/cast.inbound.stub');
+        }
+
         return $this->resolveStubPath('/stubs/cast.stub');
     }
 
@@ -44,5 +61,17 @@ class CastMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\\Casts';
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['inbound', null, InputOption::VALUE_OPTIONAL, 'Generate an inbound cast class'],
+        ];
     }
 }

@@ -15,6 +15,17 @@ class SeederMakeCommand extends BaseGeneratorCommand
     protected $name = 'module:make-seeder';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-seeder';
+
+    /**
      * The console command description.
      *
      * @var string
@@ -57,11 +68,11 @@ class SeederMakeCommand extends BaseGeneratorCommand
      */
     protected function getPath($name): string
     {
-        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+        $name = str_replace('\\', '/', Str::replaceFirst($this->rootNamespace(), '', $name));
 
-        $moduleName = $this->getModuleInput();;
+        $moduleName = $this->getModuleInput();
 
-        return base_path() . "/modules/{$moduleName}/database/seeders/" . str_replace('\\', '/', $name).'.php';
+        return base_path() . "/modules/{$moduleName}/database/seeders/" . $name.'.php';
     }
 
     /**

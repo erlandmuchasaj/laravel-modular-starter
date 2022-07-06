@@ -17,16 +17,16 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      */
     protected $name = 'module:make-component';
 
-
     /**
      * The name of the console command.
      *
      * This name is used to identify the command during lazy loading.
      *
      * @var string|null
+     *
+     * @deprecated
      */
     protected static $defaultName = 'module:make-component';
-
 
     /**
      * The console command description.
@@ -114,15 +114,15 @@ class ComponentMakeCommand extends BaseGeneratorCommand
     {
         if ($this->option('inline')) {
             return str_replace(
-                'DummyView',
-                "<<<'blade'\n<div>\n    <!-- " . Inspiring::quote() . " -->\n</div>\nblade",
+                ['DummyView', '{{ view }}'],
+                "<<<'blade'\n<div>\n    <!-- ".Inspiring::quote()." -->\n</div>\nblade",
                 parent::buildClass($name)
             );
         }
 
         return str_replace(
-            'DummyView',
-            'view(\'components.' . $this->getView() . '\')',
+            ['DummyView', '{{ view }}'],
+            'view(\'components.'.$this->getView().'\')',
             parent::buildClass($name)
         );
     }

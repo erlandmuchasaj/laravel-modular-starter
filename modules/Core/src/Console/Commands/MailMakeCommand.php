@@ -3,6 +3,7 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class MailMakeCommand extends BaseGeneratorCommand
@@ -15,6 +16,17 @@ class MailMakeCommand extends BaseGeneratorCommand
      * @var string
      */
     protected $name = 'module:make-mail';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-mail';
 
     /**
      * The console command description.
@@ -57,7 +69,7 @@ class MailMakeCommand extends BaseGeneratorCommand
     protected function writeMarkdownTemplate()
     {
         $path = $this->viewPath(
-            str_replace('.', '/', $this->option('markdown')).'.blade.php'
+            str_replace('.', '/', $this->getView()).'.blade.php'
         );
 
         if (! $this->files->isDirectory(dirname($path))) {
@@ -78,11 +90,31 @@ class MailMakeCommand extends BaseGeneratorCommand
     {
         $class = parent::buildClass($name);
 
-        if ($this->option('markdown')) {
-            $class = str_replace('DummyView', $this->option('markdown'), $class);
+        if ($this->option('markdown') !== false) {
+            $class = str_replace(['DummyView', '{{ view }}'], $this->getView(), $class);
         }
 
         return $class;
+    }
+
+    /**
+     * Get the view name.
+     *
+     * @return string
+     */
+    protected function getView(): string
+    {
+        $view = $this->option('markdown');
+
+        if (! $view) {
+            $name = str_replace('\\', '/', $this->argument('name'));
+
+            $view = 'mail.'.collect(explode('/', $name))
+                    ->map(fn ($part) => Str::kebab($part))
+                    ->implode('.');
+        }
+
+        return $view;
     }
 
     /**
@@ -93,7 +125,7 @@ class MailMakeCommand extends BaseGeneratorCommand
     protected function getStub(): string
     {
         return $this->resolveStubPath(
-            $this->option('markdown')
+            $this->option('markdown') !== false
                 ? '/stubs/markdown-mail.stub'
                 : '/stubs/mail.stub');
     }

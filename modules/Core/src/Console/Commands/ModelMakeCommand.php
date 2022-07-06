@@ -8,12 +8,26 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModelMakeCommand extends BaseGeneratorCommand
 {
+    use CreatesMatchingTest;
+
     /**
      * The console command name.
      *
      * @var string
      */
     protected $name = 'module:make-model';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-model';
+
 
     /**
      * The console command description.
@@ -90,6 +104,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
         $factory = Str::studly(class_basename($this->argument('name')));
 
         $this->call('module:make-factory', [
+            'module' => $this->getModuleInput(),
             'name' => "{$factory}Factory",
             '--model' => $this->qualifyClass($this->getNameInput()),
         ]);
@@ -109,6 +124,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
         }
 
         $this->call('module:make-migration', [
+            'module' => $this->getModuleInput(),
             'name' => "create_{$table}_table",
             '--create' => $table,
         ]);
@@ -124,6 +140,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
         $seeder = Str::studly(class_basename($this->argument('name')));
 
         $this->call('module:make-seed', [
+            'module' => $this->getModuleInput(),
             'name' => "{$seeder}Seeder",
         ]);
     }
@@ -146,6 +163,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
             'name'  => "{$controller}Controller",
             '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
             '--api' => $this->option('api'),
+            '--requests' => $this->option('requests') || $this->option('all'),
         ]));
     }
 
@@ -197,9 +215,20 @@ class ModelMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return $this->option('traits')
-            ? $this->resolveStubPath('/stubs/model-with-traits.stub')
-            : $this->resolveStubPath('/stubs/model.stub');
+        if ($this->option('traits')) {
+            return $this->resolveStubPath('/stubs/model-with-traits.stub');
+        }
+
+        if ($this->option('pivot')) {
+            return $this->resolveStubPath('/stubs/model.pivot.stub');
+        }
+
+        if ($this->option('morph-pivot')) {
+            return $this->resolveStubPath('/stubs/model.morph-pivot.stub');
+        }
+
+        return $this->resolveStubPath('/stubs/model.stub');
+
     }
 
     /**
@@ -226,12 +255,14 @@ class ModelMakeCommand extends BaseGeneratorCommand
             ['factory', 'f', InputOption::VALUE_NONE, 'Create a new factory for the model'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists'],
             ['migration', 'm', InputOption::VALUE_NONE, 'Create a new migration file for the model'],
+            ['morph-pivot', null, InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom polymorphic intermediate table model'],
             ['policy', null, InputOption::VALUE_NONE, 'Create a new policy for the model'],
             ['seed', 's', InputOption::VALUE_NONE, 'Create a new seeder file for the model'],
             ['pivot', 'p', InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom intermediate table model'],
             ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated controller should be a resource controller'],
             ['api', null, InputOption::VALUE_NONE, 'Indicates if the generated controller should be an API controller'],
             ['traits', 't', InputOption::VALUE_NONE, 'Separate eloquent attributes method in traits'],
+            ['requests', 'R', InputOption::VALUE_NONE, 'Create new form request classes and use them in the resource controller'],
         ];
     }
 }

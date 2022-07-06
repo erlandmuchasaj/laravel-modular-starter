@@ -15,6 +15,18 @@ class RuleMakeCommand extends BaseGeneratorCommand
     protected $name = 'module:make-rule';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'module:make-rule';
+
+
+    /**
      * The console command description.
      *
      * @var string
@@ -52,7 +64,18 @@ class RuleMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        return $this->resolveStubPath('/stubs/rule.stub');
+
+        $stub = '/stubs/rule.stub';
+
+        if ($this->option('invokable')) {
+            $stub = '/stubs/rule.invokable.stub';
+        }
+
+        if ($this->option('implicit') && $this->option('invokable')) {
+            $stub = str_replace('.stub', '.implicit.stub', $stub);
+        }
+
+        return $this->resolveStubPath($stub);
     }
 
     /**
@@ -75,6 +98,7 @@ class RuleMakeCommand extends BaseGeneratorCommand
     {
         return [
             ['implicit', 'i', InputOption::VALUE_NONE, 'Generate an implicit rule.'],
+            ['invokable', null, InputOption::VALUE_NONE, 'Generate a single method, invokable rule class.'],
         ];
     }
 }

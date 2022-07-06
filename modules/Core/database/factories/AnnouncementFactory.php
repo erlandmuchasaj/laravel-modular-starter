@@ -3,6 +3,7 @@
 namespace Modules\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Core\Models\Announcement\Announcement;
 
 class AnnouncementFactory extends Factory
 {
@@ -11,7 +12,7 @@ class AnnouncementFactory extends Factory
      *
      * @var string|null
      */
-    protected $model;
+    protected $model = Announcement::class;
 
     /**
      * Define the model's default state.

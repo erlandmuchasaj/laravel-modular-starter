@@ -7,6 +7,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class {{ class }} extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
      *

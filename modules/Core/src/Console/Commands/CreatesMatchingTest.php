@@ -37,6 +37,7 @@ trait CreatesMatchingTest
         }
 
         $this->call('module:make-test', [
+            'module' => $this->getModuleInput(),
             'name' => Str::of($path)->after($this->laravel['path'])->beforeLast('.php')->append('Test')->replace('\\', '/'),
             '--pest' => $this->option('pest'),
         ]);
