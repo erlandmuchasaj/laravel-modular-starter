@@ -558,7 +558,7 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                $path => app()->langPath("vendor/{$this->module(true)}"),
+                $path => lang_path("vendor/{$this->module(true)}"),
             ], 'lang');
         }
 
@@ -574,12 +574,14 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
 
-            // $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'factories');
-            // $this->loadFactoriesFrom($path);
+            // # $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR .
+            // 'database' . DIRECTORY_SEPARATOR . 'factories');
+            // # $this->loadFactoriesFrom($path);
+
             if ($this->app->runningInConsole()) {
                 $this->publishes([
-                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),
-                ], 'seeds');
+                    __DIR__ . '/../../database/seeders/DatabaseSeeder.php' => database_path('seeders/' . $this->module() . 'ModuleSeeder.php'),
+                ], 'seeders');
             }
         }
 

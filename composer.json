@@ -124,10 +124,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./modules/*",
-            "options": {
-                "symlink": false
-            }
+            "url": "./modules/*"
         }
     ]
 }

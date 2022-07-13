@@ -29,9 +29,9 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "Modules\\Core\\": "src",
-            "Modules\\Core\\Database\\Factories\\": "database/factories",
-            "Modules\\Core\\Database\\Seeders\\": "database/seeders"
+            "Modules\\Core\\": "src/",
+            "Modules\\Core\\Database\\Factories\\": "database/factories/",
+            "Modules\\Core\\Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "src/helpers.php"
@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Core\\Tests\\": "tests"
+            "Modules\\Core\\Tests\\": "tests/"
         }
     },
     "config": {

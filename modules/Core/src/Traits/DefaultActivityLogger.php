@@ -6,6 +6,7 @@ use ReflectionClass;
 use ReflectionException;
 use Illuminate\Support\Str;
 
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
 
@@ -44,6 +45,12 @@ trait DefaultActivityLogger
 
     protected static array $logAttributesToIgnore = ['id', 'password', 'remember_token', 'token', 'created_at', 'updated_at', 'deleted_at'];
 
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     /**
      * @param Activity $activity
      * @param string $eventName
@@ -53,8 +60,8 @@ trait DefaultActivityLogger
         try {
             $reflect = new ReflectionClass($this);
             $class_name = Str::lower($reflect->getShortName());
-            $activity->description = "$class_name.{$eventName}";
-        } catch(ReflectionException $e) {
+            $activity->description = "activity.$class_name.{$eventName}";
+        } catch (ReflectionException $e) {
             $activity->description = $eventName;
         }
     }

@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
 use Modules\Core\Database\Factories\AnnouncementFactory;
+use ReflectionClass;
+use ReflectionException;
+use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -86,20 +90,20 @@ class Announcement extends Model
         return LogOptions::defaults();
     }
 
-//    /**
-//     * @param Activity $activity
-//     * @param string $eventName
-//     */
-//    public function tapActivity(Activity $activity, string $eventName)
-//    {
-//        try {
-//            $reflect = new ReflectionClass($this);
-//            $class_name = Str::lower($reflect->getShortName());
-//            $activity->description = "$class_name.{$eventName}";
-//        } catch (ReflectionException $e) {
-//            $activity->description = $eventName;
-//        }
-//    }
+    /**
+     * @param Activity $activity
+     * @param string $eventName
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        try {
+            $reflect = new ReflectionClass($this);
+            $class_name = Str::lower($reflect->getShortName());
+            $activity->description = "activity.$class_name.{$eventName}";
+        } catch (ReflectionException $e) {
+            $activity->description = $eventName;
+        }
+    }
 
     /**
      * Create a new factory instance for the model.

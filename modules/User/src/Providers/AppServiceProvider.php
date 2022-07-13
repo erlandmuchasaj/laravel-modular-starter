@@ -405,8 +405,8 @@ class AppServiceProvider extends ServiceProvider
 
             if ($this->app->runningInConsole()) {
                 $this->publishes([
-                    __DIR__ . '/../../database/seeds/DatabaseSeeder.php' => database_path('seeds/' . $this->module() . 'ModuleSeeder.php'),
-                ], 'seeds');
+                    __DIR__ . '/../../database/seeders/DatabaseSeeder.php' => database_path('seeders/' . $this->module() . 'ModuleSeeder.php'),
+                ], 'seeders');
             }
         }
 

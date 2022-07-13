@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        # Announcement::factory(10)->create();
+        Announcement::factory(10)->create();
     }
 }

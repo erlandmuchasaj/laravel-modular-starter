@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use JetBrains\PhpStorm\Pure;
 use Modules\Core\Enums\Notification;
 use Throwable;
 use Exception;
@@ -25,7 +26,7 @@ class GeneralException extends Exception
      * @param int            $code
      * @param Throwable|null $previous
      */
-    public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
+    #[Pure] public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

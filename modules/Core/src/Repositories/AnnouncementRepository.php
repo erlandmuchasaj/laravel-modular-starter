@@ -244,7 +244,7 @@ class AnnouncementRepository extends BaseRepository
             return collect(new Announcement);
         }
 
-        cache()->remember('get_for_backend', now()->addMinutes(20), function () {
+        return cache()->remember('get_for_backend_announcements', now()->addMinutes(20), function () {
             return $this->model::enabled()
                 ->forArea($this->model::TYPE_BACKEND)
                 ->inTimeFrame()
