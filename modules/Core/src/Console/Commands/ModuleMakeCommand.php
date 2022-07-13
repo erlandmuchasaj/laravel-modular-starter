@@ -73,13 +73,13 @@ class ModuleMakeCommand extends GeneratorCommand
             return;
         }
 
-        // Next, We will check to see if the Module folder already exists. If it does, we don't want
-        // to create the Module and overwrite the user's code. So, we will bail out so the
-        // code is untouched. Otherwise, we will continue generating this Module' files.
-        if ($this->files->exists("modules/{$moduleName}")) {
-            $this->error($this->type . " {$moduleName}, already exists!");
-            return;
-        }
+        // // Next, We will check to see if the Module folder already exists. If it does, we don't want
+        // // to create the Module and overwrite the user's code. So, we will bail out so the
+        // // code is untouched. Otherwise, we will continue generating this Module' files.
+        // if ($this->files->exists("modules/{$moduleName}")) {
+        //     $this->error($this->type . " {$moduleName}, already exists!");
+        //     return;
+        // }
 
         // Next we check that the name does not contain any non-supported values.
         if (preg_match('([^A-Za-z0-9_/\\\\])', $moduleName)) {
@@ -97,8 +97,19 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->makeDirectory("modules/{$moduleName}/database/migrations");
         $this->makeDirectory("modules/{$moduleName}/database/seeders");
 
+        // Add a default seeder on all modules
+        // this will be used as an entry
+        // point for seeding.
+        $seederStub = $this->files->get(__DIR__ . '/stubs/seeder.stub');
+        $this->files->put(
+            "modules/{$moduleName}/database/seeders/DatabaseSeeder.php",
+            $this->replaceNamespace($seederStub, 'Modules\\'. $moduleName . '\\Database\Seeders\DatabaseSeeder')
+                ->replaceModuleName($seederStub, $moduleName)
+                ->replaceClass($seederStub, 'DatabaseSeeder')
+        );
+
+        // there is a change in structure for translations from v8 to v9.
         if (version_compare(app()->version(), '9.0.0') >= 0) {
-            // echo 'I am at least 9.0.0, my version: ' . app()->version() . "\n";
             $this->makeDirectory("modules/{$moduleName}/lang/en");
             $this->files->put("modules/{$moduleName}/lang/en.json", "");
             $this->files->put("modules/{$moduleName}/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");

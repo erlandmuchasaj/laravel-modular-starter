@@ -76,19 +76,23 @@ class SeedServiceProvider extends ServiceProvider
     protected function addSeedsFrom(string $seeds_path): void
     {
 
-        $file_names = Arr::wrap(glob("{$seeds_path}/*.php"));
+       $file_names = Arr::wrap(glob("{$seeds_path}/*.php"));
         foreach ($file_names as $filename) {
-            include $filename;
-            $classes = get_declared_classes();
-            $class = end($classes);
 
-            echo htmlspecialchars("Seeding: {$class}\n");
-            $startTime = microtime(true);
+            if ( $filename && file_exists($filename)) {
+                include $filename;
+                $classes = get_declared_classes();
+                $class = end($classes);
 
-            Artisan::call('db:seed', ['--class' => $class, '--force' => '']);
+                echo htmlspecialchars("Seeding: {$class}\n");
+                $startTime = microtime(true);
 
-            $runTime = round(microtime(true) - $startTime, 2);
-            echo htmlspecialchars("Seeded: {$class} ({$runTime} seconds)\n");
+                Artisan::call('db:seed', ['--class' => $class, '--force' => '']);
+
+                $runTime = round(microtime(true) - $startTime, 2);
+                echo htmlspecialchars("Seeded: {$class} ({$runTime} seconds)\n");
+            }
+
         }
     }
 
