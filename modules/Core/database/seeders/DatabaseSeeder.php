@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AnnouncementsTableSeeder::class);
+
         Announcement::factory(10)->create();
     }
 }

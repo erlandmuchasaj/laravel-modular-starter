@@ -40,17 +40,11 @@ class AppServiceProvider extends ServiceProvider
     use CanPublishConfiguration;
 
     /**
-     * The root namespace
+     * The Module Name
      *
      * @var string
      */
     protected string $module = 'Core';
-
-    /**
-     * The root namespace to assume when generating URLs to actions.
-     * @var string
-     */
-    private string $namespace = 'Modules\\Core\\Http\\Controllers';
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -65,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
      * @return array
      */
     protected array $providers = [
+        RouteServiceProvider::class,
         EventServiceProvider::class,
         SeedServiceProvider::class,
         ConsoleServiceProvider::class,
@@ -174,18 +169,11 @@ class AppServiceProvider extends ServiceProvider
         //     $view->with('announcements', $announcementRepository->getForBackend());
         // });
 
-        // Load core route channels.
-        $channels = base_path("modules" . DIRECTORY_SEPARATOR . $this->module . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "channels.php");
-        if ($channels && file_exists($channels)) {
-            require $channels;
-        }
-
         # This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
         # ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
         Blade::componentNamespace('\\Modules\\Core\\Views\\Components', 'core'); # does not work
         // Blade::component('app-layout', AppLayout::class); // Works
         // Blade::component('guest-layout', GuestLayout::class); // Works
-
 
         // publish migrations
         $this->bootMigrations();
@@ -201,9 +189,6 @@ class AppServiceProvider extends ServiceProvider
 
         // boot middleware
         $this->bootMiddleware();
-
-        // boot routes
-        $this->bootRoutes();
 
         // boot observers
         $this->bootObservers();
@@ -382,39 +367,6 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * bootRoutes
-     * @return static
-     */
-    private function bootRoutes(): static
-    {
-        if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
-            // api routes
-            $api = __DIR__ . '/../../routes/api.php';
-            if (file_exists($api)) {
-                Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.api", []))
-                    ->as(config("{$this->base}.{$this->module(true)}.config.api_group"))
-                    ->prefix(config("{$this->base}.{$this->module(true)}.config.api_prefix"))
-                    ->namespace($this->namespace . '\\Api')
-                    ->group($api);
-            }
-
-            // web routes
-            $web = __DIR__ . '/../../routes/web.php';
-            if (file_exists($web)) {
-                # $this->loadRoutesFrom($web);
-                # The versions below give you a little more control.
-                Route::middleware(config("{$this->base}.{$this->module(true)}.config.middleware.web", []))
-                    ->as(config("{$this->base}.{$this->module(true)}.config.web_group"))
-                    ->prefix(config("{$this->base}.{$this->module(true)}.config.web_prefix"))
-                    ->namespace($this->namespace)
-                    ->group($web);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * bootBladeDirective
      *
      * @return static
@@ -492,7 +444,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function bootServices(): void
     {
-        //
+        // Boot your services here
     }
 
     /**
@@ -520,7 +472,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register views & Publish views.
      * @return static
-     * @todo
+     * @todo check
      */
     private function bootViews(): static
     {
@@ -589,6 +541,20 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get module case according to different usage cases.
+     * Studly or snake case.
+     * @param bool $snake
+     * @return string
+     */
+    private function module(bool $snake = false): string
+    {
+        if ($snake === true){
+            return Str::snake($this->module);
+        }
+        return Str::studly($this->module);
+    }
+
+    /**
      * Checks if the current url matches the configured backend uri
      * @return bool
      */
@@ -620,20 +586,6 @@ class AppServiceProvider extends ServiceProvider
     private function getConfigFilename(string $file): string
     {
         return strval(preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($file)));
-    }
-
-    /**
-     * Get module case according to different usage cases.
-     * Studly or snake case.
-     * @param bool $snake
-     * @return string
-     */
-    private function module(bool $snake = false): string
-    {
-        if ($snake === true){
-            return Str::snake($this->module);
-        }
-        return Str::studly($this->module);
     }
 
 }

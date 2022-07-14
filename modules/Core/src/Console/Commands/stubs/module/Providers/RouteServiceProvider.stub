@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Modules\Core\Providers\RouteServiceProvider as CoreRouteServiceProvider;
+use Modules\Core\Providers\BaseRouteServiceProvider;
 
-class RouteServiceProvider extends CoreRouteServiceProvider
+class RouteServiceProvider extends BaseRouteServiceProvider
 {
 
     /**

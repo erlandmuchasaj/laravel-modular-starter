@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Policies;
 
-use App\Models\User;
+use Modules\User\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Core\Models\Announcement\Announcement;
 

@@ -43,7 +43,8 @@
         "laravel/tinker": "^2.7",
         "sentry/sentry-laravel": "^2.12",
         "modules/core": "^1.0",
-        "modules/user": "^1.0"
+        "modules/user": "^1.0",
+        "modules/test": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

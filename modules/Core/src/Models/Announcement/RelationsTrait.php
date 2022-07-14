@@ -10,7 +10,7 @@ trait RelationsTrait
      */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('Module\User\Models\User', 'user_id');
+        return $this->belongsTo('Modules\User\Models\User\User', 'user_id');
     }
 
 }

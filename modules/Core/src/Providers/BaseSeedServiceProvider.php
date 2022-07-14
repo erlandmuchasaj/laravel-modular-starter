@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Providers;
 
-use Illuminate\Support\Arr;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Support\Facades\Artisan;
@@ -17,14 +16,15 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
      * The root namespace to assume where to get the seeding data from.
      *
      * @var string
+     * @version v2
      */
     protected string $namespace = '';
 
     // /**
     //  * @return string
+    //  * @version v2
     //  */
     // abstract protected function getSeederPath(): string;
-
 
     /**
      * Bootstrap services.
@@ -73,7 +73,7 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
             // Accept command in console only,
             // exclude all commands from Artisan::call() method.
             if ($event->output instanceof ConsoleOutput) {
-                $this->addSeedsFrom($this->namespace);
+                $this->addSeedsFrom();
             }
         });
     }
@@ -81,44 +81,18 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
     /**
      * Register seeds.
      *
-     * @param string $seeds_path
      * @return void
      */
-    protected function addSeedsFrom(string $seeds_path): void
+    protected function addSeedsFrom(): void
     {
-
-        // # v1
-        // $fileName = $this->getSeederPath();
-        //
-        // if ( $fileName && file_exists($fileName)) {
-        //     include_once $fileName;
-        //
-        //     $classes = get_declared_classes();
-        //
-        //     $class = end($classes);
-        //
-        //     echo htmlspecialchars("\033[1;33mSeeding:\033[0m {$class}\n");
-        //     $startTime = microtime(true);
-        //
-        //     Artisan::call('db:seed', ['--class' => $class, '--force' => '' ]);
-        //
-        //     $runTime = round(microtime(true) - $startTime, 2);
-        //     echo htmlspecialchars("\033[0;32mSeeded:\033[0m {$class} ({$runTime} seconds)\n");
-        //
-        // }
-
-
         # v2
         echo htmlspecialchars("\033[1;33mSeeding:\033[0m {$this->namespace}\n");
         $startTime = microtime(true);
-
 
         Artisan::call('db:seed', ['--class' => $this->namespace, '--force' => '' ]);
 
         $runTime = round(microtime(true) - $startTime, 2);
         echo htmlspecialchars("\033[0;32mSeeded:\033[0m {$this->namespace} ({$runTime} seconds)\n");
-
-
     }
 
 }
