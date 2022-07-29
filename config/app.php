@@ -400,6 +400,15 @@ return [
 
     'social_login' => env('SOCIAL_LOGIN', true),
 
+    'social_providers' => [
+        'bitbucket',
+        'facebook',
+        'google',
+        'github',
+        'linkedin',
+        'twitter',
+    ],
+
     'disable_autologin' => env('DISABLE_AUTOLOGIN', false),
 
     'retype_password_when_deleting' => env('RETYPE_PASSWORD_WHEN_DELETING', true),
@@ -463,6 +472,19 @@ return [
      */
 
     'only_roles' => false,
+
+    'default_role' => 'user',
+
+    'roles' => [
+        'superadmin' => 'superadmin',
+        'admin' => 'admin',
+        'supervisor' => 'supervisor',
+        'finance' => 'finance',
+        'kiosk' => 'kiosk',
+        'patrol' => 'patrol',
+        'provider' => 'provider',
+        'user' => 'user',
+    ],
 
     /*
      | How many days before users have to change their passwords
@@ -569,11 +591,11 @@ return [
     'package' => [
         'log-viewer' => true,
         'telescope' => true,
-        'horizon' => true,
+        'horizon' => false,
         'activitylog' => true,
         'socialite' => true,
-        'laravel-impersonate' => true,
-        'geoip' => true,
+        'laravel-impersonate' => false,
+        'geoip' => false,
     ],
 
     /*
@@ -638,7 +660,7 @@ return [
     |
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
+    | the aliases are "lazy" loaded, so they don't hinder performance.
     |
     */
 

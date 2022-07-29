@@ -1,4 +1,19 @@
 <?php return array (
+  'albertcht/invisible-recaptcha' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'AlbertCht\\InvisibleReCaptcha\\InvisibleReCaptchaServiceProvider',
+    ),
+  ),
+  'arcanedev/log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
+      1 => 'Arcanedev\\LogViewer\\Providers\\DeferredServicesProvider',
+    ),
+  ),
   'fruitcake/laravel-cors' => 
   array (
     'providers' => 
@@ -37,16 +52,6 @@
     array (
     ),
   ),
-  'modules/test' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Modules\\Test\\Providers\\AppServiceProvider',
-    ),
-    'aliases' => 
-    array (
-    ),
-  ),
   'modules/user' => 
   array (
     'providers' => 
@@ -71,6 +76,13 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'nunomaduro/termwind' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    ),
+  ),
   'sentry/sentry-laravel' => 
   array (
     'providers' => 
@@ -88,6 +100,13 @@
     'providers' => 
     array (
       0 => 'Spatie\\Activitylog\\ActivitylogServiceProvider',
+    ),
+  ),
+  'spatie/laravel-honeypot' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Honeypot\\HoneypotServiceProvider',
     ),
   ),
   'spatie/laravel-ignition' => 

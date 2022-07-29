@@ -33,6 +33,8 @@ use Modules\Core\Policies\AnnouncementPolicy;
 use Modules\Core\Repositories\AnnouncementRepository;
 use Modules\Core\View\Components\AppLayout;
 use Modules\Core\View\Components\GuestLayout;
+use Spatie\Honeypot\ProtectAgainstSpam;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -111,6 +113,7 @@ class AppServiceProvider extends ServiceProvider
      */
     protected array $middlewareGroups = [
         'web' => [
+            ProtectAgainstSpam::class, # we can set it also as global middleware.
             RememberLocale::class,
         ],
         'api' => [
@@ -212,7 +215,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         logger('AppServiceProvider::register => '. $this->module);
 

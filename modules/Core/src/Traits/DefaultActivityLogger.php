@@ -54,8 +54,9 @@ trait DefaultActivityLogger
     /**
      * @param Activity $activity
      * @param string $eventName
+     * @return void
      */
-    public function tapActivity(Activity $activity, string $eventName)
+    public function tapActivity(Activity $activity, string $eventName): void
     {
         try {
             $reflect = new ReflectionClass($this);

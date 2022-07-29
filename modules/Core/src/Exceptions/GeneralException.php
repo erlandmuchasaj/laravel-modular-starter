@@ -55,7 +55,7 @@ class GeneralException extends Exception
         ];
 
         if ($request->expectsJson()) {
-            return response()->json($response, ($this->code ?: 400));
+            return response()->json($response, ($this->code ?: \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST));
         }
 
         return redirect()

@@ -101,7 +101,7 @@ if (!function_exists('display_price')) {
             return $price;
         }
 
-        $price = preg_replace("/^([0-9]+\.?[0-9]*)(\s[A-Z]{3})$/", "$1", (string)$price);
+        $price = preg_replace("/^(\d+\.?\d*)(\s[A-Z]{3})$/", "$1", (string)$price);
         // return number_format((float) $price, $decimals, '.', ',');
         return number_format((float)$price, $decimals);
     }

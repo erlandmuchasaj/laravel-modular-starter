@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-    // if (version_compare(app()->version(), '9.0.0') >= 0) {
-    //     echo 'I am at least 9.0.0, my version: ' . app()->version() . "\n";
-    // }
-    // dd(app()->version(), app()->langPath('vendor/core'), resource_path("lang/vendor/core"));
-
     return view('welcome');
 });
 

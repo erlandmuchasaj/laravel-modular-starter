@@ -2,8 +2,6 @@
 
 namespace Modules\Core\Traits;
 
-use Modules\Core\Utils\EmCms;
-
 trait NamespacedEntity
 {
 

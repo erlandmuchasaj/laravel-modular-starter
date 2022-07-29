@@ -37,7 +37,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
     }
@@ -64,7 +64,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
      * @param Router $router
      * @return void
      */
-    public function map(Router $router)
+    public function map(Router $router): void
     {
         // If the routes have not been cached, we will include them in a route group
         // so that all the routes will be conveniently registered to the given

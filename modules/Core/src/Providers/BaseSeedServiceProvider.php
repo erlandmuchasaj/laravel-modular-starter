@@ -22,7 +22,7 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
 
     // /**
     //  * @return string
-    //  * @version v2
+    //  * @version v1
     //  */
     // abstract protected function getSeederPath(): string;
 
@@ -31,7 +31,7 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             if ($this->isConsoleCommandContains([ 'db:seed', '--seed' ], [ '--class', 'help', '-h' ])) {

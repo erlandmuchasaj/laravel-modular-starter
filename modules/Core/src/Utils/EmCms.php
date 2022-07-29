@@ -19,4 +19,11 @@ final class EmCms
      * @var string
      */
     public const NAME = 'emcms';
+
+    /**
+     * The EmCms application author email
+     *
+     * @var string
+     */
+    public const AUTHOR = 'erland.muchasaj@gmail.com';
 }

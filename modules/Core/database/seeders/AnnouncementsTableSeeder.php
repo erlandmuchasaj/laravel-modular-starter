@@ -12,7 +12,7 @@ class AnnouncementsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Announcement::create([
             'area' => null,

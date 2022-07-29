@@ -22,6 +22,13 @@ class Indisposable
     protected mixed $service;
 
     /**
+     * Indisposable service enable status.
+     *
+     * @var bool
+     */
+    protected bool $enabled;
+
+    /**
      * base service url.
      * @var string
      */
@@ -39,11 +46,13 @@ class Indisposable
      */
     public function __construct(){
 
-        $this->service = config('app.indisposable_service');
+        $this->service = config('services.indisposable.default');
 
-        $services = config('app.indisposable');
+        $this->enabled = config('services.indisposable.enabled');
 
-        $this->baseUrl = rtrim($services[$this->service]['domain'], '/\\') . '/';
+        $connections = config('services.indisposable.connections');
+
+        $this->baseUrl = rtrim($connections[$this->service]['domain'], '/\\') . '/';
 
         $this->initializeClient();
     }
@@ -60,7 +69,11 @@ class Indisposable
      */
     public function validate(string $attribute, mixed $value, array $parameters,Validator  $validator): bool
     {
-        return $this->isRealEmail($value);
+        if ($this->enabled) {
+            return $this->isRealEmail($value);
+        }
+
+        return true;
     }
 
     /**
@@ -137,7 +150,6 @@ class Indisposable
                 $res->status == 400, $res->disposable == true, $res->mx == false => true,
                 default => false,
             };
-
 
         } elseif ($this->service === 'block-temporary-email') {
             // return (bool) $response['temporary'];
