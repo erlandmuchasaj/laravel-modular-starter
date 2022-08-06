@@ -58,6 +58,14 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'permission' => 0775,
+        ],
+
+        'sentry' => [
+            'driver' => 'sentry',
+            'level'  => 'debug', // The minimum monolog logging level at which this handler will be triggered
+            // 'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency',
+            'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
         ],
 
         'daily' => [
@@ -65,6 +73,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
+            'permission' => 0775,
         ],
 
         'slack' => [

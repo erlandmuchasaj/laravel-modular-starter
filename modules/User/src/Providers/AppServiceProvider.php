@@ -4,13 +4,9 @@ namespace Modules\User\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -85,7 +81,7 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * The application's route middleware.
-     * These middleware may be assigned to group or used individually.
+     * This middleware may be assigned to group or used individually.
      * @var array
      */
     protected array $routeMiddleware = [
@@ -151,7 +147,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         logger('AppServiceProvider::register => '. $this->module);
 
@@ -350,7 +346,7 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/views';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module(true) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
 
         $this->loadViewsFrom($path, $this->module(true));
 

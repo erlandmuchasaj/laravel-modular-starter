@@ -70,8 +70,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
         // so that all the routes will be conveniently registered to the given
         // controller namespace. After that we will load the EMCMS routes file.
 
-
-
         if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
             # mapApiRoutes
             $router->group([

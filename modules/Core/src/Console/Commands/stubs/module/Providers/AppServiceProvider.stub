@@ -377,7 +377,7 @@ class AppServiceProvider extends ServiceProvider
     {
         # $path = __DIR__ . '/../../resources/views';
 
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module(true) . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
 
         $this->loadViewsFrom($path, $this->module(true));
 
