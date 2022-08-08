@@ -8,7 +8,7 @@ parameters:
         - modules
 
     # The level 9 is the highest level
-    level: 5
+    level: 3
 
     ignoreErrors:
         - '#PHPDoc tag @var#'
@@ -19,3 +19,4 @@ parameters:
 
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false

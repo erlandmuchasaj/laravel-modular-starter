@@ -1,7 +1,7 @@
 {
     "name": "laravel/emcms",
     "type": "project",
-    "description": "Laravel Modular starter",
+    "description": "Laravel modular starter for any project, Big or Small.",
     "keywords": [
         "framework",
         "laravel",

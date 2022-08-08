@@ -182,7 +182,7 @@ final class FileUploader
     public static function upload(UploadedFile $file, string $disk = null, array $args = [], $user_id = null): array
     {
 
-        if (!isset($user_id)) {
+        if (is_null($user_id)) {
             $user_id = auth()->id() ?? 1;
         }
 
@@ -357,15 +357,15 @@ final class FileUploader
      * @param  string  $path
      * @param  string  $visibility
      *
-     * @return string|null public|private
+     * @return bool
      */
-    public static function setVisibility(string $path, string $visibility): ?string
+    public static function setVisibility(string $path, string $visibility): bool
     {
         if (!in_array($visibility, self::$validOptions)) {
             return Storage::disk(self::$disk)->setVisibility($path, $visibility);
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -410,7 +410,7 @@ final class FileUploader
 
         $data['url'] = $diskFrom->url($path);
         $data['visibility'] = $diskFrom->getVisibility($path);
-        $data['size_in_kb'] = self::formatBytes($data['size']);
+        $data['size_in_kb'] = self::formatBytes($data['size'] ?? 0);
         $data['last_modified'] = Carbon::createFromTimestamp($data['timestamp'])->diffForHumans();
 
         return $data;
@@ -800,7 +800,7 @@ final class FileUploader
      */
     public static function convertToBytes($from): float|int|string
     {
-        $number = substr($from,0,-2);
+        $number = (float) substr($from,0,-2);
         return match (strtoupper(substr($from, -2))) {
             "KB" => $number * 1024,
             "MB" => $number * pow(1024, 2),

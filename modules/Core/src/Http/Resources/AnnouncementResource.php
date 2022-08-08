@@ -18,7 +18,6 @@ class AnnouncementResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            // 'user' => new UserResource($this->whenLoaded('user')),
             'area' => $this->area,
             'type' => $this->type,
             'message' => $this->message,
