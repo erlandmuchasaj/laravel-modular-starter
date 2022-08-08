@@ -24,11 +24,9 @@ class Announcement extends Model
         , MutatorTrait
         , AccessorTrait;
 
-
     public const TYPE_FRONTEND = 'frontend';
 
     public const TYPE_BACKEND = 'backend';
-
 
     /**
      * The database table used by the model.
@@ -36,8 +34,6 @@ class Announcement extends Model
      * @var string
      */
     protected $table = 'announcements';
-
-
 
     /**
      * The attributes that are mass assignable.
@@ -74,7 +70,6 @@ class Announcement extends Model
      * @var array
      */
     protected $appends = ['parsed_body'];
-
 
     protected static bool $logFillable = true;
 

@@ -19,7 +19,7 @@ return [
 
     'version' => env('APP_VERSION', 'Laravel '.app()->version()),
 
-    'slug' => 'emcms',
+    'slug' => \Modules\Core\Utils\EmCms::NAME,
 
     /*
     |--------------------------------------------------------------------------
@@ -650,6 +650,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        // App\Providers\FortifyServiceProvider::class, # uncomment this if install fortify
 
     ],
 

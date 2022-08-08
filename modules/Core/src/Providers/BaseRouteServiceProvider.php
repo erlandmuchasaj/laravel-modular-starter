@@ -28,7 +28,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
     /**
      * The root namespace to assume when generating URLs to actions.
      *
-     * @var string
+     * @var string|null
      */
     protected $namespace = '';
 

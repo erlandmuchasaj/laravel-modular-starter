@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use stdClass;
@@ -16,10 +17,12 @@ class Indisposable
 {
 
     /**
-     * Indisposable service.
+     * Indisposable service name.
+     *
      * @var string
      */
-    protected mixed $service;
+    protected string $service;
+
 
     /**
      * Indisposable service enable status.
@@ -28,14 +31,25 @@ class Indisposable
      */
     protected bool $enabled;
 
+
     /**
      * base service url.
+     *
      * @var string
      */
     protected string $baseUrl;
 
     /**
+     * service Api Key.
+     *
+     * @var string
+     */
+    protected string $apiKey;
+
+
+    /**
      * The Client object used for requests
+     *
      * @var Client $client
      */
     protected Client $client;
@@ -54,23 +68,28 @@ class Indisposable
 
         $this->baseUrl = rtrim($connections[$this->service]['domain'], '/\\') . '/';
 
+        $this->apiKey = $connections[$this->service]['key'] ?? '';
+
         $this->initializeClient();
     }
 
     /**
      * Validates whether an email address does not originate from a disposable email service.
+     * The response is saved to prevent unnecessary checks.
      *
      * @param string $attribute
      * @param mixed $value
      * @param array $parameters
      * @param Validator $validator
      * @return bool
-     * @throws GuzzleException
      */
     public function validate(string $attribute, mixed $value, array $parameters,Validator  $validator): bool
     {
         if ($this->enabled) {
-            return $this->isRealEmail($value);
+            $cacheKey = $this->service . '_email_validator_' . $value;
+            return cache()->remember($cacheKey, now()->addMinutes(10), function () use ($value){
+                return $this->isRealEmail($value);
+            });
         }
 
         return true;
@@ -93,6 +112,7 @@ class Indisposable
             'headers'  => [
                 'Content-Type' => 'application/json; charset=utf-8',
                 'Accept' => 'application/json',
+                'X-Api-Key' => $this->service === 'block-temporary-email' ? $this->apiKey : ''
             ],
         ];
 
@@ -102,7 +122,9 @@ class Indisposable
 
     /**
      * Initialize the GuzzleHttp/Client instance
-     * @param string $email
+     *
+     * @param  string  $email
+     *
      * @return bool
      * @throws GuzzleException
      */
@@ -114,6 +136,7 @@ class Indisposable
         }
 
         $domain = Str::after($email, '@');
+
 
         try {
             $response = $this->client->get($domain);
@@ -150,6 +173,7 @@ class Indisposable
                 $res->status == 400, $res->disposable == true, $res->mx == false => true,
                 default => false,
             };
+
 
         } elseif ($this->service === 'block-temporary-email') {
             // return (bool) $response['temporary'];

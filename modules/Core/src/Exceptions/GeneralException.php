@@ -6,7 +6,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use JetBrains\PhpStorm\Pure;
 use Modules\Core\Enums\Notification;
 use Throwable;
 use Exception;
@@ -22,11 +21,11 @@ class GeneralException extends Exception
     /**
      * GeneralException constructor.
      *
-     * @param string         $message
-     * @param int            $code
+     * @param string         $message Bad request
+     * @param int            $code 400
      * @param Throwable|null $previous
      */
-    #[Pure] public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
+    public function __construct(string $message = 'Bad Request', int $code = 400, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
@@ -48,11 +47,7 @@ class GeneralException extends Exception
     public function render(Request $request): JsonResponse|RedirectResponse
     {
         // All instances of ReportableException redirect back with a flash message to show a bootstrap alert-error
-        $response = [
-            'type'    => Notification::ERROR,
-            'title'   => __('notification.error'),
-            'message' => $this->message,
-        ];
+        $response = Notification::error($this->message);
 
         if ($request->expectsJson()) {
             return response()->json($response, ($this->code ?: \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST));

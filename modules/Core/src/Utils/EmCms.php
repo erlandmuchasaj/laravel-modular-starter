@@ -26,4 +26,11 @@ final class EmCms
      * @var string
      */
     public const AUTHOR = 'erland.muchasaj@gmail.com';
+
+    /**
+     * The default page limit
+     *
+     * @var int
+     */
+    public const PAGE_LIMIT = 15;
 }

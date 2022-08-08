@@ -55,6 +55,6 @@ class CurrentLocale
 
         $locales = config('app.locales');
 
-        return in_array($locale, $locales);
+        return in_array($locale, $locales, true);
     }
 }
