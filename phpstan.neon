@@ -13,10 +13,16 @@ parameters:
     ignoreErrors:
         - '#PHPDoc tag @var#'
         - '#Unsafe usage of new static#'
+        - '#Access to an undefined property [a-zA-Z0-9\_]+::\$.*#'
+
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php
 
+    parallel:
+        maximumNumberOfProcesses: 4
+
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
+    noUnnecessaryCollectionCall: false
     checkGenericClassInNonGenericObjectType: false

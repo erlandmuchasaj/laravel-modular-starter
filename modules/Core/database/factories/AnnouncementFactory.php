@@ -5,6 +5,9 @@ namespace Modules\Core\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Core\Models\Announcement\Announcement;
 
+/**
+ * @extends Factory<Announcement>
+ */
 class AnnouncementFactory extends Factory
 {
     /**

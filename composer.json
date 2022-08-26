@@ -98,7 +98,13 @@
         "reset": [
             "composer clear-all",
             "composer cache-all"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse --memory-limit=2G"
         ]
+    },
+    "scripts-descriptions": {
+        "phpstan": "Run PHPStan static analysis against your application."
     },
     "extra": {
         "laravel": {

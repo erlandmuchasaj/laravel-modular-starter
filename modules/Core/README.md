@@ -197,6 +197,17 @@ $this->app->scoped(Transistor::class, function ($app) {
 ./vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
+To add some exclusion to specific use cases:
+```text
+# - '#Access to an undefined property Modules\*\Http\Requests\(.*)::$.*#'
+# - '#Access to an undefined property Modules\*\Models(.*)::$.*#'
+# - '#Call to an undefined method Modules\*\Models(.*)::.*#'
+# - '#Call to an undefined static method Modules\(.*)\Models(.*)::.*#'
+# - '#Call to an undefined method Illuminate\(.*)::.*#'
+# - '#Call to an undefined static method Illuminate\(.*)::.*#'
+# - '#Access to an undefined property Modules\*\Http\Requests\(.*)::$.*#'
+```
+
 ```php
 // null coalesce if you need a default value.
 return $user->profile->twitter_id ?? null;

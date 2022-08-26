@@ -37,7 +37,6 @@ class AnnouncementRepository extends BaseRepository
     /**
      * @param array $data
      *
-     * @throws GeneralException
      * @throws Exception
      * @throws Throwable
      *
@@ -67,7 +66,6 @@ class AnnouncementRepository extends BaseRepository
      * @param Announcement  $announcement
      * @param array $data
      *
-     * @throws GeneralException
      * @throws Exception
      * @throws Throwable
      *
@@ -90,7 +88,6 @@ class AnnouncementRepository extends BaseRepository
      * @param Announcement  $announcement
      * @param int  $status
      *
-     * @throws GeneralException
      * @throws Exception
      * @throws Throwable
      *

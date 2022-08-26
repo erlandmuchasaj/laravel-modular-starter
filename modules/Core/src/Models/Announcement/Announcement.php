@@ -143,7 +143,7 @@ class Announcement extends Model
     /**
      * Create a new factory instance for the model.
      *
-     * @return Factory
+     * @return Factory<Announcement>
      */
     protected static function newFactory(): Factory
     {
