@@ -2,20 +2,17 @@
 
 namespace Modules\Core\Validators;
 
+use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Utils;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-
-use Exception;
-use Illuminate\Support\Facades\Cache;
+use GuzzleHttp\Utils;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use stdClass;
 
 class Indisposable
 {
-
     /**
      * Indisposable service name.
      *
@@ -23,14 +20,12 @@ class Indisposable
      */
     protected string $service;
 
-
     /**
      * Indisposable service enable status.
      *
      * @var bool
      */
     protected bool $enabled;
-
 
     /**
      * base service url.
@@ -46,27 +41,25 @@ class Indisposable
      */
     protected string $apiKey;
 
-
     /**
      * The Client object used for requests
      *
-     * @var Client $client
+     * @var Client
      */
     protected Client $client;
 
     /**
      * __construct
-     *
      */
-    public function __construct(){
-
+    public function __construct()
+    {
         $this->service = config('services.indisposable.default');
 
         $this->enabled = config('services.indisposable.enabled');
 
         $connections = config('services.indisposable.connections');
 
-        $this->baseUrl = rtrim($connections[$this->service]['domain'], '/\\') . '/';
+        $this->baseUrl = rtrim($connections[$this->service]['domain'], '/\\').'/';
 
         $this->apiKey = $connections[$this->service]['key'] ?? '';
 
@@ -77,17 +70,18 @@ class Indisposable
      * Validates whether an email address does not originate from a disposable email service.
      * The response is saved to prevent unnecessary checks.
      *
-     * @param string $attribute
-     * @param mixed $value
-     * @param array $parameters
-     * @param Validator $validator
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @param  array  $parameters
+     * @param  Validator  $validator
      * @return bool
      */
-    public function validate(string $attribute, mixed $value, array $parameters,Validator  $validator): bool
+    public function validate(string $attribute, mixed $value, array $parameters, Validator $validator): bool
     {
         if ($this->enabled) {
-            $cacheKey = $this->service . '_email_validator_' . $value;
-            return cache()->remember($cacheKey, now()->addMinutes(10), function () use ($value){
+            $cacheKey = $this->service.'_email_validator_'.$value;
+
+            return cache()->remember($cacheKey, now()->addMinutes(10), function () use ($value) {
                 return $this->isRealEmail($value);
             });
         }
@@ -108,15 +102,16 @@ class Indisposable
 
         $options = [
             'base_uri' => $this->baseUrl,
-            'verify'   => false,
-            'headers'  => [
+            'verify' => false,
+            'headers' => [
                 'Content-Type' => 'application/json; charset=utf-8',
                 'Accept' => 'application/json',
-                'X-Api-Key' => $this->service === 'block-temporary-email' ? $this->apiKey : ''
+                'X-Api-Key' => $this->service === 'block-temporary-email' ? $this->apiKey : '',
             ],
         ];
 
         $this->client = new Client($options);
+
         return $this->client;
     }
 
@@ -124,19 +119,17 @@ class Indisposable
      * Initialize the GuzzleHttp/Client instance
      *
      * @param  string  $email
-     *
      * @return bool
+     *
      * @throws GuzzleException
      */
     protected function isRealEmail(string $email): bool
     {
-
         if (false === $email = filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
         $domain = Str::after($email, '@');
-
 
         try {
             $response = $this->client->get($domain);
@@ -151,13 +144,13 @@ class Indisposable
             return true;
         }
 
-        return !$this->isDisposable($responseBody);
+        return ! $this->isDisposable($responseBody);
     }
-
 
     /**
      * Initialize the GuzzleHttp/Client instance
-     * @param mixed $response
+     *
+     * @param  mixed  $response
      * @return bool
      */
     protected function isDisposable(mixed $response): bool
@@ -173,11 +166,10 @@ class Indisposable
                 $res->status == 400, $res->disposable == true, $res->mx == false => true,
                 default => false,
             };
-
-
         } elseif ($this->service === 'block-temporary-email') {
             // return (bool) $response['temporary'];
             $res = $this->formatResponseBTE($response);
+
             return match (true) {
                 $res->status == 400, $res->disposable == true, $res->mx == false => true,
                 default => false,
@@ -187,11 +179,10 @@ class Indisposable
         return false;
     }
 
-
     /**
      * Query the API Validator Pica.
      *
-     * @param mixed $data
+     * @param  mixed  $data
      * @return stdClass API response data
      */
     private function formatResponseVP(mixed $data): stdClass
@@ -207,7 +198,7 @@ class Indisposable
     /**
      * Query the API Block Temporary Emails.
      *
-     * @param mixed $data
+     * @param  mixed  $data
      * @return stdClass API response data
      */
     private function formatResponseBTE(mixed $data): stdClass
@@ -219,5 +210,4 @@ class Indisposable
 
         return $object;
     }
-
 }

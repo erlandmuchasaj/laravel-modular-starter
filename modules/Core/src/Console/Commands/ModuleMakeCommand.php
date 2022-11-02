@@ -47,6 +47,7 @@ class ModuleMakeCommand extends GeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -58,7 +59,9 @@ class ModuleMakeCommand extends GeneratorCommand
 
     /**
      * Generate the entire structure of a module
+     *
      * @return void
+     *
      * @throws FileNotFoundException
      */
     public function generateModuleStructure(): void
@@ -69,7 +72,8 @@ class ModuleMakeCommand extends GeneratorCommand
         // language and that the class name will actually be valid. If it is not valid we
         // can error now and prevent from polluting the filesystem using invalid files.
         if ($this->isReservedName($moduleName)) {
-            $this->error('The name "' . $moduleName . '" is reserved by PHP.');
+            $this->error('The name "'.$moduleName.'" is reserved by PHP.');
+
             return;
         }
 
@@ -100,10 +104,10 @@ class ModuleMakeCommand extends GeneratorCommand
         // Add a default seeder on all modules
         // this will be used as an entry
         // point for seeding.
-        $seederStub = $this->files->get(__DIR__ . '/stubs/seeder.stub');
+        $seederStub = $this->files->get(__DIR__.'/stubs/seeder.stub');
         $this->files->put(
             "modules/{$moduleName}/database/seeders/DatabaseSeeder.php",
-            $this->replaceNamespace($seederStub, 'Modules\\'. $moduleName . '\\Database\Seeders\DatabaseSeeder')
+            $this->replaceNamespace($seederStub, 'Modules\\'.$moduleName.'\\Database\Seeders\DatabaseSeeder')
                 ->replaceModuleName($seederStub, $moduleName)
                 ->replaceClass($seederStub, 'DatabaseSeeder')
         );
@@ -111,7 +115,7 @@ class ModuleMakeCommand extends GeneratorCommand
         // there is a change in structure for translations from v8 to v9.
         if (version_compare(app()->version(), '9.0.0') >= 0) {
             $this->makeDirectory("modules/{$moduleName}/lang/en");
-            $this->files->put("modules/{$moduleName}/lang/en.json", "");
+            $this->files->put("modules/{$moduleName}/lang/en.json", '');
             $this->files->put("modules/{$moduleName}/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
         } else {
             $this->makeDirectory("modules/{$moduleName}/resources/lang/en");
@@ -162,48 +166,47 @@ class ModuleMakeCommand extends GeneratorCommand
 
         /**
          * Add .gitkeep files in folders in order to keep them in repositories
+         *
          * @note if we do not add .gitkeep the folder won't be pushed on repository.
          */
-
-        $this->files->put("modules/{$moduleName}/bootstrap/.gitkeep", "");
+        $this->files->put("modules/{$moduleName}/bootstrap/.gitkeep", '');
         $this->files->put("modules/{$moduleName}/config/config.php", "<?php \n\n/*\n * You can place your custom module configuration in here.\n */\n \nreturn [\n\n];\n");
 
-        $this->files->put("modules/{$moduleName}/database/factories/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/database/migrations/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/database/seeders/.gitkeep", "");
+        $this->files->put("modules/{$moduleName}/database/factories/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/database/migrations/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/database/seeders/.gitkeep", '');
 
-        $this->files->put("modules/{$moduleName}/resources/views/components/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/views/errors/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", "");
-        $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", "");
+        $this->files->put("modules/{$moduleName}/resources/views/components/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/resources/views/errors/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", '');
+        $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", '');
 
-        $stubWebRoute = $this->files->get($this->getStub() . "/routes/web.stub");
-        $stubApiRoute = $this->files->get($this->getStub() . "/routes/api.stub");
-        $stubBroadcastChannel = $this->files->get($this->getStub() . "/routes/channels.stub");
+        $stubWebRoute = $this->files->get($this->getStub().'/routes/web.stub');
+        $stubApiRoute = $this->files->get($this->getStub().'/routes/api.stub');
+        $stubBroadcastChannel = $this->files->get($this->getStub().'/routes/channels.stub');
 
         $this->files->put("modules/{$moduleName}/routes/web.php", $this->writeFile($stubWebRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/routes/api.php", $this->writeFile($stubApiRoute, $moduleName));
         $this->files->put("modules/{$moduleName}/routes/channels.php", $this->writeFile($stubBroadcastChannel, $moduleName));
         $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");
 
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", $this->getStub() . "/Providers/AppServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\EventServiceProvider", $this->getStub() . "/Providers/EventServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\RouteServiceProvider", $this->getStub() . "/Providers/RouteServiceProvider.stub");
-        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\SeedServiceProvider", $this->getStub() . "/Providers/SeedServiceProvider.stub");
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", $this->getStub().'/Providers/AppServiceProvider.stub');
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\EventServiceProvider", $this->getStub().'/Providers/EventServiceProvider.stub');
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\RouteServiceProvider", $this->getStub().'/Providers/RouteServiceProvider.stub');
+        $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\SeedServiceProvider", $this->getStub().'/Providers/SeedServiceProvider.stub');
 
-        $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get($this->getStub() . "/CHANGELOG.stub"));
-        $this->files->put("modules/{$moduleName}/README.md", $this->files->get($this->getStub() . "/README.stub"));
-        $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get($this->getStub() . "/LICENSE.stub"));
-
+        $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get($this->getStub().'/CHANGELOG.stub'));
+        $this->files->put("modules/{$moduleName}/README.md", $this->files->get($this->getStub().'/README.stub'));
+        $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get($this->getStub().'/LICENSE.stub'));
 
         $this->writeComposerFile($moduleName);
 
         $this->requireModule($moduleName);
 
-        $this->info($this->type . ' created successfully.');
+        $this->info($this->type.' created successfully.');
 
-        exec("composer update");
+        exec('composer update');
     }
 
     /**
@@ -219,12 +222,12 @@ class ModuleMakeCommand extends GeneratorCommand
     /**
      * Build the directory for the class if necessary.
      *
-     * @param string $path
+     * @param  string  $path
      * @return string
      */
     protected function makeDirectory($path): string
     {
-        if (!$this->files->isDirectory($path)) {
+        if (! $this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
         }
 
@@ -238,14 +241,14 @@ class ModuleMakeCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/module';
+        return __DIR__.'/stubs/module';
     }
 
     /**
      * Build the class with the given name.
      *
-     * @param string $name
-     * @param string $stubPath
+     * @param  string  $name
+     * @param  string  $stubPath
      * @return int|bool
      *
      * @throws FileNotFoundException
@@ -256,9 +259,9 @@ class ModuleMakeCommand extends GeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        $class = str_replace($this->getNamespace($name) . '\\', '', $name);
+        $class = str_replace($this->getNamespace($name).'\\', '', $name);
 
-        $filePath = "modules" . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . "Providers" . DIRECTORY_SEPARATOR . $class . ".php";
+        $filePath = 'modules'.DIRECTORY_SEPARATOR.$moduleName.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.$class.'.php';
 
         return $this->files->put(
             $filePath,
@@ -267,14 +270,14 @@ class ModuleMakeCommand extends GeneratorCommand
     }
 
     /**
-     * @param string $moduleName
+     * @param  string  $moduleName
      * @return void
      *
      * @throws FileNotFoundException
      */
     public function writeComposerFile(string $moduleName): void
     {
-        $content = $this->files->get($this->getStub() . "/composer.stub");
+        $content = $this->files->get($this->getStub().'/composer.stub');
 
         $snakeModuleName = Str::kebab($moduleName);
 
@@ -285,10 +288,9 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/composer.json", $content);
     }
 
-
     /**
-     * @param string $stub
-     * @param string $moduleName
+     * @param  string  $stub
+     * @param  string  $moduleName
      * @return string
      */
     public function writeFile(string $stub, string $moduleName): string
@@ -310,24 +312,26 @@ class ModuleMakeCommand extends GeneratorCommand
 
     /**
      * Put the new module on the main json file of Laravel
-     * @param string $moduleName
+     *
+     * @param  string  $moduleName
      * @return void
+     *
      * @throws FileNotFoundException
      */
     public function requireModule(string $moduleName): void
     {
         $snakeModuleName = Str::kebab($moduleName);
-        $content = $this->files->get("composer.json");
+        $content = $this->files->get('composer.json');
         $phpArray = json_decode($content, true);
-        $phpArray['require']['modules/' . $snakeModuleName] = '^1.0';
-        $this->files->put("composer.json", json_encode($phpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $phpArray['require']['modules/'.$snakeModuleName] = '^1.0';
+        $this->files->put('composer.json', json_encode($phpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     /**
      * Replace the Module class name for the given stub.
      *
-     * @param string $stub
-     * @param string $moduleName
+     * @param  string  $stub
+     * @param  string  $moduleName
      * @return $this
      */
     protected function replaceModuleName(string &$stub, string $moduleName): static

@@ -146,7 +146,7 @@ abstract class BaseService
     /**
      * Get the specified model record from the database.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Model
      */
     public function getById(int $id): Model
@@ -159,8 +159,8 @@ abstract class BaseService
     }
 
     /**
-     * @param string $item
-     * @param string $column
+     * @param  string  $item
+     * @param  string  $column
      * @param  array  $columns
      * @return Model|Builder|null
      */
@@ -176,7 +176,7 @@ abstract class BaseService
     /**
      * Delete the specified model record from the database.
      *
-     * @param int $id
+     * @param  int  $id
      * @return bool|null
      *
      * @throws Exception
@@ -191,7 +191,7 @@ abstract class BaseService
     /**
      * Set the query limit.
      *
-     * @param int $limit
+     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit): static
@@ -204,8 +204,8 @@ abstract class BaseService
     /**
      * Set an ORDER BY clause.
      *
-     * @param string $column
-     * @param string $direction
+     * @param  string  $column
+     * @param  string  $direction
      * @return $this
      */
     public function orderBy(string $column, string $direction = 'asc'): static
@@ -216,10 +216,10 @@ abstract class BaseService
     }
 
     /**
-     * @param int $limit
-     * @param array $columns
-     * @param string $pageName
-     * @param int|null $page
+     * @param  int  $limit
+     * @param  array  $columns
+     * @param  string  $pageName
+     * @param  int|null  $page
      * @return LengthAwarePaginator
      */
     public function paginate(int $limit = 25, array $columns = ['*'], string $pageName = 'page', int $page = null): LengthAwarePaginator
@@ -236,9 +236,9 @@ abstract class BaseService
     /**
      * Add a simple where clause to the query.
      *
-     * @param string $column
-     * @param string $value
-     * @param string $operator
+     * @param  string  $column
+     * @param  string  $value
+     * @param  string  $operator
      * @return $this
      */
     public function where(string $column, string $value, string $operator = '='): static
@@ -251,7 +251,7 @@ abstract class BaseService
     /**
      * Add a simple where in clause to the query.
      *
-     * @param string $column
+     * @param  string  $column
      * @param  mixed  $values
      * @return $this
      */
@@ -267,7 +267,7 @@ abstract class BaseService
     /**
      * Set Eloquent relationships to eager load.
      *
-     * @param string|array $relations
+     * @param  string|array  $relations
      * @return $this
      */
     public function with(string|array $relations): static
@@ -326,7 +326,7 @@ abstract class BaseService
             $this->query->orderBy($orders['column'], $orders['direction']);
         }
 
-        if (isset($this->take) and !empty($this->take)) {
+        if (isset($this->take) and ! empty($this->take)) {
             $this->query->take($this->take);
         }
 

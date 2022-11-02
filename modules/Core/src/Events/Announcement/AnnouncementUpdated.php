@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modules\Core\Events\Announcement;
 
 /**
@@ -8,5 +7,4 @@ namespace Modules\Core\Events\Announcement;
  */
 class AnnouncementUpdated extends AnnouncementEvent
 {
-
 }

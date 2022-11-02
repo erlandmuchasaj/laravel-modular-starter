@@ -44,8 +44,9 @@ class PolicyMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
@@ -62,7 +63,7 @@ class PolicyMakeCommand extends BaseGeneratorCommand
     /**
      * Replace the User model namespace.
      *
-     * @param string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function replaceUserNamespace(string $stub): string
@@ -109,8 +110,8 @@ class PolicyMakeCommand extends BaseGeneratorCommand
     /**
      * Replace the model for the given stub.
      *
-     * @param string $stub
-     * @param string $model
+     * @param  string  $stub
+     * @param  string  $model
      * @return string
      */
     protected function replaceModel(string $stub, string $model): string

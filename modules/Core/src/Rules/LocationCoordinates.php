@@ -20,9 +20,9 @@ class LocationCoordinates implements Rule
     public function passes($attribute, $value): bool
     {
         return preg_match(
-                '/^[-]?((([0-8]?[0-9])(\.(\d{1,8}))?)|(90(\.0+)?)),\s?[-]?((((1[0-7][0-9])|([0-9]?[0-9]))(\.(\d{1,8}))?)|180(\.0+)?)$/',
-                $value
-            ) > 0;
+            '/^[-]?((([0-8]?[0-9])(\.(\d{1,8}))?)|(90(\.0+)?)),\s?[-]?((((1[0-7][0-9])|([0-9]?[0-9]))(\.(\d{1,8}))?)|180(\.0+)?)$/',
+            $value
+        ) > 0;
     }
 
     /**
@@ -30,7 +30,7 @@ class LocationCoordinates implements Rule
      *
      * @return string
      */
-    public function message() : string
+    public function message(): string
     {
         return 'The :attribute must be a valid set of latitude and longitude coordinates, with a limit of 8 digits after a decimal point';
     }

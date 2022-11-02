@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Modules\User\Models\User\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Modules\User\Models\User\User;
 
 class RegisteredUserController extends Controller
 {
@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse
      *
      * @throws ValidationException

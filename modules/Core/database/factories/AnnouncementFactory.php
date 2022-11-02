@@ -29,7 +29,7 @@ class AnnouncementFactory extends Factory
             'type' => $this->faker->randomElement(['success', 'danger', 'warning', 'info']),
             'message' => $this->faker->realText(180),
             'enabled' => $this->faker->boolean(),
-            'ends_at' => now()->subDay()
+            'ends_at' => now()->subDay(),
         ];
     }
 }

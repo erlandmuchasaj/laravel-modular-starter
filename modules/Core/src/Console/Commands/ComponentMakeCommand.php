@@ -6,7 +6,6 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ComponentMakeCommand extends BaseGeneratorCommand
 {
@@ -46,6 +45,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -54,14 +54,15 @@ class ComponentMakeCommand extends BaseGeneratorCommand
             $this->writeView(function () {
                 $this->info($this->type.' created successfully.');
             });
+
             return null;
         }
 
-        if (parent::handle() === false && !$this->option('force')) {
+        if (parent::handle() === false && ! $this->option('force')) {
             return false;
         }
 
-        if (!$this->option('inline')) {
+        if (! $this->option('inline')) {
             $this->writeView();
         }
 
@@ -72,20 +73,19 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      * Write the view for the component.
      *
      * @param  callable|null  $onSuccess
-     *
      * @return void
      */
     protected function writeView(callable $onSuccess = null)
     {
         $path = $this->viewPath(
-            str_replace('.', '/', 'components.' . $this->getView()) . '.blade.php'
+            str_replace('.', '/', 'components.'.$this->getView()).'.blade.php'
         );
 
-        if (!$this->files->isDirectory(dirname($path))) {
+        if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
 
-        if ($this->files->exists($path) && !$this->option('force')) {
+        if ($this->files->exists($path) && ! $this->option('force')) {
             $this->error('View already exists!');
 
             return;
@@ -94,7 +94,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
         file_put_contents(
             $path,
             '<div>
-    <!-- ' . Inspiring::quote() . ' -->
+    <!-- '.Inspiring::quote().' -->
 </div>'
         );
 
@@ -106,8 +106,9 @@ class ComponentMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
@@ -156,12 +157,12 @@ class ComponentMakeCommand extends BaseGeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\View\\Components';
+        return $rootNamespace.'\\View\\Components';
     }
 
     /**

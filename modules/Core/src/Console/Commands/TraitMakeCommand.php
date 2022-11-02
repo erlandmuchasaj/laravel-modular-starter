@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Console\Commands;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class TraitMakeCommand extends BaseGeneratorCommand
@@ -47,7 +46,7 @@ class TraitMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         if ($this->option('model')) {
-            return $rootNamespace.'\\Models\\'. $this->option('model');
+            return $rootNamespace.'\\Models\\'.$this->option('model');
         } else {
             return $rootNamespace.'\\Traits';
         }

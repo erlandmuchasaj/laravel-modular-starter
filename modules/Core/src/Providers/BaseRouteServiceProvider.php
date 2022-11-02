@@ -3,13 +3,12 @@
 namespace Modules\Core\Providers;
 
 use Illuminate\Contracts\Foundation\CachesRoutes;
-use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 use Modules\Core\Utils\EmCms;
 
 abstract class BaseRouteServiceProvider extends ServiceProvider
 {
-
     /**
      * The base platform name.
      * This SHOULD NOT be changed.
@@ -57,11 +56,10 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
      */
     abstract protected function getChannelsRoute(): string;
 
-
     /**
      * Define the routes for the application.
      *
-     * @param Router $router
+     * @param  Router  $router
      * @return void
      */
     public function map(Router $router): void
@@ -71,7 +69,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
         // controller namespace. After that we will load the EMCMS routes file.
 
         if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
-            # mapApiRoutes
+            // mapApiRoutes
             $router->group([
                 'prefix' => 'api',
                 'middleware' => ['api'],
@@ -80,7 +78,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
                 $this->loadApiRoutes($router);
             });
 
-            # mapWebRoutes
+            // mapWebRoutes
             $router->group([
                 'middleware' => ['web'],
                 'namespace' => $this->namespace,
@@ -89,14 +87,14 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
             });
         }
 
-        # Channels
+        // Channels
         $this->loadChannelsRoutes();
-
     }
 
     /**
      * Load all web routes.
-     * @param Router $router
+     *
+     * @param  Router  $router
      */
     private function loadWebRoutes(Router $router): void
     {
@@ -110,7 +108,8 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Load /Api routes
-     * @param Router $router
+     *
+     * @param  Router  $router
      */
     private function loadApiRoutes(Router $router): void
     {
@@ -135,5 +134,4 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
             require $channels;
         }
     }
-
 }

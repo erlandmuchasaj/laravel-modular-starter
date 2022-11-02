@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,26 +34,26 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        # when we go live we might want to force SSL
-        # on the requests and responses
+        // when we go live we might want to force SSL
+        // on the requests and responses
         if ($this->app->isProduction() && config('app.ssl')) {
             URL::forceScheme('https');
         }
 
         // prevent user to send accidental arrays
-        if (!$this->app->isProduction()) {
+        if (! $this->app->isProduction()) {
             Mail::alwaysTo('foo@example.org');
         }
 
         // Handle SQL Error schema migrate
-        if (PHP_OS === 'WINNT' && !$this->app->isProduction()) {
+        if (PHP_OS === 'WINNT' && ! $this->app->isProduction()) {
             Schema::defaultStringLength(191);
         }
 
-        # Remove 'data' from json api responses
+        // Remove 'data' from json api responses
         JsonResource::withoutWrapping();
 
-        # Find N+1 problems instantly by disabling lazy loading
+        // Find N+1 problems instantly by disabling lazy loading
         Model::preventLazyLoading($this->app->isLocal());
     }
 }

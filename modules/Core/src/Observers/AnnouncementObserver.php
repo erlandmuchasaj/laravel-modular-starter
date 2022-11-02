@@ -9,14 +9,13 @@ use Modules\Core\Models\Announcement\Announcement;
  */
 class AnnouncementObserver
 {
-
     /**
      * Handle the Model "retrieved" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function retrieved(Announcement $announcement) : void
+    public function retrieved(Announcement $announcement): void
     {
         //
         logger('Announcement retrieved');
@@ -25,10 +24,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "creating" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function creating(Announcement $announcement) : void
+    public function creating(Announcement $announcement): void
     {
         //
         logger('Announcement creating');
@@ -37,10 +36,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "created" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function created(Announcement $announcement) : void
+    public function created(Announcement $announcement): void
     {
         //
         logger('Announcement created');
@@ -49,10 +48,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "updating" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function updating(Announcement $announcement) : void
+    public function updating(Announcement $announcement): void
     {
         //
         logger('Announcement updating');
@@ -61,10 +60,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "updated" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function updated(Announcement $announcement) : void
+    public function updated(Announcement $announcement): void
     {
         //
         logger('Announcement updated');
@@ -73,10 +72,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "saving" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function saving(Announcement $announcement) : void
+    public function saving(Announcement $announcement): void
     {
         //
         logger('Announcement saving');
@@ -85,10 +84,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "saved" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function saved(Announcement $announcement) : void
+    public function saved(Announcement $announcement): void
     {
         //
         logger('Announcement saved');
@@ -97,10 +96,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "deleting" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function deleting(Announcement $announcement) : void
+    public function deleting(Announcement $announcement): void
     {
         //
         logger('Announcement deleting');
@@ -109,10 +108,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "deleted" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function deleted(Announcement $announcement) : void
+    public function deleted(Announcement $announcement): void
     {
         //
         logger('Announcement deleted');
@@ -121,10 +120,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "restoring" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function restoring(Announcement $announcement) : void
+    public function restoring(Announcement $announcement): void
     {
         //
         logger('Announcement restoring');
@@ -133,10 +132,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "restored" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function restored(Announcement $announcement) : void
+    public function restored(Announcement $announcement): void
     {
         //
         logger('Announcement restored');
@@ -145,10 +144,10 @@ class AnnouncementObserver
     /**
      * Handle the Model "force deleted" event.
      *
-     * @param  Announcement $announcement
+     * @param  Announcement  $announcement
      * @return void
      */
-    public function forceDeleted(Announcement $announcement) : void
+    public function forceDeleted(Announcement $announcement): void
     {
         //
         logger('Announcement forceDeleted');

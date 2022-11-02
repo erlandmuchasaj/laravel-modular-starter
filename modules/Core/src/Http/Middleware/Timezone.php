@@ -9,7 +9,6 @@ class Timezone
 {
     public function handle(Request $request, Closure $next): mixed
     {
-
         $response = $next($request);
 
         // $default_timezone = (auth()->check()) ? optional(auth()->user())->timezone : 'UTC';
@@ -29,7 +28,6 @@ class Timezone
         //     return $response->withCookie(cookie()->forever('timezone', $default_timezone));
         // }
         return $response;
-
 
         // return $next($request)->withCookie('locale', app()->getLocale(), 60 * 24 * 365 * 5);
     }

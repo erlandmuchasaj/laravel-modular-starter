@@ -6,7 +6,6 @@ use Parsedown;
 
 trait AccessorTrait
 {
-
     /**
      * Get the parsed body of the announcement.
      *
@@ -16,5 +15,4 @@ trait AccessorTrait
     {
         return (new Parsedown)->text(htmlspecialchars($this->attributes['message']));
     }
-
 }

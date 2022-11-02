@@ -43,6 +43,7 @@ class SeederMakeCommand extends BaseGeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -72,7 +73,7 @@ class SeederMakeCommand extends BaseGeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path() . "/modules/{$moduleName}/database/seeders/" . $name.'.php';
+        return base_path()."/modules/{$moduleName}/database/seeders/".$name.'.php';
     }
 
     /**

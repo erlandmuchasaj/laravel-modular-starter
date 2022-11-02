@@ -19,7 +19,6 @@ use Throwable;
  */
 class AnnouncementController extends Controller
 {
-
     /**
      * @var AnnouncementRepository
      */
@@ -28,7 +27,7 @@ class AnnouncementController extends Controller
     /**
      * UserController constructor.
      *
-     * @param AnnouncementRepository $announcementRepository
+     * @param  AnnouncementRepository  $announcementRepository
      */
     public function __construct(AnnouncementRepository $announcementRepository)
     {
@@ -38,12 +37,11 @@ class AnnouncementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ManageAnnouncementRequest $request
+     * @param  ManageAnnouncementRequest  $request
      * @return RedirectResponse|JsonResponse
      *
      * @throws GeneralException
      * @throws Throwable
-     *
      * @throws GeneralException
      */
     public function store(ManageAnnouncementRequest $request): RedirectResponse|JsonResponse
@@ -56,7 +54,7 @@ class AnnouncementController extends Controller
 
         Event::dispatch('core.announcement.create.after', $announcement);
 
-        # To listen fo specific events we listen on boot() method os EventServiceProvider
+        // To listen fo specific events we listen on boot() method os EventServiceProvider
         // Event::listen('core.announcement.create.after', 'Modules\Core\Listeners\Announcement@sendNewAnnouncementMail');
 
         if ($request->expectsJson()) {
@@ -72,8 +70,7 @@ class AnnouncementController extends Controller
             'title' => __('notification.success'),
             'message' => __('Announcement Created'),
         ];
+
         return redirect()->route('home')->with([Notification::NAME => json_encode($response)]);
     }
-
-
 }

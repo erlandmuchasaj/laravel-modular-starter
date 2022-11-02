@@ -2,38 +2,35 @@
 
 namespace Modules\Core\Providers;
 
-
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\MigrationCreator;
-
-use Modules\Core\Console\Commands\{CastMakeCommand,
-    ChannelMakeCommand,
-    ComponentMakeCommand,
-    ConsoleMakeCommand,
-    EventMakeCommand,
-    ExceptionMakeCommand,
-    FactoryMakeCommand,
-    JobMakeCommand,
-    ListenerMakeCommand,
-    ControllerMakeCommand,
-    MailMakeCommand,
-    MiddlewareMakeCommand,
-    MigrateMakeCommand,
-    ModelMakeCommand,
-    ModuleMakeCommand,
-    NotificationMakeCommand,
-    ObserverMakeCommand,
-    PolicyMakeCommand,
-    ProviderMakeCommand,
-    RequestMakeCommand,
-    ResourceMakeCommand,
-    RuleMakeCommand,
-    ScopeMakeCommand,
-    SeederMakeCommand,
-    TraitMakeCommand,
-    TestMakeCommand};
-
+use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Support\ServiceProvider;
+use Modules\Core\Console\Commands\CastMakeCommand;
+use Modules\Core\Console\Commands\ChannelMakeCommand;
+use Modules\Core\Console\Commands\ComponentMakeCommand;
+use Modules\Core\Console\Commands\ConsoleMakeCommand;
+use Modules\Core\Console\Commands\ControllerMakeCommand;
+use Modules\Core\Console\Commands\EventMakeCommand;
+use Modules\Core\Console\Commands\ExceptionMakeCommand;
+use Modules\Core\Console\Commands\FactoryMakeCommand;
+use Modules\Core\Console\Commands\JobMakeCommand;
+use Modules\Core\Console\Commands\ListenerMakeCommand;
+use Modules\Core\Console\Commands\MailMakeCommand;
+use Modules\Core\Console\Commands\MiddlewareMakeCommand;
+use Modules\Core\Console\Commands\MigrateMakeCommand;
+use Modules\Core\Console\Commands\ModelMakeCommand;
+use Modules\Core\Console\Commands\ModuleMakeCommand;
+use Modules\Core\Console\Commands\NotificationMakeCommand;
+use Modules\Core\Console\Commands\ObserverMakeCommand;
+use Modules\Core\Console\Commands\PolicyMakeCommand;
+use Modules\Core\Console\Commands\ProviderMakeCommand;
+use Modules\Core\Console\Commands\RequestMakeCommand;
+use Modules\Core\Console\Commands\ResourceMakeCommand;
+use Modules\Core\Console\Commands\RuleMakeCommand;
+use Modules\Core\Console\Commands\ScopeMakeCommand;
+use Modules\Core\Console\Commands\SeederMakeCommand;
+use Modules\Core\Console\Commands\TestMakeCommand;
+use Modules\Core\Console\Commands\TraitMakeCommand;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
@@ -108,7 +105,6 @@ class ConsoleServiceProvider extends ServiceProvider
             ->give(function ($app) {
                 return $app->basePath('stubs');
             });
-
 
         // The migrator is responsible for actually running and rollback the migration
         // files in the application. We'll pass in our database connection resolver

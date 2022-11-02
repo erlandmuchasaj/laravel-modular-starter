@@ -63,7 +63,7 @@ return [
 
         'sentry' => [
             'driver' => 'sentry',
-            'level'  => 'debug', // The minimum monolog logging level at which this handler will be triggered
+            'level' => 'debug', // The minimum monolog logging level at which this handler will be triggered
             // 'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency',
             'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
         ],

@@ -10,12 +10,10 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-
 use Modules\Core\Traits\CanPublishConfiguration;
 
 abstract class BaseAppServiceProvider extends ServiceProvider
 {
-
     use CanPublishConfiguration;
 
     /**
@@ -48,7 +46,9 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * The policy mappings for the application.
+     *
      * @example Model::class => ModelPolicy::class
+     *
      * @var array
      */
     protected array $policies = [
@@ -56,6 +56,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Boot module observers.
+     *
      * @example Model::class => ModelObserver::class
      *
      * @return array
@@ -65,7 +66,9 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * register module aliases.
+     *
      * @example 'alias' => Model::class
+     *
      * @return array
      */
     protected array $aliases = [
@@ -73,6 +76,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * The application's global middleware stack.
+     *
      * @example MiddlewareClass::class
      *
      * @var array
@@ -95,6 +99,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     /**
      * The application's route middleware.
      * These middleware may be assigned to group or used individually.
+     *
      * @example
      * 'subscription.is_customer' => hasBeenCustomer::class,
      *
@@ -105,6 +110,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * The available command shortname.
+     *
      * @example CommandNameClass::class
      *
      * @var array
@@ -115,14 +121,16 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     /**
      * Bootstrap your package's services.
 
+     *
      * @return void
+     *
      * @throws BindingResolutionException
      */
     public function boot(): void
     {
-        # This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
-        # ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
-        Blade::componentNamespace('\\Modules\\'.$this->module().'\\Views\\Components', $this->module(true)); #
+        // This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
+        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
+        Blade::componentNamespace('\\Modules\\'.$this->module().'\\Views\\Components', $this->module(true)); //
 
         // publish migrations
         $this->bootMigrations();
@@ -179,7 +187,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
         // Register providers
         $this->registerProviders();
-
     }
 
     /**
@@ -255,11 +262,12 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      * bootMiddleware
      *
      * @return void
+     *
      * @throws BindingResolutionException
      */
     protected function bootMiddleware(): void
     {
-        # Register global middleware
+        // Register global middleware
         $kernel = $this->app->make(Kernel::class);
         foreach ($this->middleware as $middleware) {
             $kernel->pushMiddleware($middleware);
@@ -267,17 +275,17 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
         $router = $this->app->make(Router::class);
 
-        # Register route middleware
+        // Register route middleware
         foreach ($this->routeMiddleware as $name => $class) {
             $router->aliasMiddleware($name, $class);
-            # $this->app['router']->aliasMiddleware($name, $class);
+            // $this->app['router']->aliasMiddleware($name, $class);
         }
 
-        # Register group middleware
+        // Register group middleware
         foreach ($this->middlewareGroups as $group => $middlewares) {
             foreach ($middlewares as $middleware) {
                 $router->pushMiddlewareToGroup($group, $middleware);
-                # $this->app['router']->pushMiddlewareToGroup($group, $middleware);
+                // $this->app['router']->pushMiddlewareToGroup($group, $middleware);
             }
         }
     }
@@ -311,7 +319,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     protected function bootPolicies(): void
     {
-        # Gate::policy(Model::class, ModelPolicy::class);
+        // Gate::policy(Model::class, ModelPolicy::class);
         foreach ($this->policies as $className => $policyName) {
             Gate::policy($className, $policyName);
         }
@@ -319,14 +327,15 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootObservers
+     *
      * @return void
      */
     protected function bootObservers(): void
     {
-        # Model::observe(ModelObserver::class);
+        // Model::observe(ModelObserver::class);
         foreach ($this->observers as $className => $observerName) {
             $classObj = app($className);
-            if (!is_null($classObj)) {
+            if (! is_null($classObj)) {
                 $classObj::observe($observerName);
             }
         }
@@ -349,7 +358,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     protected function bootMigrations(): void
     {
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'database'. DIRECTORY_SEPARATOR . 'migrations');
+        $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
 
         $this->loadMigrationsFrom($path);
 
@@ -367,7 +376,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     protected function bootViews(): void
     {
-        $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'views');
+        $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views');
 
         $this->loadViewsFrom($path, $this->module(true));
 
@@ -391,9 +400,9 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     {
         // there is a change in structure for translations from v8 to v9.
         if (version_compare(app()->version(), '9.0.0') >= 0) {
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'lang');
+            $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'lang');
         } else {
-            $path = base_path('modules' . DIRECTORY_SEPARATOR . $this->module() . DIRECTORY_SEPARATOR . 'resources'. DIRECTORY_SEPARATOR . 'lang');
+            $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'lang');
         }
 
         $this->loadTranslationsFrom($path, $this->module(true));
@@ -415,7 +424,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
             if ($this->app->runningInConsole()) {
                 $this->publishes([
-                    __DIR__ . '/../../database/seeders/DatabaseSeeder.php' => database_path('seeders/' . $this->module() . 'ModuleSeeder.php'),
+                    __DIR__.'/../../database/seeders/DatabaseSeeder.php' => database_path('seeders/'.$this->module().'ModuleSeeder.php'),
                 ], 'seeders');
             }
         }
@@ -424,16 +433,16 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     /**
      * Get module case according to different usage cases.
      * Studly or snake case.
-     * @param bool $snake
      *
+     * @param  bool  $snake
      * @return string
      */
     protected function module(bool $snake = false): string
     {
-        if ($snake === true){
+        if ($snake === true) {
             return Str::snake($this->module);
         }
+
         return Str::studly($this->module);
     }
-
 }

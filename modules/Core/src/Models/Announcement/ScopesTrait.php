@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait ScopesTrait
 {
-
     /**
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return Builder<Announcement>
      */
     public function scopeEnabled(Builder $query): Builder
@@ -18,9 +16,8 @@ trait ScopesTrait
     }
 
     /**
-     * @param Builder $query
-     * @param string $area
-     *
+     * @param  Builder  $query
+     * @param  string  $area
      * @return Builder<Announcement>
      */
     public function scopeForArea(Builder $query, string $area): Builder
@@ -32,8 +29,7 @@ trait ScopesTrait
     }
 
     /**
-     * @param Builder $query
-     *
+     * @param  Builder  $query
      * @return Builder<Announcement>
      */
     public function scopeInTimeFrame(Builder $query): Builder
@@ -58,5 +54,4 @@ trait ScopesTrait
             });
         });
     }
-
 }

@@ -39,8 +39,9 @@ class AppVersion extends Command
      */
     public function handle(): int
     {
-        $this->comment('App version: ' . config('app.version'));
-        $this->comment('Platform version: ' . EmCms::NAME . ' ' . EmCms::VERSION);
+        $this->comment('App version: '.config('app.version'));
+        $this->comment('Platform version: '.EmCms::NAME.' '.EmCms::VERSION);
+
         return CommandAlias::SUCCESS;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Modules\User\Database\Factories;
 
-use Modules\User\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Modules\User\Models\User\User;
 
 /**
  * @extends Factory<User>
@@ -47,5 +47,4 @@ class UserFactory extends Factory
             ];
         });
     }
-
 }

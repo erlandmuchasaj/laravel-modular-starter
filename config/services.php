@@ -105,7 +105,7 @@ return [
         'connections' => [
             'open.kickbox' => [
                 'domain' => 'https://open.kickbox.com/v1/disposable',
-                'email' => 'https://open.kickbox.com/v1/disposable', # this does not support email check
+                'email' => 'https://open.kickbox.com/v1/disposable', // this does not support email check
             ],
 
             'validator.pizza' => [
@@ -117,6 +117,6 @@ return [
                 'domain' => 'https://block-temporary-email.com/check/domain',
                 'email' => 'https://block-temporary-email.com/check/email',
             ],
-        ]
+        ],
     ],
 ];

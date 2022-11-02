@@ -16,23 +16,22 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IdempotencyMiddleware
 {
-
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        # the following method are idempotent so no need to process them.
+        // the following method are idempotent so no need to process them.
         if (in_array($request->method(), ['GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE'], true)) {
             return $next($request);
         }
 
         $requestId = strval($request->header(config('app.idempotency.key')));
-        if (!$requestId) {
+        if (! $requestId) {
             return $next($request);
         }
 
@@ -44,12 +43,11 @@ class IdempotencyMiddleware
 
         $response->header(config('app.idempotency.key'), $requestId);
 
-        # if it's not an error, cache it
+        // if it's not an error, cache it
         // if (in_array($response->status(), [Response::HTTP_OK, Response::HTTP_CREATED, Response::HTTP_ACCEPTED, Response::HTTP_NO_CONTENT])) {
-            Cache::put($requestId, $response, config('app.idempotency.cache_time'));
+        Cache::put($requestId, $response, config('app.idempotency.cache_time'));
         // }
 
         return $response;
     }
-
 }

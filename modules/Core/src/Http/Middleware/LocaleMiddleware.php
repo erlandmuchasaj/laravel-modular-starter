@@ -15,10 +15,10 @@ class LocaleMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
-     *
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

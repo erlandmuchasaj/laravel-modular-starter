@@ -17,4 +17,3 @@ class NotFoundController extends Controller
         return response()->view('errors.404', [], 404);
     }
 }
-

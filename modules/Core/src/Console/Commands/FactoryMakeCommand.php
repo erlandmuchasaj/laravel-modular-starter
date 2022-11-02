@@ -53,8 +53,9 @@ class FactoryMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
@@ -68,7 +69,7 @@ class FactoryMakeCommand extends BaseGeneratorCommand
         $model = class_basename($namespaceModel);
 
         if (Str::startsWith($namespaceModel, $this->rootNamespace().'Models')) {
-            $namespace = Str::beforeLast($this->getDefaultNamespace(trim($this->rootNamespace(), '\\'))."\\".Str::after($namespaceModel, $this->rootNamespace().'Models\\'), '\\');
+            $namespace = Str::beforeLast($this->getDefaultNamespace(trim($this->rootNamespace(), '\\')).'\\'.Str::after($namespaceModel, $this->rootNamespace().'Models\\'), '\\');
         } else {
             $namespace = $this->getDefaultNamespace(trim($this->rootNamespace(), '\\'));
         }
@@ -104,15 +105,13 @@ class FactoryMakeCommand extends BaseGeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path() . "/modules/{$moduleName}/database/factories/" . str_replace('\\', '/', $name).'.php';
-
+        return base_path()."/modules/{$moduleName}/database/factories/".str_replace('\\', '/', $name).'.php';
     }
 
     /**
      * Guess the model name from the Factory name or return a default model name.
      *
      * @param  string  $name
-     *
      * @return string
      */
     protected function guessModelName(string $name): string
@@ -123,15 +122,15 @@ class FactoryMakeCommand extends BaseGeneratorCommand
 
         $modelName = $this->qualifyModel(Str::after($name, $this->rootNamespace()));
 
-
         if (class_exists($modelName)) {
             return $modelName;
         }
 
-        $modelPath = base_path() . "/modules/{$this->getModuleInput()}/src/Models/";
+        $modelPath = base_path()."/modules/{$this->getModuleInput()}/src/Models/";
         if (is_dir($modelPath)) {
             return $this->rootNamespace().'Models\Model';
         }
+
         return $this->rootNamespace().'Model';
     }
 

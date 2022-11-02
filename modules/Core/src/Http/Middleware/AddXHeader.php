@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class AddXHeader
 {
-
     /**
      * @var array
      */
@@ -19,13 +18,12 @@ class AddXHeader
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
-
         // They seem to mess up the tests so disable them
         if (config('app.testing')) {
             return $next($request);
@@ -50,13 +48,13 @@ class AddXHeader
     }
 
     /**
-     * @param mixed $response
+     * @param  mixed  $response
      * @return void
      */
     private function decorateResponse(mixed $response): void
     {
         // Check if we should/can add header
-        if (method_exists((object) $response,'header')) {
+        if (method_exists((object) $response, 'header')) {
             // Info: https://scotthelme.co.uk/hardening-your-http-response-headers
 
             // Set miscellaneous headers.
@@ -171,9 +169,7 @@ class AddXHeader
              *
              * Reference: https://w3c.github.io/webappsec-permissions-policy/
              */
-            $response->headers->set('Permissions-Policy', "accelerometer=(self), autoplay=(self), camera=(self), cross-origin-isolated=(self), display-capture=(self), document-domain=*, encrypted-media=(self), fullscreen=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), midi=(self), payment=(self), picture-in-picture=*, publickey-credentials-get=(self), screen-wake-lock=(self), sync-xhr=*, usb=(self), web-share=(self), xr-spatial-tracking=(self)", true);
+            $response->headers->set('Permissions-Policy', 'accelerometer=(self), autoplay=(self), camera=(self), cross-origin-isolated=(self), display-capture=(self), document-domain=*, encrypted-media=(self), fullscreen=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), midi=(self), payment=(self), picture-in-picture=*, publickey-credentials-get=(self), screen-wake-lock=(self), sync-xhr=*, usb=(self), web-share=(self), xr-spatial-tracking=(self)', true);
         }
-
     }
-
 }

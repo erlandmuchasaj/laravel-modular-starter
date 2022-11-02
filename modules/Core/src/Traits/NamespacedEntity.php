@@ -4,10 +4,9 @@ namespace Modules\Core\Traits;
 
 trait NamespacedEntity
 {
-
-
     /**
      * The root namespace to assume when generating URLs to actions.
+     *
      * @var string|null
      */
     protected static ?string $entityNamespace = null;
@@ -25,7 +24,7 @@ trait NamespacedEntity
     /**
      * Sets the entity namespace.
      *
-     * @param string $namespace
+     * @param  string  $namespace
      * @return void
      */
     public static function setEntityNamespace(string $namespace): void

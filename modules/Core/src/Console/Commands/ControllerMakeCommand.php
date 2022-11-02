@@ -69,7 +69,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
             $stub = str_replace('.stub', '.api.stub', $stub);
         }
 
-        $stub ??='/stubs/controller.plain.stub';
+        $stub ??= '/stubs/controller.plain.stub';
 
         return $this->resolveStubPath($stub);
     }
@@ -90,8 +90,9 @@ class ControllerMakeCommand extends BaseGeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
@@ -126,7 +127,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         if (! class_exists($parentModelClass)) {
             if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('module:make-model', ['module'=>  $this->getModuleInput(), 'name' => $parentModelClass]);
+                $this->call('module:make-model', ['module' => $this->getModuleInput(), 'name' => $parentModelClass]);
             }
         }
 
@@ -155,7 +156,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         if (! class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('module:make-model', ['module'=>  $this->getModuleInput(), 'name' => $modelClass]);
+                $this->call('module:make-model', ['module' => $this->getModuleInput(), 'name' => $modelClass]);
             }
         }
 
@@ -191,13 +192,11 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         return $this->qualifyModel($model);
     }
 
-
     /**
      * Build the model replacement values.
      *
      * @param  array  $replace
      * @param  string  $modelClass
-     *
      * @return array
      */
     protected function buildFormRequestReplacements(array $replace, string $modelClass): array
@@ -207,7 +206,6 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         ];
 
         if ($this->option('requests')) {
-
             $namespace = 'Modules\\'.$this->getModuleInput().'\\Http\\Requests';
 
             [$storeRequestClass, $updateRequestClass] = $this->generateFormRequests(
@@ -241,7 +239,6 @@ class ControllerMakeCommand extends BaseGeneratorCommand
      * @param  string  $modelClass
      * @param  string  $storeRequestClass
      * @param  string  $updateRequestClass
-     *
      * @return array
      */
     protected function generateFormRequests(string $modelClass, string $storeRequestClass, string $updateRequestClass): array
@@ -249,7 +246,7 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
 
         $this->call('module:make-request', [
-            'module'=>  $this->getModuleInput(),
+            'module' => $this->getModuleInput(),
             'name' => $storeRequestClass,
         ]);
 

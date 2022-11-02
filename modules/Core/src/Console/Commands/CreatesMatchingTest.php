@@ -27,7 +27,7 @@ trait CreatesMatchingTest
     /**
      * Create the matching test case if requested.
      *
-     * @param string $path
+     * @param  string  $path
      * @return void
      */
     protected function handleTestCreation(string $path): void

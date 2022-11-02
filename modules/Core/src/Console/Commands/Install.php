@@ -2,16 +2,17 @@
 
 namespace Modules\Core\Console\Commands;
 
-use Modules\Core\Utils\EmCms;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+use Modules\Core\Utils\EmCms;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class Install extends Command
 {
     /**
      * The root namespace to assume when generating URLs to actions.
+     *
      * @var string
      */
     private string $base = EmCms::NAME;
@@ -47,9 +48,9 @@ class Install extends Command
      */
     public function handle(): int
     {
-
         if ($this->emcmsAlreadyInstalled()) {
             $this->line('EMCMS module is already installed for this project.');
+
             return CommandAlias::FAILURE;
         }
 
@@ -88,7 +89,6 @@ class Install extends Command
         return CommandAlias::SUCCESS;
     }
 
-
     /**
      *  Checking .env file and if not found then create .env file.
      *  Then ask for database name, password & username to set
@@ -96,8 +96,8 @@ class Install extends Command
      */
     public function checkForEnvFile(): void
     {
-        $envExists = File::exists(base_path() . '/.env');
-        if (!$envExists) {
+        $envExists = File::exists(base_path().'/.env');
+        if (! $envExists) {
             $this->info('Creating .env file');
             $this->createEnvFile();
         } else {
@@ -136,19 +136,18 @@ class Install extends Command
     /**
      * Update ENV variables
      *
-     * @param string $key
-     * @param string $value
+     * @param  string  $key
+     * @param  string  $value
      */
     public static function envUpdate(string $key, string $value): void
     {
-        $path  = base_path() . '/.env';
+        $path = base_path().'/.env';
         file_put_contents($path, str_replace(
             $key,
-            $key . $value,
+            $key.$value,
             (string) file_get_contents($path)
         ));
     }
-
 
     /**
      * Determine if EMCMS module system is already installed.
@@ -214,5 +213,4 @@ class Install extends Command
     //
     //     return true;
     // }
-
 }

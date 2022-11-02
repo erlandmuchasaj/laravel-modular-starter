@@ -18,7 +18,7 @@ class NewPasswordController extends Controller
     /**
      * Display the password reset view.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return View
      */
     public function create(Request $request)
@@ -29,7 +29,7 @@ class NewPasswordController extends Controller
     /**
      * Handle an incoming new password request.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return RedirectResponse
      *
      * @throws ValidationException

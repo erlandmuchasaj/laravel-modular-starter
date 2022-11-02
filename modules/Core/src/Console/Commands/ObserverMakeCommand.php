@@ -3,7 +3,6 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -44,8 +43,9 @@ class ObserverMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
@@ -60,8 +60,8 @@ class ObserverMakeCommand extends BaseGeneratorCommand
     /**
      * Replace the model for the given stub.
      *
-     * @param string $stub
-     * @param string $model
+     * @param  string  $stub
+     * @param  string  $model
      * @return string
      */
     protected function replaceModel(string $stub, string $model): string

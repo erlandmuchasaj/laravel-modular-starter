@@ -63,9 +63,9 @@ class TestMakeCommand extends BaseGeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        $moduleName = $this->getModuleInput();;
+        $moduleName = $this->getModuleInput();
 
-        return base_path() . "/modules/{$moduleName}/tests/" . str_replace('\\', '/', $name).'.php';
+        return base_path()."/modules/{$moduleName}/tests/".str_replace('\\', '/', $name).'.php';
     }
 
     /**
@@ -90,7 +90,7 @@ class TestMakeCommand extends BaseGeneratorCommand
      */
     protected function rootNamespace(): string
     {
-        $moduleName = $this->getModuleInput();;
+        $moduleName = $this->getModuleInput();
 
         return "Modules\\{$moduleName}\\Tests";
     }

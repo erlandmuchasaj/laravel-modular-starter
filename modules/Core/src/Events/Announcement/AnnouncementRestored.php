@@ -7,5 +7,4 @@ namespace Modules\Core\Events\Announcement;
  */
 class AnnouncementRestored extends AnnouncementEvent
 {
-
 }

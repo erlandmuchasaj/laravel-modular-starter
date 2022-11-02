@@ -9,15 +9,14 @@ class DomainName
     /**
      * Validates whether it is a valid domain name.
      *
-     * @param string $attribute
-     * @param mixed $value
-     * @param array $parameters
-     * @param Validator $validator
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @param  array  $parameters
+     * @param  Validator  $validator
      * @return bool
      */
     public function validate(string $attribute, mixed $value, array $parameters, Validator $validator): bool
     {
-
         if (stripos($value, 'http://') === 0) {
             $value = substr($value, 7);
         }
@@ -27,7 +26,7 @@ class DomainName
         }
 
         // Not even a single . this will eliminate things like abcd, since http://abcd is reported valid
-        if (!substr_count($value, '.')) {
+        if (! substr_count($value, '.')) {
             return false;
         }
 
@@ -38,8 +37,8 @@ class DomainName
         // remove last /
         $value = rtrim($value, '/\\');
 
-        return (preg_match("/^([a-z\d](-*[a-z\d])*)(.([a-z\d](-*[a-z\d])*))*$/i", $value) //valid characters check
-            && preg_match("/^.{1,253}$/", $value) //overall length check
-            && preg_match("/^[^.]{1,63}(.[^.]{1,63})*$/", $value)); //length of every label
+        return preg_match("/^([a-z\d](-*[a-z\d])*)(.([a-z\d](-*[a-z\d])*))*$/i", $value) //valid characters check
+            && preg_match('/^.{1,253}$/', $value) //overall length check
+            && preg_match('/^[^.]{1,63}(.[^.]{1,63})*$/', $value); //length of every label
     }
 }

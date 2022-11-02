@@ -7,9 +7,13 @@ use Illuminate\Support\Str;
 final class Notification
 {
     const NAME = 'notification';
+
     const INFO = 'info';
+
     const ERROR = 'error';
+
     const WARNING = 'warning';
+
     const SUCCESS = 'success';
 
     public static function info(string $message, ?string $title = null): array
@@ -40,11 +44,9 @@ final class Notification
     private static function formatNotification(string $type, string $message, ?string $title = null): array
     {
         return [
-            'type'    => $type,
-            'title'   => $title ?: Str::ucfirst($type),
+            'type' => $type,
+            'title' => $title ?: Str::ucfirst($type),
             'message' => $message,
         ];
     }
-
 }
-

@@ -7,8 +7,8 @@ namespace Modules\Core\Utils;
  *
  * @author E.M
  */
-class Sanatize {
-
+class Sanatize
+{
     /**
      * Copied from Drupal search module, except for \x{0}-\x{2f}
      * that has been replaced by \x{0}-\x{2c}\x{2e}-\x{2f} in order to keep the char '-'
@@ -38,7 +38,6 @@ class Sanatize {
     '\x{2460}-\x{249b}\x{24ea}-\x{24ff}\x{2776}-\x{2793}\x{3007}\x{3021}-\x{3029}'.
     '\x{3038}-\x{303a}\x{3192}-\x{3195}\x{3220}-\x{3229}\x{3251}-\x{325f}\x{3280}-'.
     '\x{3289}\x{32b1}-\x{32bf}\x{ff10}-\x{ff19}';
-
 
     const PREG_CLASS_SEARCH_EXCLUDE = '\x{0}-\x{2c}\x{2e}-\x{2f}\x{3a}-\x{40}\x{5b}-\x{60}\x{7b}-\x{bf}\x{d7}\x{f7}\x{2b0}-'.
     '\x{385}\x{387}\x{3f6}\x{482}-\x{489}\x{559}-\x{55f}\x{589}-\x{5c7}\x{5f3}-'.
@@ -70,26 +69,29 @@ class Sanatize {
 
     /**
      * 	Blacklisted words to remove from search
+     *
      * @var string
      */
     public static string $EM_SEARCH_BLACKLIST = '4r5e';
 
     /**
      * 	minimum characters to start performing the search
-     * @var integer
+     *
+     * @var int
      */
     public static int $EM_SEARCH_MIN_WORD_LENGTH = 1;
 
     /**
      * maximum characters used per word search
-     * @var integer
+     *
+     * @var int
      */
     public static int $EM_SEARCH_MAX_WORD_LENGTH = 30;
 
     /**
      * Replace all accented chars by their equivalent non-accented chars.
      *
-     * @param string $str
+     * @param  string  $str
      * @return string
      */
     public static function replaceAccentedChars(string $str): string
@@ -99,7 +101,7 @@ class Sanatize {
             http://www.tachyonsoft.com/uc0001.htm
             http://www.tachyonsoft.com/uc0004.htm
         */
-        $patterns = array(
+        $patterns = [
             /* Lowercase */
             /* a  */ '/[\x{00E0}\x{00E1}\x{00E2}\x{00E3}\x{00E4}\x{00E5}\x{0101}\x{0103}\x{0105}\x{0430}\x{00C0}-\x{00C3}\x{1EA0}-\x{1EB7}]/u',
             /* b  */ '/[\x{0431}]/u',
@@ -175,16 +177,16 @@ class Sanatize {
             /* YI */ '/[\x{0407}]/u',
             /* YO */ '/[\x{0401}]/u',
             /* YU */ '/[\x{042E}]/u',
-            /* ZH */ '/[\x{0416}]/u');
+            /* ZH */ '/[\x{0416}]/u', ];
 
         // ö to oe
         // å to aa
         // ä to ae
 
-        $replacements = array(
+        $replacements = [
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 'ss', 't', 'u', 'v', 'w', 'y', 'z', 'ae', 'ch', 'kh', 'oe', 'sh', 'shh', 'ya', 'ye', 'yi', 'yo', 'yu', 'zh',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'AE', 'CH', 'KH', 'OE', 'SH', 'SHH', 'YA', 'YE', 'YI', 'YO', 'YU', 'ZH'
-        );
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'AE', 'CH', 'KH', 'OE', 'SH', 'SHH', 'YA', 'YE', 'YI', 'YO', 'YU', 'ZH',
+        ];
 
         return (string) preg_replace($patterns, $replacements, $str);
     }
@@ -193,7 +195,7 @@ class Sanatize {
      * sanitize
      * Sanatize a string for search
      *
-     * @param string $string
+     * @param  string  $string
      * @return string
      */
     public static function sanitize(string $string = ''): string
@@ -215,11 +217,10 @@ class Sanatize {
         $string = (string) preg_replace('/[^\s]-+/', '', $string);
 
         $blacklist = self::lowercase(self::$EM_SEARCH_BLACKLIST);
-        if (!empty($blacklist)) {
-
+        if (! empty($blacklist)) {
             $blacklist = [$blacklist];
 
-            $blacklist = implode("|", $blacklist);
+            $blacklist = implode('|', $blacklist);
             $string = (string) preg_replace('/(?<=\s)('.$blacklist.')(?=\s)/Su', '', $string);
             $string = (string) preg_replace('/^('.$blacklist.')(?=\s)/Su', '', $string);
             $string = (string) preg_replace('/(?<=\s)('.$blacklist.')$/Su', '', $string);
@@ -232,7 +233,7 @@ class Sanatize {
     }
 
     /**
-     * @param string $str
+     * @param  string  $str
      * @return string
      */
     private static function lowercase(string $str): string
@@ -240,7 +241,7 @@ class Sanatize {
         if (function_exists('mb_strtolower')) {
             return mb_strtolower($str, 'utf-8');
         }
+
         return strtolower($str);
     }
-
 }

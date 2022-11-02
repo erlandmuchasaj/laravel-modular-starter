@@ -7,5 +7,4 @@ namespace Modules\Core\Events\Announcement;
  */
 class AnnouncementPermanentDeleted extends AnnouncementEvent
 {
-
 }

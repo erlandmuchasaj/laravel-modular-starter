@@ -9,7 +9,6 @@ class CurrentLocale
 {
     public static function determine(): string
     {
-
         $urlLocale = (string) request()->segment(1);
 
         if (static::isValidLocale($urlLocale)) {
@@ -17,7 +16,7 @@ class CurrentLocale
         }
 
         try {
-            $cookieLocale = app(Encrypter::class)->decrypt((string)request()->cookie('locale'));
+            $cookieLocale = app(Encrypter::class)->decrypt((string) request()->cookie('locale'));
 
             if (self::isValidLocale($cookieLocale)) {
                 return $cookieLocale;
@@ -36,7 +35,7 @@ class CurrentLocale
 
     public static function getContentLocale(): string
     {
-        if (!static::isValidLocale(locale())) {
+        if (! static::isValidLocale(locale())) {
             return config('app.locales')[0];
         }
 
@@ -44,7 +43,7 @@ class CurrentLocale
     }
 
     /**
-     * @param string $locale
+     * @param  string  $locale
      * @return bool
      */
     public static function isValidLocale(string $locale): bool

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Modules\Core\Database\Factories\AnnouncementFactory;
@@ -35,6 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read int|null $activities_count
  * @property-read string $parsed_body
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement enabled()
  * @method static \Modules\Core\Database\Factories\AnnouncementFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement forArea(string $area)
@@ -115,10 +115,10 @@ class Announcement extends Model
 
     /**
      * Logging only the changed attributes
-     * @var boolean
+     *
+     * @var bool
      */
     protected static bool $logOnlyDirty = true;
-
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -126,8 +126,8 @@ class Announcement extends Model
     }
 
     /**
-     * @param Activity $activity
-     * @param string $eventName
+     * @param  Activity  $activity
+     * @param  string  $eventName
      */
     public function tapActivity(Activity $activity, string $eventName)
     {

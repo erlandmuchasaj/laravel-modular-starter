@@ -28,7 +28,6 @@ class ModelMakeCommand extends BaseGeneratorCommand
      */
     protected static $defaultName = 'module:make-model';
 
-
     /**
      * The console command description.
      *
@@ -47,6 +46,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -54,7 +54,6 @@ class ModelMakeCommand extends BaseGeneratorCommand
         if (parent::handle() === false && ! $this->option('force')) {
             return false;
         }
-
 
         if ($this->option('all')) {
             $this->input->setOption('factory', true);
@@ -160,13 +159,12 @@ class ModelMakeCommand extends BaseGeneratorCommand
 
         $this->call('module:make-controller', array_filter([
             'module' => $moduleName,
-            'name'  => "{$controller}Controller",
+            'name' => "{$controller}Controller",
             '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
             '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
         ]));
     }
-
 
     /**
      * Create a policy file for the model.
@@ -188,6 +186,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
 
     /**
      * createModelTraits
+     *
      * @return void
      */
     protected function createModelTraits(): void
@@ -202,10 +201,9 @@ class ModelMakeCommand extends BaseGeneratorCommand
             $this->call('module:make-trait', array_filter([
                 'module' => $moduleName,
                 'name' => $traitName,
-                '--model'  => $modelName,
+                '--model' => $modelName,
             ]));
         }
-
     }
 
     /**
@@ -228,7 +226,6 @@ class ModelMakeCommand extends BaseGeneratorCommand
         }
 
         return $this->resolveStubPath('/stubs/model.stub');
-
     }
 
     /**

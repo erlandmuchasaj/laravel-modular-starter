@@ -2,13 +2,12 @@
 
 namespace Modules\Core\Traits;
 
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
-use Illuminate\Support\Str;
-
+use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\Contracts\Activity;
 
 /**
  *  activity('user')
@@ -45,15 +44,14 @@ trait DefaultActivityLogger
 
     protected static array $logAttributesToIgnore = ['id', 'password', 'remember_token', 'token', 'created_at', 'updated_at', 'deleted_at'];
 
-
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
     }
 
     /**
-     * @param Activity $activity
-     * @param string $eventName
+     * @param  Activity  $activity
+     * @param  string  $eventName
      * @return void
      */
     public function tapActivity(Activity $activity, string $eventName): void
@@ -67,10 +65,8 @@ trait DefaultActivityLogger
         }
     }
 
-
     public function getDescriptionForEvent(string $eventName): string
     {
         return "This model has been {$eventName}";
     }
-
 }

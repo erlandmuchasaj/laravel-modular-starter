@@ -3,7 +3,6 @@
 namespace Modules\User\Models\User;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +36,7 @@ use Modules\User\Database\Factories\UserFactory;
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Modules\User\Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -61,10 +61,10 @@ class User extends Authenticatable
 {
     use HasFactory,
         ScopesTrait,
-    	MethodTrait,
-    	RelationsTrait,
-    	MutatorTrait,
-    	AccessorTrait,
+        MethodTrait,
+        RelationsTrait,
+        MutatorTrait,
+        AccessorTrait,
         HasApiTokens,
         HasFactory,
         Notifiable;
@@ -99,7 +99,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
     /**
      * Create a new factory instance for the model.
      *
@@ -109,5 +108,4 @@ class User extends Authenticatable
     {
         return UserFactory::new();
     }
-
 }

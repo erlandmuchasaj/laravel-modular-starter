@@ -15,7 +15,6 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
      * base_path()
      */
 
-
     /**
      * Execute the console command.
      *
@@ -26,20 +25,19 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     public function handle(): ?bool
     {
         // check if module is already created and file exists
-        if (!$this->moduleAlreadyExists()) {
-            $this->error('Module ' . $this->getModuleInput() . ' does not exists, Please create a module first.');
+        if (! $this->moduleAlreadyExists()) {
+            $this->error('Module '.$this->getModuleInput().' does not exists, Please create a module first.');
+
             return false;
         }
 
         return  parent::handle();
     }
 
-
-
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
      */
     protected function getPath($name): string
@@ -48,7 +46,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path() . "/modules/{$moduleName}/src/" . str_replace('\\', '/', $name) . '.php';
+        return base_path()."/modules/{$moduleName}/src/".str_replace('\\', '/', $name).'.php';
     }
 
     /**
@@ -61,7 +59,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     {
         $moduleName = $this->getModuleInput();
 
-        $views =  base_path() . "/modules/{$moduleName}/resources/views";
+        $views = base_path()."/modules/{$moduleName}/resources/views";
 
         return $views.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -97,14 +95,14 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     protected function rootNamespace(): string
     {
         $moduleName = $this->getModuleInput();
+
         return "Modules\\{$moduleName}\\";
     }
-
 
     /**
      * Check if module folder exists.
      *
-     * @return boolean
+     * @return bool
      */
     private function moduleAlreadyExists(): bool
     {
@@ -117,7 +115,6 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         return $this->files->exists("modules/{$moduleName}");
         // return file_exists(base_path() . "/modules/{$moduleName}");
     }
-
 
     /**
      * Get the console command arguments.

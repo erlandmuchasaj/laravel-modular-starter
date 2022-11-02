@@ -304,7 +304,6 @@ return [
         // 'store'  => 'redis',
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | Default Country
@@ -446,7 +445,6 @@ return [
 
     'deactivate_account' => env('DEACTIVATE_ACCOUNT', true),
 
-
     /*
      | Whether admins need 2FA enabled to visit the backend
      | Weather the 2FA is enabled or not site-wide
@@ -564,7 +562,7 @@ return [
     */
 
     'idempotency' => [
-        'key' =>  env('IDEMPOTENT_KEY', 'Idempotency-Key'),
+        'key' => env('IDEMPOTENT_KEY', 'Idempotency-Key'),
         'cache_time' => 60,
         'methods' => [
             'POST', // POST is NOT idempotent.

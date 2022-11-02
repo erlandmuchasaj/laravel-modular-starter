@@ -45,6 +45,7 @@ class NotificationMakeCommand extends BaseGeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -79,8 +80,9 @@ class NotificationMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string

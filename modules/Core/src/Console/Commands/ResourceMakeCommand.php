@@ -26,7 +26,6 @@ class ResourceMakeCommand extends BaseGeneratorCommand
      */
     protected static $defaultName = 'module:make-resource';
 
-
     /**
      * The console command description.
      *
@@ -45,6 +44,7 @@ class ResourceMakeCommand extends BaseGeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
@@ -82,7 +82,7 @@ class ResourceMakeCommand extends BaseGeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string

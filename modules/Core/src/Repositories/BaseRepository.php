@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 abstract class BaseRepository implements RepositoryContract
 {
-
     /**
      * The repository model.
      *
@@ -131,8 +130,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get the specified model record from the database.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Model
      */
     public function getById(int $id): Model
@@ -145,10 +143,9 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param mixed $item
-     * @param string $column
+     * @param  mixed  $item
+     * @param  string  $column
      * @param  array  $columns
-     *
      * @return Builder|Model|null
      */
     public function getByColumn(mixed $item, string $column, array $columns = ['*']): Model|Builder|null
@@ -163,9 +160,9 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Delete the specified model record from the database.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return bool|null
+     *
      * @throws Exception
      */
     public function deleteById(int $id): ?bool
@@ -178,8 +175,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set the query limit.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit): static
@@ -192,8 +188,8 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set an ORDER BY clause.
      *
-     * @param string $column
-     * @param string $direction
+     * @param  string  $column
+     * @param  string  $direction
      * @return $this
      */
     public function orderBy(string $column, string $direction = 'asc'): static
@@ -204,11 +200,10 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param int|null    $limit
-     * @param array  $columns
-     * @param string $pageName
-     * @param int|null   $page
-     *
+     * @param  int|null  $limit
+     * @param  array  $columns
+     * @param  string  $pageName
+     * @param  int|null  $page
      * @return LengthAwarePaginator
      */
     public function paginate(int $limit = null, array $columns = ['*'], string $pageName = 'page', int $page = null): LengthAwarePaginator
@@ -225,10 +220,9 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where clause to the query.
      *
-     * @param string $column
-     * @param mixed $value
-     * @param string $operator
-     *
+     * @param  string  $column
+     * @param  mixed  $value
+     * @param  string  $operator
      * @return $this
      */
     public function where(string $column, mixed $value, string $operator = '='): static
@@ -241,9 +235,8 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where in clause to the query.
      *
-     * @param string $column
-     * @param mixed  $values
-     *
+     * @param  string  $column
+     * @param  mixed  $values
      * @return $this
      */
     public function whereIn(string $column, mixed $values): static
@@ -258,8 +251,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set Eloquent relationships to eager load.
      *
-     * @param array|string $relations
-     *
+     * @param  array|string  $relations
      * @return $this
      */
     public function with(array|string $relations): static
@@ -318,7 +310,7 @@ abstract class BaseRepository implements RepositoryContract
             $this->query->orderBy($orders['column'], $orders['direction']);
         }
 
-        if (isset($this->take) and !empty($this->take)) {
+        if (isset($this->take) and ! empty($this->take)) {
             $this->query->take($this->take);
         }
 

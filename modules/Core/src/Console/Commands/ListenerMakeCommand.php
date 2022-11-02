@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Console\Commands;
 
-
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
@@ -46,15 +45,16 @@ class ListenerMakeCommand extends BaseGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
     {
         $event = $this->option('event');
 
-        if (!Str::startsWith($event, [
+        if (! Str::startsWith($event, [
             $this->laravel->getNamespace(),
             'Illuminate',
             '\\',
@@ -92,7 +92,7 @@ class ListenerMakeCommand extends BaseGeneratorCommand
     /**
      * Determine if the class already exists.
      *
-     * @param string $rawName
+     * @param  string  $rawName
      * @return bool
      */
     protected function alreadyExists($rawName): bool
@@ -103,12 +103,12 @@ class ListenerMakeCommand extends BaseGeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\Listeners';
+        return $rootNamespace.'\\Listeners';
     }
 
     /**

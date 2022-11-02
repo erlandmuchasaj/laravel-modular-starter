@@ -3,7 +3,6 @@
 namespace Modules\User\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-
 use Laravel\Sanctum\SanctumServiceProvider;
 use Modules\Core\Providers\BaseAppServiceProvider;
 
@@ -85,11 +84,12 @@ class AppServiceProvider extends BaseAppServiceProvider
      * Bootstrap services.
      *
      * @return void
+     *
      * @throws BindingResolutionException
      */
     public function boot(): void
     {
-        logger('AppServiceProvider::boot => '. $this->module);
+        logger('AppServiceProvider::boot => '.$this->module);
 
         parent::boot();
     }
@@ -101,7 +101,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      */
     public function register(): void
     {
-        logger('AppServiceProvider::register => '. $this->module);
+        logger('AppServiceProvider::register => '.$this->module);
 
         parent::register();
     }

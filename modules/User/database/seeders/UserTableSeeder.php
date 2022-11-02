@@ -4,8 +4,8 @@ namespace Modules\User\Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Modules\User\Models\User\User;
 
 class UserTableSeeder extends Seeder

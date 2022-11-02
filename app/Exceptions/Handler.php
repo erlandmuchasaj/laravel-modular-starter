@@ -3,9 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Modules\Core\Exceptions\GeneralException;
 use Psr\Log\LogLevel;
 use Throwable;
-use Modules\Core\Exceptions\GeneralException;
 
 class Handler extends ExceptionHandler
 {

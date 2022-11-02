@@ -22,7 +22,6 @@ class RequestMakeCommand extends BaseGeneratorCommand
      */
     protected static $defaultName = 'module:make-request';
 
-
     /**
      * The console command description.
      *

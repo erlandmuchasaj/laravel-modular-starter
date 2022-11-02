@@ -3,9 +3,9 @@
 namespace Modules\Core\Events\Announcement;
 
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Events\Event;
 use Modules\Core\Models\Announcement\Announcement;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class AnnouncementEvent.
@@ -18,7 +18,7 @@ class AnnouncementEvent extends Event
     public Announcement|Model $announcement;
 
     /**
-     * @param Announcement|Model $announcement
+     * @param  Announcement|Model  $announcement
      */
     public function __construct(Announcement|Model $announcement)
     {
@@ -34,5 +34,4 @@ class AnnouncementEvent extends Event
     {
         return new PrivateChannel('channel-name');
     }
-
 }

@@ -20,8 +20,8 @@ class RedirectIfAuthenticated
      * @param  Request  $request
      * @param  Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param  string|null  ...$guards
-     *
      * @return Response|RedirectResponse|JsonResponse
+     *
      * @throws GeneralException
      */
     public function handle(Request $request, Closure $next, ...$guards): Response|RedirectResponse|JsonResponse

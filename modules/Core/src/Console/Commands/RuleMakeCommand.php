@@ -25,7 +25,6 @@ class RuleMakeCommand extends BaseGeneratorCommand
      */
     protected static $defaultName = 'module:make-rule';
 
-
     /**
      * The console command description.
      *
@@ -64,7 +63,6 @@ class RuleMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-
         $stub = '/stubs/rule.stub';
 
         if ($this->option('invokable')) {

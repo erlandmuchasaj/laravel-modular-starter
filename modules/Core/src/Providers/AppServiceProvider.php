@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-
 use Modules\Core\Console\Commands\AppVersion;
 use Modules\Core\Console\Commands\Install;
 use Modules\Core\Http\Middleware\AddXHeader;
@@ -67,7 +66,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      *
      * @return array
      */
-    protected  array $aliases = [
+    protected array $aliases = [
         'announcement' => Announcement::class,
     ];
 
@@ -90,7 +89,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      */
     protected array $middlewareGroups = [
         'web' => [
-            ProtectAgainstSpam::class, # we can set it also as global middleware.
+            ProtectAgainstSpam::class, // we can set it also as global middleware.
             RememberLocale::class,
         ],
         'api' => [
@@ -121,11 +120,12 @@ class AppServiceProvider extends BaseAppServiceProvider
      * Bootstrap your package's services.
      *
      * @return void
+     *
      * @throws BindingResolutionException
      */
     public function boot(): void
     {
-        logger('AppServiceProvider::boot => '. $this->module);
+        logger('AppServiceProvider::boot => '.$this->module);
         // Create custom rate limiters
         // to use @example: Route::middleware(['throttle:uploads'])
         RateLimiter::for('uploads', function (Request $request) {
@@ -144,7 +144,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      */
     public function register(): void
     {
-        logger('AppServiceProvider::register => '. $this->module);
+        logger('AppServiceProvider::register => '.$this->module);
 
         $this->app->scoped("{$this->base}.isInstalled", function ($app) {
             return true === config("{$this->base}.{$this->module(true)}.config.is_installed");
@@ -160,7 +160,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
         parent::register();
     }
-
 
     /**
      * bootValidators
@@ -197,7 +196,8 @@ class AppServiceProvider extends BaseAppServiceProvider
          * Usage: @set($variable, value)
          */
         Blade::directive('set', function ($expression) {
-            list($variable, $value) = $this->getArguments($expression);
+            [$variable, $value] = $this->getArguments($expression);
+
             return "<?php {$variable} = {$value}; ?>";
         });
 
@@ -222,8 +222,8 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * Get argument array from argument string.
-     * @param string $argumentString
      *
+     * @param  string  $argumentString
      * @return array
      */
     private function getArguments(string $argumentString): array
@@ -245,5 +245,4 @@ class AppServiceProvider extends BaseAppServiceProvider
 
         return false;
     }
-
 }

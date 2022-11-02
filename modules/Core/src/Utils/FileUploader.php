@@ -2,13 +2,9 @@
 
 namespace Modules\Core\Utils;
 
-use Exception;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Exception;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -51,28 +47,42 @@ final class FileUploader
      * Available file folder for sizes
      */
     const ORIGINAL = 'original'; // this is not a directory just used as name
-    const THUMB  = 'thumb';
+
+    const THUMB = 'thumb';
+
     const XSMALL = 'xs';
-    const SMALL  = 'sm';
+
+    const SMALL = 'sm';
+
     const MEDIUM = 'md';
-    const LARGE  = 'lg';
+
+    const LARGE = 'lg';
+
     const XLARGE = 'xl';
 
     /**
      * Available file types
      * suppoerted by fileService
      */
-    const IMAGE    = 'image';
-    const AUDIO    = 'audio';
-    const VIDEO    = 'video';
-    const FILE     = 'file';
-    const FONT     = 'font';
-    const ARCHIVE  = 'archive';
+    const IMAGE = 'image';
+
+    const AUDIO = 'audio';
+
+    const VIDEO = 'video';
+
+    const FILE = 'file';
+
+    const FONT = 'font';
+
+    const ARCHIVE = 'archive';
+
     const DOCUMENT = 'document';
+
     const SPREADSHEETS = 'spreadsheets';
 
     /**
      * Available file types
+     *
      * @var array<int, string>
      */
     public static array $validTypes = [
@@ -88,6 +98,7 @@ final class FileUploader
 
     /**
      * Available sizes for images
+     *
      * @var array<string, int>
      */
     public static array $validSizes = [
@@ -111,37 +122,44 @@ final class FileUploader
 
     /**
      * $image_ext
+     *
      * @var array<int, string>
      */
-    private static array $image_ext    = ['jpg', 'jpe', 'jpeg', 'png', 'gif', 'svg', 'svgz', 'tiff', 'tif', 'webp', 'ico'];
+    private static array $image_ext = ['jpg', 'jpe', 'jpeg', 'png', 'gif', 'svg', 'svgz', 'tiff', 'tif', 'webp', 'ico'];
 
     /**
      * $font_ext
+     *
      * @var array<int, string>
      */
     private static array $font_ext = ['ttc', 'otf', 'ttf', 'woff', 'woff2'];
 
     /**
      * $audio_ext
+     *
      * @var array<int, string>
      */
     private static array $audio_ext = ['mp3', 'm4a', 'ogg', 'mpga', 'wav'];
 
     /**
      * $video_ext
+     *
      * @var array<int, string>
      */
     private static array $video_ext = ['smv', 'movie', 'mov', 'wvx', 'wmx', 'wm', 'mp4', 'mp4', 'mp4v', 'mpg4', 'mpeg', 'mpg', 'mpe', 'wmv', 'avi', 'ogv', '3gp', '3g2'];
 
     /**
      * $document_ext
+     *
      * @var array<int, string>
      */
     private static array $document_ext = ['css', 'csv', 'html', 'conf', 'log', 'txt', 'text', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'pps', 'ppsx', 'odt', 'xls', 'xlsx'];
 
     /**
      * $archive
+     *
      * @var array<int, string>
+     *
      * @example application/zip
      */
     private static array $archives_ext = ['gzip', 'rar', 'tar', 'zip', '7z'];
@@ -150,12 +168,12 @@ final class FileUploader
      * Upload a file into specified disk using
      * specified visibility and then store into DB.
      *
-     * @param UploadedFile $file
-     * @param string|null $disk
-     * @param array $args
-     * @param int $user_id Who this file belongs to
-     *
+     * @param  UploadedFile  $file
+     * @param  string|null  $disk
+     * @param  array  $args
+     * @param  int  $user_id Who this file belongs to
      * @return array File
+     *
      * @throws GeneralException
      */
     public static function store(UploadedFile $file, string $disk = null, array $args = [], $user_id = null): array
@@ -172,16 +190,16 @@ final class FileUploader
     /**
      * Upload an image to specific FileSystem
      *
-     * @param UploadedFile $file
-     * @param string|null $disk
-     * @param array $args
-     * @param null $user_id
+     * @param  UploadedFile  $file
+     * @param  string|null  $disk
+     * @param  array  $args
+     * @param  null  $user_id
      * @return array
+     *
      * @throws GeneralException
      */
     public static function upload(UploadedFile $file, string $disk = null, array $args = [], $user_id = null): array
     {
-
         if (is_null($user_id)) {
             $user_id = auth()->id() ?? 1;
         }
@@ -190,18 +208,16 @@ final class FileUploader
             abort(415, __('File failed to load.'));
         }
 
-
         try {
-
-            # here you can put as many default values as you want.
+            // here you can put as many default values as you want.
             $defaults = [
-                'folder'      => '',
-                'alt'         => '',
+                'folder' => '',
+                'alt' => '',
                 'description' => '',
-                'visibility'  => self::VISIBILITY_PRIVATE, # public | private
+                'visibility' => self::VISIBILITY_PRIVATE, // public | private
             ];
 
-            # merge default options with passed parameters
+            // merge default options with passed parameters
             $args = array_merge($defaults, $args);
 
             if ($disk === null) {
@@ -209,63 +225,61 @@ final class FileUploader
             }
 
             $folder = '';
-            if (!empty($args['folder']) && is_string($args['folder'])) {
-                $folder = rtrim($args['folder'], '/\\') . '/';
+            if (! empty($args['folder']) && is_string($args['folder'])) {
+                $folder = rtrim($args['folder'], '/\\').'/';
             }
 
-            if (!in_array($args['visibility'], self::$validOptions)) {
+            if (! in_array($args['visibility'], self::$validOptions)) {
                 $args['visibility'] = self::VISIBILITY_PRIVATE;
             }
 
-            # get filename with extension
+            // get filename with extension
             $filenameWithExtension = $file->getClientOriginalName();
 
-            # get filename without extension
+            // get filename without extension
             $filename = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
 
-            # get file extension
+            // get file extension
             $extension = $file->getClientOriginalExtension();
 
-            #  Get the type of file we are storing
+            //  Get the type of file we are storing
             $type = self::getType($extension);
 
-            # filename to store
+            // filename to store
             $filenameToStore = Str::slug($filename).'_'.time().'.'.$extension;
 
-            # Make a file path where image will be stored [uploads/{user_id}/{type}/{filename}]
+            // Make a file path where image will be stored [uploads/{user_id}/{type}/{filename}]
             $filePath = self::getUserDir($filenameToStore, $type, $user_id);
 
-            # Upload File to s3
+            // Upload File to s3
             // $path = Storage::disk($disk)->put($filePath, file_get_contents($file), $args['visibility']); # save the file im memory
             // $path = Storage::disk($disk)->put($filePath, File::get($file), $args['visibility']); # save the file im memory
             $path = Storage::disk($disk)->put($filePath, fopen($file, 'r+'), $args['visibility']); // very nice for very big files
 
-            # Store $filePath in the database
-            if (!$path) {
+            // Store $filePath in the database
+            if (! $path) {
                 throw new GeneralException('File could not be uploaded to remote server!');
             }
 
             $data = [
-                'user_id'   => $user_id,
-                'type'      => $type, # was: $file->getType(),
-                'size'      => $file->getSize(),
+                'user_id' => $user_id,
+                'type' => $type, // was: $file->getType(),
+                'size' => $file->getSize(),
                 'mime_type' => $file->getClientMimeType(),
                 'extension' => $file->getClientOriginalExtension(),
-                'dimensions'=> self::getDimensions($file, $type),
-                'name'      => $filename,
-                'disk'      => $disk,
-                'path'      => $filePath, # was: $path
-                'alt'         => $args['alt'] ?? null,
+                'dimensions' => self::getDimensions($file, $type),
+                'name' => $filename,
+                'disk' => $disk,
+                'path' => $filePath, // was: $path
+                'alt' => $args['alt'] ?? null,
                 'description' => $args['description'] ?? null,
-                'visibility'  => $args['visibility'], # indicate if file is public or private
+                'visibility' => $args['visibility'], // indicate if file is public or private
 
-                # !! extras
-                'url'       => Storage::disk(self::$disk)->url($filePath),
+                // !! extras
+                'url' => Storage::disk(self::$disk)->url($filePath),
                 'original_name' => $file->getClientOriginalName(),
                 'hash_file' => self::getHashFile($file),
             ];
-
-
         } catch (Exception $e) {
             throw new GeneralException($e->getMessage(), $e->getCode());
         }
@@ -277,7 +291,6 @@ final class FileUploader
      * Create a streamed response for a given file.
      *
      * @param  string  $path
-     *
      * @return StreamedResponse Content
      */
     public static function get(string $path): StreamedResponse
@@ -289,13 +302,13 @@ final class FileUploader
      * Create a streamed response for a given file.
      *
      * @param  string  $path
-     *
      * @return string Content
+     *
      * @throws GeneralException
      */
     public static function getFile(string $path): string
     {
-        if (!Storage::disk(self::$disk)->exists($path)) {
+        if (! Storage::disk(self::$disk)->exists($path)) {
             throw new GeneralException(__('File [:file] does not exists.', ['file' => $path]));
         }
 
@@ -307,7 +320,6 @@ final class FileUploader
      * Mainly used to access public files.
      *
      * @param  string  $path
-     *
      * @return string
      */
     public static function url(string $path): string
@@ -318,7 +330,7 @@ final class FileUploader
     /**
      * Get file path.
      *
-     * @param string $path
+     * @param  string  $path
      * @return string
      */
     public static function path(string $path): string
@@ -329,9 +341,8 @@ final class FileUploader
     /**
      * Download a specific resource
      *
-     * @param string $path
+     * @param  string  $path
      * @param  string|null  $name name with extensions.
-     *
      * @return StreamedResponse
      */
     public static function download(string $path, string|null $name): StreamedResponse
@@ -343,7 +354,6 @@ final class FileUploader
      * Get Visibility of a file
      *
      * @param  string  $path
-     *
      * @return string public|private
      */
     public static function getVisibility(string $path): string
@@ -356,12 +366,11 @@ final class FileUploader
      *
      * @param  string  $path
      * @param  string  $visibility
-     *
      * @return bool
      */
     public static function setVisibility(string $path, string $visibility): bool
     {
-        if (!in_array($visibility, self::$validOptions)) {
+        if (! in_array($visibility, self::$validOptions)) {
             return Storage::disk(self::$disk)->setVisibility($path, $visibility);
         }
 
@@ -371,13 +380,14 @@ final class FileUploader
     /**
      * Delete file from disk
      *
-     * @param string $path
+     * @param  string  $path
      * @return  bool
+     *
      * @throws Exception
      */
     public static function remove(string $path): bool
     {
-        if (!Storage::disk(self::$disk)->exists($path)) {
+        if (! Storage::disk(self::$disk)->exists($path)) {
             throw new GeneralException('File does not exist!');
         }
 
@@ -386,7 +396,6 @@ final class FileUploader
 
     /**
      * @param $file
-     *
      * @return string
      */
     public static function getHashFile($file): string
@@ -398,12 +407,10 @@ final class FileUploader
      * Create a streamed response for a given file.
      *
      * @param  string  $path
-     *
      * @return array Content
      */
     public static function getMeta(string $path): array
     {
-
         $diskFrom = Storage::disk(self::$disk);
 
         $data = $diskFrom->getMetadata($path);
@@ -430,6 +437,7 @@ final class FileUploader
 
     /**
      * Get all extensions
+     *
      * @return array<int, string> Extensions of all file types
      */
     public static function allExtensions(): array
@@ -441,7 +449,6 @@ final class FileUploader
      * Get type by extension
      *
      * @param  string  $ext Specific extension
-     *
      * @return string Type
      */
     private static function getType(string $ext): string
@@ -479,30 +486,28 @@ final class FileUploader
      * @param  string  $filename
      * @param  string  $type
      * @param  int|null  $user_id
-     *
      * @return string Specific user directory
      *
      * @example uploads/{user_id}/{type}/{filename}
      */
     private static function getUserDir(string $filename, string $type = self::FILE, int $user_id = null): string
     {
-        if (!isset($user_id)){
+        if (! isset($user_id)) {
             $user_id = auth()->id() ?? 1; // default to superadmin
         }
 
         return trim(strtr(self::UPLOAD_PATH, [
             '{user_id}' => $user_id,
             '{type}' => $type,
-            '{filename}' => $filename
+            '{filename}' => $filename,
         ]), '/\\');
     }
 
     /**
      * Grab dimensions of an image.
      *
-     * @param  UploadedFile $file
+     * @param  UploadedFile  $file
      * @param  string  $type
-     *
      * @return string|null string|null
      */
     private static function getDimensions(UploadedFile $file, string $type = self::IMAGE): ?string
@@ -521,7 +526,7 @@ final class FileUploader
 
         [$width, $height] = $sizeDetails;
 
-        return ($width . 'x' . $height);
+        return $width.'x'.$height;
     }
 
     /**
@@ -535,6 +540,7 @@ final class FileUploader
         if ($file instanceof SymfonyUploadedFile && ! $file->isValid()) {
             return false;
         }
+
         return $file instanceof SymfonyFile;
     }
 
@@ -548,20 +554,17 @@ final class FileUploader
         return in_array(strtolower($needle), array_map('strtolower', $haystack));
     }
 
-
     /**
      * get icon path
      *
      * @param  string  $mimeType
-     *
      * @return string
      */
     public static function getIconPath(string $mimeType): string
     {
         $file_type_icons_path = 'img/file-type-icons/';
 
-        switch($mimeType)
-        {
+        switch($mimeType) {
             case 'image/jpeg':
             case 'image/pjpeg':
             case 'image/x-jps':
@@ -661,7 +664,6 @@ final class FileUploader
                 $icon_file = 'ms-pptx.png';
                 break;
 
-
             case 'application/excel':
             case 'application/x-excel':
             case 'application/x-msexcel':
@@ -686,9 +688,9 @@ final class FileUploader
                 $icon_file = 'unknown.png';
                 break;
         }
+
         return $file_type_icons_path.$icon_file;
     }
-
 
     /**
      * getFileType
@@ -696,12 +698,11 @@ final class FileUploader
      *
      *
      * @param  string  $filename
-     *
      * @return bool|string
      */
     public static function getFileType(string $filename): bool|string
     {
-        $mime_types = array(
+        $mime_types = [
 
             'txt' => 'text/plain',
             'htm' => 'text/html',
@@ -755,9 +756,9 @@ final class FileUploader
             // open office
             'odt' => 'application/vnd.oasis.opendocument.text',
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-        );
+        ];
 
-        $arr = explode('.',$filename);
+        $arr = explode('.', $filename);
         $ext = strtolower(array_pop($arr));
         if (array_key_exists($ext, $mime_types)) {
             return $mime_types[$ext];
@@ -765,6 +766,7 @@ final class FileUploader
             $fileInfo = finfo_open(FILEINFO_MIME);
             $mimetype = finfo_file($fileInfo, $filename);
             finfo_close($fileInfo);
+
             return $mimetype;
         } else {
             return 'application/octet-stream';
@@ -776,17 +778,17 @@ final class FileUploader
      *
      * @param  int  $size in-bytes
      * @param  int  $precision
-     *
      * @return string
      */
     public static function formatBytes(int $size, int $precision = 2): string
     {
-        $units =  ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $bytes = max($size, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
         $bytes /= pow(1024, $pow);
-        return round($bytes, $precision) . ' ' . $units[$pow];
+
+        return round($bytes, $precision).' '.$units[$pow];
     }
 
     /**
@@ -795,21 +797,21 @@ final class FileUploader
      * @example 1KB => 1000 (bytes)
      *
      * @param $from
-     *
      * @return float|int|string
      */
     public static function convertToBytes($from): float|int|string
     {
-        $number = (float) substr($from,0,-2);
+        $number = (float) substr($from, 0, -2);
+
         return match (strtoupper(substr($from, -2))) {
-            "KB" => $number * 1024,
-            "MB" => $number * pow(1024, 2),
-            "GB" => $number * pow(1024, 3),
-            "TB" => $number * pow(1024, 4),
-            "PB" => $number * pow(1024, 5),
-            "EB" => $number * pow(1024, 6),
-            "ZB" => $number * pow(1024, 7),
-            "YB" => $number * pow(1024, 8),
+            'KB' => $number * 1024,
+            'MB' => $number * pow(1024, 2),
+            'GB' => $number * pow(1024, 3),
+            'TB' => $number * pow(1024, 4),
+            'PB' => $number * pow(1024, 5),
+            'EB' => $number * pow(1024, 6),
+            'ZB' => $number * pow(1024, 7),
+            'YB' => $number * pow(1024, 8),
             default => $from,
         };
     }
@@ -817,24 +819,23 @@ final class FileUploader
     /**
      * Convert bytes to the unit specified by the $to parameter.
      *
-     * @param  integer $bytes  The filesize in Bytes.
+     * @param  int  $bytes  The filesize in Bytes.
      * @param  string  $to  The unit type to convert to. Accepts KB, MB, GB, TB or PB for Kilobytes, Megabytes, Gigabytes, Terabytes or PetaBytes, respectively.
-     * @param  integer $decimal_places  The number of decimal places to return.
-     *
+     * @param  int  $decimal_places  The number of decimal places to return.
      * @return string Returns only the number of units, not the type letter. Returns 0 if the $to unit type is out of scope.
-     * @example 1000 (KB) => 1
      *
+     * @example 1000 (KB) => 1
      */
     public static function convertBytesToSpecified(int $bytes, string $to, int $decimal_places = 2): string
     {
-        $formulas = array(
+        $formulas = [
             'KB' => number_format($bytes / 1024, $decimal_places),
             'MB' => number_format($bytes / 1048576, $decimal_places),
             'GB' => number_format($bytes / 1073741824, $decimal_places),
             'TB' => number_format($bytes / 1099511627776, $decimal_places),
             'PB' => number_format($bytes / 1125899906842624, $decimal_places),
-        );
-        return isset($formulas[$to]) ? $formulas[$to] . $to : 0 . $to;
-    }
+        ];
 
+        return isset($formulas[$to]) ? $formulas[$to].$to : 0 .$to;
+    }
 }

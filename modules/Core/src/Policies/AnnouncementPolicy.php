@@ -2,9 +2,9 @@
 
 namespace Modules\Core\Policies;
 
-use Modules\User\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Core\Models\Announcement\Announcement;
+use Modules\User\Models\User\User;
 
 class AnnouncementPolicy
 {
@@ -38,7 +38,7 @@ class AnnouncementPolicy
     /**
      * Determine whether the user can view the Announcement.
      *
-     * @param  User|null $user
+     * @param  User|null  $user
      * @param  Announcement  $announcement
      * @return bool
      */
@@ -73,6 +73,7 @@ class AnnouncementPolicy
         if ($user->can('create Announcements')) {
             return true;
         }
+
         return false;
     }
 

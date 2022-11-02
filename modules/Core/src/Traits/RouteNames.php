@@ -7,19 +7,18 @@ use Illuminate\Support\Facades\Route;
 
 trait RouteNames
 {
-
     /**
      * Group route names array by prefix
      * Excepts is used if we don't want to get particular route(s) prefix
      *
-     * @param array|null $except
+     * @param  array|null  $except
      * @return array
      */
     public function getRoutesExcept(array $except = null): array
     {
         $routeNames = $this->getRouteNames();
 
-        $except =  Arr::wrap($except);
+        $except = Arr::wrap($except);
 
         return $this->sortRoutesByName($routeNames, $except);
     }
@@ -44,14 +43,14 @@ trait RouteNames
     /**
      * Sort routes by their prefixes
      *
-     * @param array $routeNames
-     * @param array|null $except
+     * @param  array  $routeNames
+     * @param  array|null  $except
      * @return array
      */
     public function sortRoutesByPrefix(array $routeNames, array $except = null): array
     {
         $routes = [];
-        $except =  Arr::wrap($except);
+        $except = Arr::wrap($except);
 
         foreach ($routeNames as $routeName) {
             $routeNameArray = explode('.', $routeName);
@@ -61,23 +60,24 @@ trait RouteNames
                 $routes[$prefix][] = implode('.', $routeNameArray);
             }
         }
+
         return $routes;
     }
 
     /**
      * Sort routes by name
      *
-     * @param array $routeNames
-     * @param array|null $except
+     * @param  array  $routeNames
+     * @param  array|null  $except
      * @return array
      */
     private function sortRoutesByName(array $routeNames, array $except = null): array
     {
         $routes = [];
-        $except =  Arr::wrap($except);
+        $except = Arr::wrap($except);
 
         foreach ($routeNames as $routeName) {
-            if (!in_array($routeName, $except)) {
+            if (! in_array($routeName, $except)) {
                 $routeNameArray = explode('.', $routeName);
 
                 $prefix = $routeNameArray[0];
@@ -85,8 +85,7 @@ trait RouteNames
                 $routes[$prefix][] = implode('.', $routeNameArray);
             }
         }
+
         return $routes;
     }
-
-
 }

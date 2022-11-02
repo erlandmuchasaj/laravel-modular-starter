@@ -6,9 +6,9 @@ use Modules\Core\Providers\RouteServiceProvider as CoreRouteServiceProvider;
 
 class RouteServiceProvider extends CoreRouteServiceProvider
 {
-
     /**
      * The root namespace to assume when generating URLs to actions.
+     *
      * @var string
      */
     protected $namespace = 'Modules\\User\\Http\\Controllers';
@@ -36,5 +36,4 @@ class RouteServiceProvider extends CoreRouteServiceProvider
     {
         return __DIR__.'/../../routes/channels.php';
     }
-
 }
