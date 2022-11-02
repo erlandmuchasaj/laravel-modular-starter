@@ -39,7 +39,6 @@
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.0",
-        "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "modules/core": "^1.0",
         "modules/user": "^1.0"
@@ -48,12 +47,14 @@
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.2",
         "laravel/sail": "^1.0.1",
         "laravel/telescope": "^4.9",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "2.0",
         "phpunit/phpunit": "^9.5.10",
+        "rector/rector": "^0.14.6",
         "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^1.0"
     },
@@ -101,10 +102,18 @@
         ],
         "phpstan": [
             "./vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "pint": [
+            "./vendor/bin/pint"
+        ],
+        "rector": [
+            "./vendor/bin/rector --memory-limit=2G"
         ]
     },
     "scripts-descriptions": {
-        "phpstan": "Run PHPStan static analysis against your application."
+        "phpstan": "Run PHPStan static analysis against your application.",
+        "pint": "Run Laravel pint to do Code style and minimalistic fixes for laravel.",
+        "rector": "Run rector to upgrade old PHP code and handle automated refactorings."
     },
     "extra": {
         "laravel": {
