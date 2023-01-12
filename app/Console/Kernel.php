@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('telescope:prune --hours=48')->daily();
         // $schedule->command('sanctum:prune-expired --hours=24')->daily();
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('auth:clear-resets')->everyFifteenMinutes();
     }
 
     /**

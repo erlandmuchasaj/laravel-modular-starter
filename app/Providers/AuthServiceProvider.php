@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Implicitly grant "Admin" role all permissions
         // This works in the app by using gate-related functions like auth()->user->can() and @can()
+        // @note: here you should NOT return false, only null whn conditions are not met.
         Gate::before(function ($user, $ability) {
             return ($user->id === 1) ? true : null;
         });

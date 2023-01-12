@@ -27,11 +27,11 @@ class Captcha implements Rule
         }
 
         $response = json_decode((new Client([
-            'timeout' => config('boilerplate.access.captcha.configs.options.timeout'),
+            'timeout' => config('app.captcha.configs.options.timeout'),
         ]))->post('https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-                'secret' => config('boilerplate.access.captcha.configs.secret_key'),
-                'remoteip' => request()->getClientIp(),
+                'secret' => config('app.captcha.configs.secret_key'),
+                'remoteip' => request()->ip(),
                 'response' => $value,
             ],
         ])->getBody(), true);

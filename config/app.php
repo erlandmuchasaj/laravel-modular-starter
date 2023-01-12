@@ -476,12 +476,10 @@ return [
     'roles' => [
         'superadmin' => 'superadmin',
         'admin' => 'admin',
-        'supervisor' => 'supervisor',
-        'finance' => 'finance',
-        'kiosk' => 'kiosk',
-        'patrol' => 'patrol',
-        'provider' => 'provider',
         'user' => 'user',
+    ],
+
+    'permissions' => [
     ],
 
     /*
@@ -538,6 +536,7 @@ return [
     */
 
     'password_history' => env('PASSWORD_HISTORY', 3),
+    'password_history_limit_check' => env('PASSWORD_HISTORY_LIMIT_CHECK', 3),
 
     /*
     |--------------------------------------------------------------------------
@@ -665,6 +664,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ])->toArray(),
 
 ];

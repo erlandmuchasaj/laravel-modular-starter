@@ -80,6 +80,14 @@ return [
         'fields' => [],
     ],
 
+    'twilio' => [
+        'sid' => env('TWILIO_SID', ''),
+        'verify_sid' => env('TWILIO_VERIFY_SID', ''),
+        'token' => env('TWILIO_TOKEN', ''),
+        'from' => env('TWILIO_FROM', ''),
+        'enabled' => env('TWILIO_ENABLED', false),
+    ],
+
     'recaptcha' => [
         'client_id' => env('INVISIBLE_RECAPTCHA_SITEKEY'),
         'client_secret' => env('INVISIBLE_RECAPTCHA_SECRETKEY'),
@@ -99,23 +107,25 @@ return [
         'key' => env('PWNED_KEY'),
         'enabled' => env('PWNED_ENABLED', false),
     ],
+
     'indisposable' => [
         'default' => env('INDISPOSABLE_SERVICE', 'open.kickbox'),
-        'enabled' => env('INDISPOSABLE_ENABLED', false),
+        'enabled' => env('INDISPOSABLE_ENABLED', true),
         'connections' => [
             'open.kickbox' => [
                 'domain' => 'https://open.kickbox.com/v1/disposable',
-                'email' => 'https://open.kickbox.com/v1/disposable', // this does not support email check
+                'email' => 'https://open.kickbox.com/v1/disposable',
             ],
 
             'validator.pizza' => [
-                'domain' => 'https://www.validator.pizza/domain',
-                'email' => 'https://www.validator.pizza/email',
+                'domain' => 'https://api.mailcheck.ai/domain',
+                'email' => 'https://api.mailcheck.ai/email',
             ],
 
             'block-temporary-email' => [
                 'domain' => 'https://block-temporary-email.com/check/domain',
                 'email' => 'https://block-temporary-email.com/check/email',
+                'key' => 'HFL4ZzPGlYaxJimbPlERn1MA067ENAvx8KhH50CQ',
             ],
         ],
     ],

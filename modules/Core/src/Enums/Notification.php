@@ -3,7 +3,6 @@
 namespace Modules\Core\Enums;
 
 use Illuminate\Support\Str;
-
 final class Notification
 {
     const NAME = 'notification';

@@ -36,4 +36,13 @@ final class EmCms
      * @var int
      */
     public const PAGE_LIMIT = 15;
+
+    /**
+     * The default time format
+     * This is used to show
+     * to the user in FE
+     *
+     * @var string
+     */
+    public const DATE_TIME_FORMAT = 'd/m/Y H:i';
 }

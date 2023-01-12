@@ -70,11 +70,12 @@ class Indisposable
      * Validates whether an email address does not originate from a disposable email service.
      * The response is saved to prevent unnecessary checks.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @param  array  $parameters
-     * @param  Validator  $validator
+     * @param string $attribute
+     * @param mixed $value
+     * @param array $parameters
+     * @param Validator $validator
      * @return bool
+     * @throws GuzzleException
      */
     public function validate(string $attribute, mixed $value, array $parameters, Validator $validator): bool
     {

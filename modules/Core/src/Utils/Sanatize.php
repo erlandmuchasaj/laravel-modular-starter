@@ -9,6 +9,13 @@ namespace Modules\Core\Utils;
  */
 class Sanatize
 {
+    /*
+     * Matches all CJK characters that are candidates for auto-splitting
+     * (Chinese, Japanese, Korean).
+     * Contains kana and BMP ideographs.
+     */
+    const PREG_CLASS_CJK = '\x{3041}-\x{30ff}\x{31f0}-\x{31ff}\x{3400}-\x{4db5}\x{4e00}-\x{9fbb}\x{f900}-\x{fad9}';
+
     /**
      * Copied from Drupal search module, except for \x{0}-\x{2f}
      * that has been replaced by \x{0}-\x{2c}\x{2e}-\x{2f} in order to keep the char '-'
@@ -192,13 +199,13 @@ class Sanatize
     }
 
     /**
-     * sanitize
-     * Sanatize a string for search
+     * Sanitize a string for search
      *
      * @param  string  $string
+     * @param  bool  $keepHyphens
      * @return string
      */
-    public static function sanitize(string $string = ''): string
+    public static function sanitize(string $string = '', bool $keepHyphens = false): string
     {
         $string = trim($string);
         if (empty($string)) {
@@ -209,12 +216,16 @@ class Sanatize
         $string = html_entity_decode($string, ENT_NOQUOTES, 'utf-8');
 
         $string = (string) preg_replace('/(['.self::PREG_CLASS_NUMBERS.']+)['.self::PREG_CLASS_PUNCTUATION.']+(?=['.self::PREG_CLASS_NUMBERS.'])/u', '\1', $string);
-        $string = (string) preg_replace('/['.self::PREG_CLASS_SEARCH_EXCLUDE.']+/u', ' ', $string);
 
-        $string = (string) preg_replace('/[._]+/', '', $string);
-        $string = ltrim((string) preg_replace('/([^ ])-/', '$1 ', ' '.$string));
-        $string = (string) preg_replace('/[._]+/', '', $string);
-        $string = (string) preg_replace('/[^\s]-+/', '', $string);
+        /**
+         * This caused the email to change from [email@me.com] => [email me com]
+         */
+        // $string = (string) preg_replace('/['.self::PREG_CLASS_SEARCH_EXCLUDE.']+/u', ' ', $string);
+        //
+        // $string = str_replace(['.', '_'], '', $string);
+        // if (!$keepHyphens) {
+        //     $string = ltrim(preg_replace('/([^ ])-/', '$1 ', ' ' . $string));
+        // }
 
         $blacklist = self::lowercase(self::$EM_SEARCH_BLACKLIST);
         if (! empty($blacklist)) {
@@ -226,6 +237,29 @@ class Sanatize
             $string = (string) preg_replace('/(?<=\s)('.$blacklist.')$/Su', '', $string);
             $string = (string) preg_replace('/^('.$blacklist.')$/Su', '', $string);
         }
+
+        $string = (string) preg_replace('/\s+/', ' ', $string);
+
+        return self::replaceAccentedChars(trim($string));
+    }
+
+    /**
+     * Sanitize a string for search
+     *
+     * @param  string  $string
+     * @return string
+     */
+    public static function simpleSanitize(string $string = ''): string
+    {
+        $string = trim($string);
+        if (empty($string)) {
+            return '';
+        }
+
+        $string = self::lowercase(strip_tags($string));
+        $string = html_entity_decode($string, ENT_NOQUOTES, 'utf-8');
+
+        $string = (string) preg_replace('/(['.self::PREG_CLASS_NUMBERS.']+)['.self::PREG_CLASS_PUNCTUATION.']+(?=['.self::PREG_CLASS_NUMBERS.'])/u', '\1', $string);
 
         $string = (string) preg_replace('/\s+/', ' ', $string);
 

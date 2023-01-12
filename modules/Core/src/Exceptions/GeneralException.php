@@ -48,7 +48,7 @@ class GeneralException extends Exception
     public function render(Request $request): JsonResponse|RedirectResponse
     {
         // All instances of ReportableException redirect back with a flash message to show a bootstrap alert-error
-        $response = Notification::error($this->message);
+        $response = Notification::error($this->message, __('core::notification.error'));
 
         if ($request->expectsJson()) {
             return response()->json($response, ($this->code ?: \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST));

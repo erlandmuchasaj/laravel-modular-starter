@@ -492,3 +492,92 @@ if (! function_exists('isSSL')) {
         }
     }
 }
+
+
+if (! function_exists('number_format_short')) {
+    function number_format_short($value, $precision = 1): string|array
+    {
+        if (!is_numeric($value)) {
+            return $value;
+        }
+
+        // 1 - 999 [$value > 0 && $value < 900]
+        $n_format = number_format($value, $precision);
+        $suffix = '';
+        if ($value >= 900 && $value < 1000000) {
+            // 0.9k-999k
+            $n_format = number_format($value / 1000, $precision);
+            $suffix = 'K';
+        } elseif ($value >= 1000000 && $value < 1000000000) {
+            // 1m-999m
+            $n_format = number_format($value / 1000000, $precision);
+            $suffix = 'M';
+        } elseif ($value >= 1000000000 && $value < 1000000000000) {
+            // 1b-999b
+            $n_format = number_format($value / 1000000000, $precision);
+            $suffix = 'B';
+        } elseif ($value >= 1000000000000) {
+            // 0.9t+
+            $n_format = number_format($value / 1000000000000, $precision);
+            $suffix = 'T';
+        }
+
+        // Remove necessary zeroes after decimal. "1.0" -> "1"; "1.00" -> "1"
+        // Intentionally does not affect partials, eg "1.50" -> "1.50"
+        if ($precision > 0) {
+            $dotZero = '.' . str_repeat('0', $precision);
+            $n_format = str_replace($dotZero, '', $n_format);
+        }
+
+        //if ($asArray) {
+        //    return [
+        //        'value' => $n_format ?? 0,
+        //        'suffix' => $suffix ?? ''
+        //    ];
+        //}
+        return !empty($n_format.$suffix) ? $n_format.$suffix : 0;
+    }
+}
+
+if (! function_exists('isTruthy')) {
+    /**
+     * Determine if a variable is Truthy or Falsy
+     *
+     * @param  mixed  $value
+     * @param  bool  $checkTruthy - if we are checking for truthy or falsy value
+     * @example
+     * isTruthy(true) => true
+     * isTruthy(1) => true
+     * isTruthy('1') => true
+     * isTruthy('on') => true
+     * isTruthy('yes') => true
+     *
+     * @return bool
+     */
+    function isTruthy(mixed $value, bool $checkTruthy = true): bool
+    {
+        $truthy = ['yes', 'on', '1', 'true', 1, true];
+
+        $falsy = ['no', 'off', '0', 'false', 0, false];
+
+        if ($checkTruthy) {
+            return in_array($value, $truthy, true);
+        } else {
+            return in_array($value, $falsy, true);
+        }
+    }
+}
+
+if (! function_exists('isFalsy')) {
+    /**
+     * Determine if a variable is Falsy
+     *
+     * @param  mixed  $value
+     *
+     * @return bool
+     */
+    function isFalsy(mixed $value): bool
+    {
+        return isTruthy($value, false);
+    }
+}

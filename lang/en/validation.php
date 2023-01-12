@@ -130,6 +130,9 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    'pwned' => 'Your password is insufficiently secure as it has been found at least :min times in known password breaches, please choose a new one.',
+    'indisposable' => 'Disposable email addresses are not allowed',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

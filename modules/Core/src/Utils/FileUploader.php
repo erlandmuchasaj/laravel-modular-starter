@@ -13,6 +13,7 @@ use Modules\Core\Exceptions\GeneralException;
 use Modules\User\Models\User\User;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class FileUploader
@@ -165,18 +166,31 @@ final class FileUploader
     private static array $archives_ext = ['gzip', 'rar', 'tar', 'zip', '7z'];
 
     /**
+     * Create e new instance of file uploader.
+     *
+     * @param ...$args
+     * @return FileUploader
+     */
+    public static function make(...$args): FileUploader
+    {
+        return new FileUploader(...$args);
+        // return new static(...$args);
+    }
+
+    /**
      * Upload a file into specified disk using
      * specified visibility and then store into DB.
      *
      * @param  UploadedFile  $file
      * @param  string|null  $disk
      * @param  array  $args
-     * @param  int  $user_id Who this file belongs to
+     * @param  int|null  $user_id Who this file belongs to
      * @return array File
      *
      * @throws GeneralException
      */
-    public static function store(UploadedFile $file, string $disk = null, array $args = [], $user_id = null): array
+    public static function store(UploadedFile $file, string $disk = null, array $args = [], int $user_id =
+    null): array
     {
         try {
             $data = self::upload($file, $disk, $args, $user_id);
@@ -193,19 +207,19 @@ final class FileUploader
      * @param  UploadedFile  $file
      * @param  string|null  $disk
      * @param  array  $args
-     * @param  null  $user_id
+     * @param  int|null  $user_id
      * @return array
      *
      * @throws GeneralException
      */
-    public static function upload(UploadedFile $file, string $disk = null, array $args = [], $user_id = null): array
+    public static function upload(UploadedFile $file, string $disk = null, array $args = [], int $user_id = null): array
     {
-        if (is_null($user_id)) {
+        if (! isset($user_id)) {
             $user_id = auth()->id() ?? 1;
         }
 
         if ($file->getSize() === false) {
-            abort(415, __('File failed to load.'));
+            abort(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, __('File failed to load.'));
         }
 
         try {
@@ -214,14 +228,14 @@ final class FileUploader
                 'folder' => '',
                 'alt' => '',
                 'description' => '',
-                'visibility' => self::VISIBILITY_PRIVATE, // public | private
+                'visibility' => self::VISIBILITY_PUBLIC, // public | private
             ];
 
             // merge default options with passed parameters
             $args = array_merge($defaults, $args);
 
             if ($disk === null) {
-                $disk = config('filesystems.default');
+                $disk = self::$disk;
             }
 
             $folder = '';
@@ -230,7 +244,7 @@ final class FileUploader
             }
 
             if (! in_array($args['visibility'], self::$validOptions)) {
-                $args['visibility'] = self::VISIBILITY_PRIVATE;
+                $args['visibility'] = self::VISIBILITY_PUBLIC;
             }
 
             // get filename with extension
@@ -258,7 +272,7 @@ final class FileUploader
 
             // Store $filePath in the database
             if (! $path) {
-                throw new GeneralException('File could not be uploaded to remote server!');
+                throw new GeneralException(__('File could not be uploaded to remote server!'));
             }
 
             $data = [
@@ -366,29 +380,30 @@ final class FileUploader
      *
      * @param  string  $path
      * @param  string  $visibility
-     * @return bool
+     * @return string|null public|private
      */
-    public static function setVisibility(string $path, string $visibility): bool
+    public static function setVisibility(string $path, string $visibility): ?string
     {
         if (! in_array($visibility, self::$validOptions)) {
             return Storage::disk(self::$disk)->setVisibility($path, $visibility);
         }
 
-        return false;
+        return null;
     }
 
     /**
      * Delete file from disk
      *
      * @param  string  $path
+     * @param  bool  $throwError
      * @return  bool
      *
-     * @throws Exception
+     * @throws GeneralException
      */
-    public static function remove(string $path): bool
+    public static function remove(string $path, bool $throwError = true): bool
     {
-        if (! Storage::disk(self::$disk)->exists($path)) {
-            throw new GeneralException('File does not exist!');
+        if (! Storage::disk(self::$disk)->exists($path) && $throwError) {
+            throw new GeneralException(__('File does not exist!'));
         }
 
         return Storage::disk(self::$disk)->delete($path);
@@ -417,7 +432,7 @@ final class FileUploader
 
         $data['url'] = $diskFrom->url($path);
         $data['visibility'] = $diskFrom->getVisibility($path);
-        $data['size_in_kb'] = self::formatBytes($data['size'] ?? 0);
+        $data['size_in_kb'] = self::formatBytes($data['size']);
         $data['last_modified'] = Carbon::createFromTimestamp($data['timestamp'])->diffForHumans();
 
         return $data;
@@ -801,7 +816,7 @@ final class FileUploader
      */
     public static function convertToBytes($from): float|int|string
     {
-        $number = (float) substr($from, 0, -2);
+        $number = substr($from, 0, -2);
 
         return match (strtoupper(substr($from, -2))) {
             'KB' => $number * 1024,

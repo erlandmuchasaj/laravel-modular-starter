@@ -197,6 +197,10 @@ $this->app->scoped(Transistor::class, function ($app) {
 ./vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
+```
+./vendor/bin/pint # this is a  PHP CS fixer.
+```
+
 To add some exclusion to specific use cases:
 ```text
 # - '#Access to an undefined property Modules\*\Http\Requests\(.*)::$.*#'

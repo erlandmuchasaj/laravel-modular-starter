@@ -15,6 +15,7 @@ use Modules\Core\Http\Middleware\AddXHeader;
 use Modules\Core\Http\Middleware\Api\IdempotencyMiddleware;
 use Modules\Core\Http\Middleware\CheckForDemoMode;
 use Modules\Core\Http\Middleware\IPFireWall;
+use Modules\Core\Http\Middleware\IpWhitelist;
 use Modules\Core\Http\Middleware\LocaleMiddleware;
 use Modules\Core\Http\Middleware\RememberLocale;
 use Modules\Core\Models\Announcement\Announcement;
@@ -104,6 +105,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      * @var array
      */
     protected array $routeMiddleware = [
+        'ip_whitelist' => IpWhitelist::class
     ];
 
     /**
