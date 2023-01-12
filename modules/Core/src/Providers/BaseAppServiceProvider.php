@@ -130,7 +130,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     {
         // This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
         // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
-        Blade::componentNamespace('\\Modules\\'.$this->module().'\\Views\\Components', $this->module(true)); //
+        Blade::componentNamespace('\\Modules\\'.$this->module().'\\View\\Components', $this->module(true));
 
         // publish migrations
         $this->bootMigrations();
