@@ -179,58 +179,26 @@ return [
         // 'da' => ['name' => 'Danish', 'script' => 'Latn', 'native' => 'dansk', 'iso' => 'da', 'code' => 'da-DK', 'rtl' => false],
         // 'de' => ['name' => 'German', 'script' => 'Latn', 'native' => 'Deutsch', 'iso' => 'de', 'code' => 'de-DE', 'rtl' => false],
         // 'el' => ['name' => 'Greek', 'script' => 'Grek', 'native' => 'Ελληνικά', 'iso' => 'el', 'code' => 'el-GR', 'rtl' => false],
-        // 'en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'iso' => 'en', 'code' => 'en-US', 'rtl' => false],
+        'en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'iso' => 'en', 'code' => 'en-US', 'rtl' => false],
         // 'es' => ['name' => 'Spanish', 'script' => 'Latn', 'native' => 'Español', 'iso' => 'es', 'code' => 'es-ES', 'rtl' => false],
         // 'fa' => ['name' => 'Persian', 'script' => 'Arab', 'native' => 'فارسی', 'iso' => 'fa', 'code' => 'fa-IR', 'rtl' => true], # Farsi
         // 'fr' => ['name' => 'French', 'script' => 'Latn', 'native' => 'Français', 'iso' => 'fr', 'code' => 'fr-FR', 'rtl' => false],
         // 'he' => ['name' => 'Hebrew', 'script' => 'Hebr', 'native' => 'עברית', 'iso' => 'he', 'code' => 'he-IL', 'rtl' => true],
         // 'hu' => ['name' => 'Hungarian', 'script' => 'Latn', 'native' => 'magyar', 'iso' => 'hu', 'code' => 'hu-HU', 'rtl' => false],
         // 'id' => ['name' => 'Indonesian', 'script' => 'Latn', 'native' => 'Bahasa Indonesia', 'iso' => 'id', 'code' => 'id-ID', 'rtl' => false],
-        // 'it' => ['name' => 'Italian', 'script' => 'Latn', 'native' => 'italiano', 'iso' => 'it', 'code' => 'it-IT', 'rtl' => false],
+        'it' => ['name' => 'Italian', 'script' => 'Latn', 'native' => 'italiano', 'iso' => 'it', 'code' => 'it-IT', 'rtl' => false],
         // 'ja' => ['name' => 'Japanese', 'script' => 'Jpan', 'native' => '日本語', 'iso' => 'ja', 'code' => 'ja-JP', 'rtl' => false],
         // 'nl' => ['name' => 'Dutch', 'script' => 'Latn', 'native' => 'Nederlands', 'iso' => 'nl', 'code' => 'nl-NL', 'rtl' => false],
         // 'nb' => ['name' => 'Norwegian Bokmål', 'script' => 'Latn', 'native' => 'Bokmål', 'iso' => 'nb', 'code' => 'nb-NO', 'rtl' => false],
         // 'pt' => ['name' => 'Portuguese', 'script' => 'Latn', 'native' => 'português', 'iso' => 'pt', 'code' => 'pt-BR', 'rtl' => false],
         // 'ru' => ['name' => 'Russian', 'script' => 'Cyrl', 'native' => 'русский', 'iso' => 'ru', 'code' => 'ru-RU', 'rtl' => false],
-        // 'sq' => ['name' => 'Albanian', 'script' => 'Latn', 'native' => 'shqip', 'iso' => 'sq', 'code' => 'sq-AL', 'rtl' => false],
+        'sq' => ['name' => 'Albanian', 'script' => 'Latn', 'native' => 'shqip', 'iso' => 'sq', 'code' => 'sq-AL', 'rtl' => false],
         // 'sv' => ['name' => 'Swedish', 'script' => 'Latn', 'native' => 'svenska', 'iso' => 'sv', 'code' => 'sv-SE', 'rtl' => false],
         // 'sl' => ['name' => 'Slovene', 'script' => 'Latn', 'native' => 'slovenščina', 'iso' => 'sl', 'code' => 'sl-SI', 'rtl' => false],
         // 'th' => ['name' => 'Thai', 'script' => 'Thai', 'native' => 'ไทย', 'iso' => 'th', 'code' => 'th-TH', 'rtl' => false],
         // 'tr' => ['name' => 'Turkish', 'script' => 'Latn', 'native' => 'Türkçe', 'iso' => 'tr', 'code' => 'tr-TR', 'rtl' => false],
         // 'uk' => ['name' => 'Ukrainian', 'script' => 'Cyrl', 'native' => 'українська', 'iso' => 'uk', 'code' => 'uk-UA', 'rtl' => false],
         // 'zh' => ['name' => 'Chinese (Simplified)', 'script' => 'Hans', 'native' => '简体中文', 'iso' => 'zh', 'code' => 'zh-CN', 'rtl' => false],
-
-        /*
-         * Key is the Laravel locale code
-         *
-         * Index 0 of sub-array is the Carbon locale code
-         * Index 1 of sub-array is the PHP locale code for setlocale()
-         * Index 2 of sub-array is whether or not to use RTL (right-to-left) html direction for this language
-         */
-        'ar' => ['ar', 'ar-AR', true],
-        'az' => ['az', 'az-AZ', false],
-        'da' => ['da', 'da-DK', false],
-        'de' => ['de', 'de-DE', false],
-        'el' => ['el', 'el-GR', false],
-        'en' => ['en', 'en-US', false],
-        'es' => ['es', 'es-ES', false],
-        'fa' => ['fa', 'fa-IR', true],
-        'fr' => ['fr', 'fr-FR', false],
-        'he' => ['he', 'he-IL', true],
-        'hu' => ['hu', 'hu-HU', false],
-        'id' => ['id', 'id-ID', false],
-        'it' => ['it', 'it-IT', false],
-        'ja' => ['ja', 'ja-JP', false],
-        'nl' => ['nl', 'nl-NL', false],
-        'nb' => ['nb', 'nb-NO', false],
-        'pt' => ['pt', 'pt-BR', false],
-        'ru' => ['ru', 'ru-RU', false],
-        'sv' => ['sv', 'sv-SE', false],
-        'sl' => ['sl', 'sl-SI', false],
-        'th' => ['th', 'th-TH', false],
-        'tr' => ['tr', 'tr-TR', false],
-        'uk' => ['uk', 'uk-UA', false],
-        'zh' => ['zh', 'zh-CN', false],
     ],
 
     /*
@@ -303,7 +271,6 @@ return [
         'driver' => 'file',
         // 'store'  => 'redis',
     ],
-
 
     /*
     |--------------------------------------------------------------------------

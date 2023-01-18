@@ -39,7 +39,7 @@ class ConsoleServiceProvider extends ServiceProvider
     /**
      * The available commands
      *
-     * @var array
+     * @var array<int, class-string>
      */
     protected array $commands = [
         CastMakeCommand::class,
@@ -83,7 +83,7 @@ class ConsoleServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return array
+     * @return array<int, class-string>
      */
     public function provides(): array
     {

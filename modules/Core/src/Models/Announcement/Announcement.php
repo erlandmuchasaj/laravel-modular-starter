@@ -52,6 +52,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class Announcement extends Model

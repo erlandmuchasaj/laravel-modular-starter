@@ -37,7 +37,11 @@ if (! function_exists('setAllLocale')) {
      */
     function setAllLocale(string $locale): void
     {
-        if (App::getLocale() !== $locale) {
+        if (App::currentLocale() !== $locale) {
+            $lang = locales()->first(function ($value, $key) use ($locale) {
+                return $key === $locale;
+            });
+
             // set laravel localization (lumen)
             app('translator')->setLocale($locale);
 
@@ -48,15 +52,15 @@ if (! function_exists('setAllLocale')) {
             Carbon::setLocale($locale);
 
             // setLocale for php. Enables ->formatLocalized() with localized values for dates
-            setlocale(LC_TIME, $locale);
-            // setlocale(LC_TIME, config('app.locales')[$locale][1]);
+            setlocale(LC_TIME, str_replace('-', '_', $lang['code']));
 
             /*
              * Set the session variable for whether the app is using RTL support
              * For use in the blade directive in BladeServiceProvider
              */
             if (! app()->runningInConsole()) {
-                if (config('app.locales')[$locale][2]) {
+                // $lang[2])
+                if ($lang['rtl']) {
                     session(['lang-rtl' => true]);
                 } else {
                     session()->forget('lang-rtl');
@@ -90,6 +94,7 @@ if (! function_exists('display_price')) {
      * @param  int|string  $price
      * @param  int  $decimals
      * @return string
+     *
      * @$price - Added hack in for when the variants are being created it passes over the new ISO currency code
      * which breaks number_format
      */
@@ -342,6 +347,7 @@ if (! function_exists('humanFilesize')) {
      * @param  int  $size
      * @param  int  $precision
      * @return string
+     *
      * @oaram int $precision
      */
     function humanFilesize(int $size, int $precision = 2): string
@@ -493,11 +499,10 @@ if (! function_exists('isSSL')) {
     }
 }
 
-
 if (! function_exists('number_format_short')) {
     function number_format_short($value, $precision = 1): string|array
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             return $value;
         }
 
@@ -525,7 +530,7 @@ if (! function_exists('number_format_short')) {
         // Remove necessary zeroes after decimal. "1.0" -> "1"; "1.00" -> "1"
         // Intentionally does not affect partials, eg "1.50" -> "1.50"
         if ($precision > 0) {
-            $dotZero = '.' . str_repeat('0', $precision);
+            $dotZero = '.'.str_repeat('0', $precision);
             $n_format = str_replace($dotZero, '', $n_format);
         }
 
@@ -535,7 +540,7 @@ if (! function_exists('number_format_short')) {
         //        'suffix' => $suffix ?? ''
         //    ];
         //}
-        return !empty($n_format.$suffix) ? $n_format.$suffix : 0;
+        return ! empty($n_format.$suffix) ? $n_format.$suffix : 0;
     }
 }
 
@@ -545,6 +550,7 @@ if (! function_exists('isTruthy')) {
      *
      * @param  mixed  $value
      * @param  bool  $checkTruthy - if we are checking for truthy or falsy value
+     *
      * @example
      * isTruthy(true) => true
      * isTruthy(1) => true
@@ -573,11 +579,37 @@ if (! function_exists('isFalsy')) {
      * Determine if a variable is Falsy
      *
      * @param  mixed  $value
-     *
      * @return bool
      */
     function isFalsy(mixed $value): bool
     {
         return isTruthy($value, false);
+    }
+}
+
+if (! function_exists('glob_recursive')) {
+    /**
+     * @return string[]
+     */
+    function glob_recursive(string $pattern, int $flags = 0): array
+    {
+        $files = glob($pattern, $flags);
+
+        if (! $files) {
+            $files = [];
+        }
+
+        $directories = glob(dirname($pattern).'/*', GLOB_ONLYDIR | GLOB_NOSORT) ?? [];
+
+        if (! $directories) {
+            $directories = [];
+        }
+
+        return array_reduce($directories, function (array $files, string $dir) use ($pattern, $flags): array {
+            return array_merge(
+                $files,
+                glob_recursive($dir.'/'.basename($pattern), $flags)
+            );
+        }, $files);
     }
 }

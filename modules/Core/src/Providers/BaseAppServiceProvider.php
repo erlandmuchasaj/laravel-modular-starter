@@ -39,7 +39,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      * SeedServiceProvider::class,
      * @example
      *
-     * @return array
+     * @return array<int, class-string>
      */
     protected array $providers = [
     ];
@@ -49,7 +49,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      *
      * @example Model::class => ModelPolicy::class
      *
-     * @var array
+     * @var array<class-string, class-string>
      */
     protected array $policies = [
     ];
@@ -59,7 +59,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      *
      * @example Model::class => ModelObserver::class
      *
-     * @return array
+     * @return array<class-string, class-string>
      */
     protected array $observers = [
     ];
@@ -69,7 +69,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      *
      * @example 'alias' => Model::class
      *
-     * @return array
+     * @return array<string, class-string>
      */
     protected array $aliases = [
     ];
@@ -79,7 +79,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      *
      * @example MiddlewareClass::class
      *
-     * @var array
+     * @var array<int, class-string>
      */
     protected array $middleware = [
     ];
@@ -87,7 +87,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string, array<int, class-string>>
      */
     protected array $middlewareGroups = [
         'web' => [
@@ -103,7 +103,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      * @example
      * 'subscription.is_customer' => hasBeenCustomer::class,
      *
-     * @var array
+     * @var array<string, class-string>
      */
     protected array $routeMiddleware = [
     ];
@@ -113,7 +113,7 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      *
      * @example CommandNameClass::class
      *
-     * @var array
+     * @var array<int, class-string>
      */
     protected array $commands = [
     ];

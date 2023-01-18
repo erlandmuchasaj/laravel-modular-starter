@@ -60,15 +60,14 @@ class AppServiceProvider extends ServiceProvider
         if (! $this->app->isProduction() && config('app.db_log')) {
             DB::listen(function ($query) {
                 if ($query->time > 1000) {
-                    Log::warning("An individual database query exceeded 1 second.", [
-                        'sql' => $query->sql
+                    Log::warning('An individual database query exceeded 1 second.', [
+                        'sql' => $query->sql,
                     ]);
                 }
 
                 logger(Str::replaceArray('?', $query->bindings, $query->sql));
             });
         }
-
 
         // Remove 'data' from json api responses
         JsonResource::withoutWrapping();
@@ -98,7 +97,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app[ConsoleKernel::class]->whenCommandLifecycleIsLongerThan(
                 5000,
                 function ($startedAt, $input, $status) {
-                    Log::warning("A command took longer than 5 seconds.", [
+                    Log::warning('A command took longer than 5 seconds.', [
                         'startedAt' => $startedAt,
                         'input' => $input,
                         'status' => $status,
@@ -110,7 +109,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app[HttpKernel::class]->whenRequestLifecycleIsLongerThan(
                 5000,
                 function ($startedAt, $request, $response) {
-                    Log::warning("A request took longer than 5 seconds.", [
+                    Log::warning('A request took longer than 5 seconds.', [
                         'startedAt' => $startedAt,
                         'request' => $request,
                         'response' => $response,

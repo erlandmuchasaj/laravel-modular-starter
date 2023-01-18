@@ -105,7 +105,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      * @var array
      */
     protected array $routeMiddleware = [
-        'ip_whitelist' => IpWhitelist::class
+        'ip_whitelist' => IpWhitelist::class,
     ];
 
     /**
@@ -159,7 +159,6 @@ class AppServiceProvider extends BaseAppServiceProvider
         $this->app->scoped("{$this->base}.ModulesList", function () {
             return config("{$this->base}.{$this->module(true)}.config.CoreModules");
         });
-
 
         parent::register();
     }
