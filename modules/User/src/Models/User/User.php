@@ -36,7 +36,6 @@ use Modules\User\Database\Factories\UserFactory;
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
- *
  * @method static \Modules\User\Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -55,7 +54,6 @@ use Modules\User\Database\Factories\UserFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- *
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -103,7 +101,7 @@ class User extends Authenticatable
     /**
      * Create a new factory instance for the model.
      *
-     * @return Factory
+     * @return Factory<User>
      */
     protected static function newFactory(): Factory
     {

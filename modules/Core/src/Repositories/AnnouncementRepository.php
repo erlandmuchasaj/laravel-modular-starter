@@ -3,6 +3,7 @@
 namespace Modules\Core\Repositories;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -89,7 +90,7 @@ class AnnouncementRepository extends BaseRepository
     public function mark(Announcement $announcement, int $status): Announcement
     {
         return DB::transaction(function () use ($announcement, $status) {
-            $announcement->enabled = $status;
+            $announcement->enabled = (bool) $status;
 
             if ($announcement->save()) {
                 switch ($status) {
@@ -112,7 +113,6 @@ class AnnouncementRepository extends BaseRepository
      * @param  Announcement  $announcement
      * @return bool
      *
-     * @throws GeneralException
      * @throws Exception
      * @throws Throwable
      */
@@ -132,11 +132,10 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  Announcement  $announcement
+     * @param Announcement $announcement
      * @return Announcement
      *
      * @throws GeneralException
-     * @throws Exception
      * @throws Throwable
      */
     public function restore(Announcement $announcement): Announcement

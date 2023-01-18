@@ -26,6 +26,7 @@ class CreateAnnouncementsTable extends Migration
             $table->timestamp('starts_at')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

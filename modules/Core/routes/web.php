@@ -5,7 +5,7 @@ use Modules\Core\Http\Controllers\LanguageController;
 
 Route::get('/home', function () {
     return view('core::pages.dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->name('dashboard')->middleware(['auth']);
 
 Route::get('/lang/{lang}', [LanguageController::class, 'swap'])
     ->name('lang.swap')

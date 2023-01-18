@@ -8,7 +8,7 @@ trait ScopesTrait
 {
     /**
      * @param  Builder  $query
-     * @return Builder<Announcement>
+     * @return Builder
      */
     public function scopeEnabled(Builder $query): Builder
     {
@@ -18,7 +18,7 @@ trait ScopesTrait
     /**
      * @param  Builder  $query
      * @param  string  $area
-     * @return Builder<Announcement>
+     * @return Builder
      */
     public function scopeForArea(Builder $query, string $area): Builder
     {
@@ -30,7 +30,7 @@ trait ScopesTrait
 
     /**
      * @param  Builder  $query
-     * @return Builder<Announcement>
+     * @return Builder
      */
     public function scopeInTimeFrame(Builder $query): Builder
     {

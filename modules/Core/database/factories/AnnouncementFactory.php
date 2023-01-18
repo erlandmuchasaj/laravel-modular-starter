@@ -13,7 +13,7 @@ class AnnouncementFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string|null
+     * @var class-string<Announcement>
      */
     protected $model = Announcement::class;
 

@@ -166,6 +166,15 @@ final class FileUploader
     private static array $archives_ext = ['gzip', 'rar', 'tar', 'zip', '7z'];
 
     /**
+     * Create a new service provider instance.
+     * @param mixed ...$args
+     */
+    public function __construct(...$args)
+    {
+        new FileUploader(...$args);
+    }
+
+    /**
      * Create e new instance of file uploader.
      *
      * @param ...$args
@@ -378,17 +387,17 @@ final class FileUploader
     /**
      * Set Visibility of a file
      *
-     * @param  string  $path
-     * @param  string  $visibility
-     * @return string|null public|private
+     * @param string $path
+     * @param string $visibility
+     * @return bool
      */
-    public static function setVisibility(string $path, string $visibility): ?string
+    public static function setVisibility(string $path, string $visibility): bool
     {
         if (! in_array($visibility, self::$validOptions)) {
             return Storage::disk(self::$disk)->setVisibility($path, $visibility);
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -422,32 +431,30 @@ final class FileUploader
      * Create a streamed response for a given file.
      *
      * @param  string  $path
-     * @return array Content
+     * @return array<string, string>
      */
     public static function getMeta(string $path): array
     {
         $diskFrom = Storage::disk(self::$disk);
 
-        $data = $diskFrom->getMetadata($path);
+        //        $data = $diskFrom->getMetadata($path);
+        //        $data['url'] = $diskFrom->url($path);
+        //        $data['visibility'] = $diskFrom->getVisibility($path);
+        //        $data['size_in_kb'] = self::formatBytes($data['size']);
+        //        $data['last_modified'] = Carbon::createFromTimestamp($data['timestamp'])->diffForHumans();
+        //        return $data;
 
-        $data['url'] = $diskFrom->url($path);
-        $data['visibility'] = $diskFrom->getVisibility($path);
-        $data['size_in_kb'] = self::formatBytes($data['size']);
-        $data['last_modified'] = Carbon::createFromTimestamp($data['timestamp'])->diffForHumans();
-
-        return $data;
-
-        // return [
-        //     'path' => $diskFrom->path($path),
-        //     'url' => $diskFrom->url($path),
-        //     'visibility' => $diskFrom->getVisibility($path),
-        //     'mimeType' => $diskFrom->mimeType($path),
-        //     'getMetadata' => $diskFrom->getMetadata($path),
-        //     'size' => self::formatBytes($diskFrom->size($path)),
-        //     'last_modified' => Carbon::createFromTimestamp($diskFrom->lastModified($path))->diffForHumans(),
-        //     'name' => basename($path),
-        //     'pathinfo' => pathinfo($path),
-        // ];
+         return [
+             'path' => $diskFrom->path($path),
+             'url' => $diskFrom->url($path),
+             'visibility' => $diskFrom->getVisibility($path),
+             'mimeType' => $diskFrom->mimeType($path),
+                //             'getMetadata' => $diskFrom->getMetadata($path),
+             'size' => self::formatBytes($diskFrom->size($path)),
+             'last_modified' => Carbon::createFromTimestamp($diskFrom->lastModified($path))->diffForHumans(),
+             'name' => basename($path),
+             'pathinfo' => pathinfo($path),
+         ];
     }
 
     /**
@@ -816,7 +823,7 @@ final class FileUploader
      */
     public static function convertToBytes($from): float|int|string
     {
-        $number = substr($from, 0, -2);
+        $number = (int) substr($from, 0, -2);
 
         return match (strtoupper(substr($from, -2))) {
             'KB' => $number * 1024,

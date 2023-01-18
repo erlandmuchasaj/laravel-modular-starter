@@ -18,7 +18,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array
+     * @return array<int, class-string>
      */
     protected array $providers = [
         RouteServiceProvider::class,
@@ -30,7 +30,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * The policy mappings for the application.
      *
-     * @var array
+     * @var array<class-string, class-string>
      */
     protected array $policies = [
     ];
@@ -38,15 +38,25 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Boot module observers.
      *
-     * @return array
+     * @return array<class-string, class-string>
      */
     protected array $observers = [
     ];
 
     /**
+     * register module aliases.
+     *
+     * @example 'alias' => Model::class
+     *
+     * @return array<string, class-string>
+     */
+    protected array $aliases = [
+    ];
+
+    /**
      * The application's global middleware stack.
      *
-     * @var array
+     * @var array<int, class-string>
      */
     protected array $middleware = [
     ];
@@ -54,7 +64,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string, array<int, class-string>>
      */
     protected array $middlewareGroups = [
         'web' => [
@@ -67,7 +77,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      * The application's route middleware.
      * These middleware may be assigned to group or used individually.
      *
-     * @var array
+     * @var array<string, class-string>
      */
     protected array $routeMiddleware = [
     ];
@@ -75,7 +85,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * The available command shortname.
      *
-     * @var array
+     * @var array<int, class-string>
      */
     protected array $commands = [
     ];
