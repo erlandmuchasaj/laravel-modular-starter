@@ -405,7 +405,12 @@ abstract class BaseAppServiceProvider extends ServiceProvider
             $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'lang');
         }
 
+        // to read language: module::file.key
+        // ex: __('core::messages.welcome');
         $this->loadTranslationsFrom($path, $this->module(true));
+
+        // __('Normal Text');
+        $this->loadJsonTranslationsFrom($path);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([

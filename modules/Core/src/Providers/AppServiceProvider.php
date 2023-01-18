@@ -160,6 +160,7 @@ class AppServiceProvider extends BaseAppServiceProvider
             return config("{$this->base}.{$this->module(true)}.config.CoreModules");
         });
 
+
         parent::register();
     }
 

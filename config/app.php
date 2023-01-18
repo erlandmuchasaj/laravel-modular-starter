@@ -304,6 +304,23 @@ return [
         // 'store'  => 'redis',
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other SEO data ti be used
+    |--------------------------------------------------------------------------
+    |
+    | Chose the direction of the css and typing
+    */
+    'title_name' => 'EMCMS Starter',
+    'seo_title' => 'EMCMS Starter',
+    'seo_description' => 'EMCMS Starter',
+    'seo_image' => '/img/seo_img.png',
+    // not usefully anymore
+    'seo_author' => 'Erland Muchasaj - Software dveloper',
+    'seo_keyword' => 'Software, development, IT, programming.',
+    'seo_copyright' => '@ErlandMuchasaj',
+
     /*
     |--------------------------------------------------------------------------
     | Default Country

@@ -1,9 +1,5 @@
-@if(config('app.debug') == true)
-    <meta name="robots" content="noindex,nofollow">
+@hasSection('meta-robots')
+    @yield('meta-robots')
 @else
-    @hasSection('meta-robots')
-        @yield('meta-robots')
-    @else
-        <meta name="robots" content="all"/>
-    @endif
+    <meta name="robots" content="all"/>
 @endif

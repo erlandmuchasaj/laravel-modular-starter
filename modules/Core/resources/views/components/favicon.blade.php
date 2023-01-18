@@ -1,3 +1,4 @@
 {{-- Site Favicon --}}
-<link rel="shortcut icon" href="{{ asset('/website/images/favicon.ico') }}">
-<link rel="icon" type="image/png" href="{{ asset('/website/images/favicon.png') }}">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
