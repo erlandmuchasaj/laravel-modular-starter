@@ -14,6 +14,7 @@ use Modules\Core\Console\Commands\Install;
 use Modules\Core\Http\Middleware\AddXHeader;
 use Modules\Core\Http\Middleware\Api\IdempotencyMiddleware;
 use Modules\Core\Http\Middleware\CheckForDemoMode;
+use Modules\Core\Http\Middleware\GzipEncodeResponse;
 use Modules\Core\Http\Middleware\IPFireWall;
 use Modules\Core\Http\Middleware\IpWhitelist;
 use Modules\Core\Http\Middleware\LocaleMiddleware;
@@ -78,6 +79,7 @@ class AppServiceProvider extends BaseAppServiceProvider
      */
     protected array $middleware = [
         AddXHeader::class,
+        GzipEncodeResponse::class,
         CheckForDemoMode::class,
         LocaleMiddleware::class,
         IPFireWall::class,
