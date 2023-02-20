@@ -115,7 +115,7 @@ class ModuleMakeCommand extends GeneratorCommand
         // there is a change in structure for translations from v8 to v9.
         if (version_compare(app()->version(), '9.0.0') >= 0) {
             $this->makeDirectory("modules/{$moduleName}/lang/en");
-            $this->files->put("modules/{$moduleName}/lang/en.json", '');
+            $this->files->put("modules/{$moduleName}/lang/en.json", '{}');
             $this->files->put("modules/{$moduleName}/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
         } else {
             $this->makeDirectory("modules/{$moduleName}/resources/lang/en");

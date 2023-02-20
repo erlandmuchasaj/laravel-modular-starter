@@ -88,16 +88,10 @@ class Announcement extends Model
     /**
      * @var string[]
      */
-    protected $dates = [
-        'starts_at',
-        'ends_at',
-    ];
-
-    /**
-     * @var string[]
-     */
     protected $casts = [
         'enabled' => 'boolean',
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
     ];
 
     /**

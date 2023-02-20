@@ -1,3 +1,10 @@
+### IMPORTANT ###
+Add these packages once they have been updated to support laravel 10.
+`"albertcht/invisible-recaptcha": "^1.9"`
+
+`"arcanedev/log-viewer": "^9.0"`,
+
+
 **CORE module**
 
 ## SETUP

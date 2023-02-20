@@ -4,15 +4,15 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Modules\Core\Exceptions\GeneralException;
-use Psr\Log\LogLevel;
 use Throwable;
+
 
 class Handler extends ExceptionHandler
 {
     /**
      * A list of exception types with their corresponding custom log levels.
      *
-     * @var array<class-string<Throwable>, LogLevel::*>
+     * @var array<class-string<Throwable>, \Psr\Log\LogLevel::*>
      */
     protected $levels = [
         //
@@ -40,8 +40,6 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -50,7 +48,7 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         if (config('app.sentry_support') && app()->environment('production')) {
             if (app()->bound('sentry') && $this->shouldReport($e)) {

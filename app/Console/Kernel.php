@@ -9,9 +9,6 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
-     *
-     * @param  Schedule  $schedule
-     * @return void
      */
     protected function schedule(Schedule $schedule): void
     {
@@ -20,12 +17,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('sanctum:prune-expired --hours=24')->daily();
         // $schedule->command('inspire')->hourly();
         // $schedule->command('auth:clear-resets')->everyFifteenMinutes();
+        // $schedule->command('cache:prune-stale-tags')->hourly();
     }
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands(): void
     {

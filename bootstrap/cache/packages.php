@@ -1,26 +1,4 @@
 <?php return array (
-  'albertcht/invisible-recaptcha' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'AlbertCht\\InvisibleReCaptcha\\InvisibleReCaptchaServiceProvider',
-    ),
-  ),
-  'arcanedev/log-viewer' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
-      1 => 'Arcanedev\\LogViewer\\Providers\\DeferredServicesProvider',
-    ),
-  ),
-  'fruitcake/laravel-cors' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fruitcake\\Cors\\CorsServiceProvider',
-    ),
-  ),
   'jenssegers/agent' => 
   array (
     'providers' => 
