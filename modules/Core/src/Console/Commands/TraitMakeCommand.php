@@ -2,8 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-trait')]
 class TraitMakeCommand extends BaseGeneratorCommand
 {
     /**

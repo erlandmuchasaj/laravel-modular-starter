@@ -3,8 +3,10 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-notification')]
 class NotificationMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -66,7 +68,7 @@ class NotificationMakeCommand extends BaseGeneratorCommand
      *
      * @return void
      */
-    protected function writeMarkdownTemplate()
+    protected function writeMarkdownTemplate(): void
     {
         $path = resource_path('views/'.str_replace('.', '/', $this->option('markdown'))).'.blade.php';
 
@@ -128,7 +130,6 @@ class NotificationMakeCommand extends BaseGeneratorCommand
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the notification already exists'],
-
             ['markdown', 'm', InputOption::VALUE_OPTIONAL, 'Create a new Markdown template for the notification'],
         ];
     }

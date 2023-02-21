@@ -14,23 +14,11 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
 {
     /**
      * The root namespace to assume where to get the seeding data from.
-     *
-     * @var string
-     *
-     * @version v2
      */
     protected string $namespace = '';
 
-    // /**
-    //  * @return string
-    //  * @version v1
-    //  */
-    // abstract protected function getSeederPath(): string;
-
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -81,8 +69,6 @@ abstract class BaseSeedServiceProvider extends ServiceProvider
 
     /**
      * Register seeds.
-     *
-     * @return void
      */
     protected function addSeedsFrom(): void
     {

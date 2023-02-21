@@ -120,10 +120,8 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap your package's services.
-
      *
      * @return void
-     *
      * @throws BindingResolutionException
      */
     public function boot(): void
@@ -165,8 +163,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -191,8 +187,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * registerBindings
-     *
-     * @return void
      */
     protected function registerBindings(): void
     {
@@ -204,8 +198,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Register Facades.
-     *
-     * @return void
      */
     protected function registerFacades(): void
     {
@@ -223,8 +215,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Register Aliases.
-     *
-     * @return void
      */
     protected function registerAliases(): void
     {
@@ -236,8 +226,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * registerCommands
-     *
-     * @return void
      */
     protected function registerCommands(): void
     {
@@ -248,8 +236,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * registerProviders
-     *
-     * @return void
      */
     protected function registerProviders(): void
     {
@@ -292,8 +278,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootValidators
-     *
-     * @return void
      */
     protected function bootValidators(): void
     {
@@ -302,8 +286,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootBladeDirective
-     *
-     * @return void
      */
     protected function bootBladeDirective(): void
     {
@@ -314,8 +296,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootPolicies
-     *
-     * @return void
      */
     protected function bootPolicies(): void
     {
@@ -327,8 +307,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootObservers
-     *
-     * @return void
      */
     protected function bootObservers(): void
     {
@@ -343,8 +321,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * bootServices
-     *
-     * @return void
      */
     protected function bootServices(): void
     {
@@ -353,8 +329,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * boot migrations.
-     *
-     * @return void
      */
     protected function bootMigrations(): void
     {
@@ -371,8 +345,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Register views & Publish views.
-     *
-     * @return void
      */
     protected function bootViews(): void
     {
@@ -393,8 +365,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      * Package translations are referenced using the module::file.line syntax convention
      * So, you may load the user module's welcome line from the messages file like so:
      * echo trans('user::messages.welcome');
-     *
-     * @return void
      */
     protected function bootTranslations(): void
     {
@@ -421,8 +391,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
 
     /**
      * Register an additional directory of factories.
-     *
-     * @return void
      */
     protected function bootFactories(): void
     {
@@ -438,9 +406,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
     /**
      * Get module case according to different usage cases.
      * Studly or snake case.
-     *
-     * @param  bool  $snake
-     * @return string
      */
     protected function module(bool $snake = false): string
     {

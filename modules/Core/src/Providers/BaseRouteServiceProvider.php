@@ -33,8 +33,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -58,9 +56,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Define the routes for the application.
-     *
-     * @param  Router  $router
-     * @return void
      */
     public function map(Router $router): void
     {
@@ -93,8 +88,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Load all web routes.
-     *
-     * @param  Router  $router
      */
     private function loadWebRoutes(Router $router): void
     {
@@ -108,8 +101,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Load /Api routes
-     *
-     * @param  Router  $router
      */
     private function loadApiRoutes(Router $router): void
     {

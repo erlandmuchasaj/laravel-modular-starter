@@ -5,8 +5,10 @@ namespace Modules\Core\Console\Commands;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-component')]
 class ComponentMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -75,7 +77,7 @@ class ComponentMakeCommand extends BaseGeneratorCommand
      * @param  callable|null  $onSuccess
      * @return void
      */
-    protected function writeView(callable $onSuccess = null)
+    protected function writeView(callable $onSuccess = null): void
     {
         $path = $this->viewPath(
             str_replace('.', '/', 'components.'.$this->getView()).'.blade.php'

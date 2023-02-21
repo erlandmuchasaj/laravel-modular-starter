@@ -5,8 +5,14 @@ namespace Modules\Core\Console\Commands;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use LogicException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'module:make-policy')]
 class PolicyMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -48,6 +54,7 @@ class PolicyMakeCommand extends BaseGeneratorCommand
      * @return string
      *
      * @throws FileNotFoundException
+     * @throws NotFoundExceptionInterface|ContainerExceptionInterface
      */
     protected function buildClass($name): string
     {
@@ -65,6 +72,8 @@ class PolicyMakeCommand extends BaseGeneratorCommand
      *
      * @param  string  $stub
      * @return string
+     *
+     * @throws NotFoundExceptionInterface|ContainerExceptionInterface
      */
     protected function replaceUserNamespace(string $stub): string
     {
@@ -86,7 +95,7 @@ class PolicyMakeCommand extends BaseGeneratorCommand
      *
      * @return string|null
      *
-     * @throws LogicException
+     * @throws LogicException|NotFoundExceptionInterface|ContainerExceptionInterface
      */
     protected function userProviderModel(): string|null
     {
@@ -113,6 +122,8 @@ class PolicyMakeCommand extends BaseGeneratorCommand
      * @param  string  $stub
      * @param  string  $model
      * @return string
+     *
+     * @throws NotFoundExceptionInterface|ContainerExceptionInterface
      */
     protected function replaceModel(string $stub, string $model): string
     {
@@ -159,7 +170,7 @@ class PolicyMakeCommand extends BaseGeneratorCommand
                 preg_quote($namespacedModel, '/'),
                 preg_quote($namespacedModel, '/'),
             ]),
-            "use {$namespacedModel};",
+            "use $namespacedModel;",
             $stub
         );
     }
@@ -195,8 +206,33 @@ class PolicyMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the policy already exists'],
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the policy applies to'],
             ['guard', 'g', InputOption::VALUE_OPTIONAL, 'The guard that the policy relies on'],
         ];
+    }
+
+    /**
+     * Interact further with the user if they were prompted for missing arguments.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output): void
+    {
+        if ($this->isReservedName($this->getNameInput()) || $this->didReceiveOptions($input)) {
+            return;
+        }
+
+        $model = $this->components->askWithCompletion(
+            'What model should this policy apply to?',
+            $this->possibleModels(),
+            'none'
+        );
+
+        if ($model && $model !== 'none') {
+            $input->setOption('model', $model);
+        }
     }
 }

@@ -4,8 +4,12 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use InvalidArgumentException;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'module:make-observer')]
 class ObserverMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -133,7 +137,33 @@ class ObserverMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the observer already exists'],
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'The model that the observer applies to.'],
         ];
     }
+
+    /**
+     * Interact further with the user if they were prompted for missing arguments.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output): void
+    {
+        if ($this->isReservedName($this->getNameInput()) || $this->didReceiveOptions($input)) {
+            return;
+        }
+
+        $model = $this->components->askWithCompletion(
+            'What model should this observer apply to?',
+            $this->possibleModels(),
+            'none'
+        );
+
+        if ($model && $model !== 'none') {
+            $input->setOption('model', $model);
+        }
+    }
+
 }

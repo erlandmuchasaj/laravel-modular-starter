@@ -4,8 +4,12 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'module:make-model')]
 class ModelMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -56,14 +60,18 @@ class ModelMakeCommand extends BaseGeneratorCommand
         }
 
         if ($this->option('all')) {
+            $this->input->setOption('traits', true);
             $this->input->setOption('factory', true);
             $this->input->setOption('seed', true);
             $this->input->setOption('migration', true);
             $this->input->setOption('controller', true);
+            // $this->input->setOption('resource', true);
+            // $this->input->setOption('api', true);
             $this->input->setOption('policy', true);
-            $this->input->setOption('resource', true);
-            $this->input->setOption('api', true);
-            $this->input->setOption('traits', true);
+        }
+
+        if ($this->option('traits')) {
+            $this->createModelTraits();
         }
 
         if ($this->option('factory')) {
@@ -84,10 +92,6 @@ class ModelMakeCommand extends BaseGeneratorCommand
 
         if ($this->option('policy')) {
             $this->createPolicy();
-        }
-
-        if ($this->option('traits')) {
-            $this->createModelTraits();
         }
 
         return true;
@@ -171,7 +175,7 @@ class ModelMakeCommand extends BaseGeneratorCommand
      *
      * @return void
      */
-    protected function createPolicy()
+    protected function createPolicy(): void
     {
         $policy = Str::studly(class_basename($this->argument('name')));
 
@@ -262,4 +266,38 @@ class ModelMakeCommand extends BaseGeneratorCommand
             ['requests', 'R', InputOption::VALUE_NONE, 'Create new form request classes and use them in the resource controller'],
         ];
     }
+
+
+    /**
+     * Interact further with the user if they were prompted for missing arguments.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output): void
+    {
+        if ($this->isReservedName($this->getNameInput()) || $this->didReceiveOptions($input)) {
+            return;
+        }
+
+        collect($this->components->choice('Would you like any of the following?', [
+            'none',
+            'all',
+            'factory',
+            'form requests',
+            'migration',
+            'policy',
+            'resource controller',
+            'seed',
+        ], default: 0, multiple: true))
+            ->reject('none')
+            ->map(fn ($option) => match ($option) {
+                'resource controller' => 'resource',
+                'form requests' => 'requests',
+                default => $option,
+            })
+            ->each(fn ($option) => $input->setOption($option, true));
+    }
+
 }

@@ -3,8 +3,10 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-rule')]
 class RuleMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -63,15 +65,19 @@ class RuleMakeCommand extends BaseGeneratorCommand
      */
     protected function getStub(): string
     {
-        $stub = '/stubs/rule.stub';
+        //  $stub = '/stubs/rule.stub';
+        //
+        //  if ($this->option('invokable')) {
+        //      $stub = '/stubs/rule.invokable.stub';
+        //  }
+        //
+        //  if ($this->option('implicit') && $this->option('invokable')) {
+        //      $stub = str_replace('.stub', '.implicit.stub', $stub);
+        //  }
 
-        if ($this->option('invokable')) {
-            $stub = '/stubs/rule.invokable.stub';
-        }
-
-        if ($this->option('implicit') && $this->option('invokable')) {
-            $stub = str_replace('.stub', '.implicit.stub', $stub);
-        }
+        $stub = $this->option('implicit')
+            ? '/stubs/rule.implicit.stub'
+            : '/stubs/rule.stub';
 
         return $this->resolveStubPath($stub);
     }
@@ -95,6 +101,7 @@ class RuleMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the rule already exists'],
             ['implicit', 'i', InputOption::VALUE_NONE, 'Generate an implicit rule.'],
             ['invokable', null, InputOption::VALUE_NONE, 'Generate a single method, invokable rule class.'],
         ];

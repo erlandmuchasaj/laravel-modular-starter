@@ -4,7 +4,9 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'module:make-seeder')]
 class SeederMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -73,7 +75,7 @@ class SeederMakeCommand extends BaseGeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path()."/modules/{$moduleName}/database/seeders/".$name.'.php';
+        return base_path()."/modules/$moduleName/database/seeders/".$name.'.php';
     }
 
     /**

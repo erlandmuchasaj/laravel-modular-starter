@@ -21,7 +21,7 @@ class NewPasswordController extends Controller
      * @param  Request  $request
      * @return View
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         return view('user::pages.auth.reset-password', ['request' => $request]);
     }
@@ -34,7 +34,7 @@ class NewPasswordController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'token' => ['required'],

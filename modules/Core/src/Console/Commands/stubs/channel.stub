@@ -8,8 +8,6 @@ class DummyClass
 {
     /**
      * Create a new channel instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -19,10 +17,10 @@ class DummyClass
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \NamespacedDummyUserModel  $user
+     * @param  \NamespacedDummyUserModel $user
      * @return void
      */
-    public function join(DummyUser $user): void
+    public function join(\NamespacedDummyUserModel $user): void
     {
         //
     }

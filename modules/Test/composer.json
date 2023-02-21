@@ -1,0 +1,58 @@
+{
+    "name": "modules/test",
+    "type": "library",
+    "description": "A Generic module for the EMCMS application functionalities",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0",
+    "license": "proprietary",
+    "keywords": [
+        "emcms",
+        "module",
+        "test"
+    ],
+    "authors": [
+        {
+            "name": "Erland Muchasaj",
+            "email": "erland.muchasaj@gmail.com",
+            "homepage": "https://erlandmuchasaj.tech/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "erland.muchasaj@gmail.com"
+    },
+    "require": {
+        "modules/core": "^1.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Modules\\Test\\": "src/",
+            "Modules\\Test\\Database\\Factories\\": "database/factories/",
+            "Modules\\Test\\Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Test\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Test\\Providers\\AppServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

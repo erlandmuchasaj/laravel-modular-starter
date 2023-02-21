@@ -3,7 +3,9 @@
 namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputOption;
+#[AsCommand(name: 'module:make-channel')]
 class ChannelMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -74,5 +76,17 @@ class ChannelMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\\Broadcasting';
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the channel already exists'],
+        ];
     }
 }

@@ -6,8 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Modules\Core\Utils\EmCms;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
+#[AsCommand(name: 'app:install')]
 class Install extends Command
 {
     /**
@@ -119,6 +121,7 @@ class Install extends Command
 
             $this->addDatabaseDetails();
         } catch (\Exception $e) {
+            report($e);
             $this->error('Error in creating .env file, please create manually and then run `php artisan migrate` again');
         }
     }

@@ -100,7 +100,7 @@ You will fill right at home.
   "repositories": [
     {
       "type": "path",
-      "url": ".\/modules\/*"
+      "url": "./modules/*"
     }
   ]
 }
@@ -110,7 +110,7 @@ You will fill right at home.
   - Then run ````  composer update  ```` and you are good to go!
 
 To add a table to specific module use command:
-``php artisan make:migration create_modules_table --path=modules/CustomModule/database/migrations``
+``php artisan make:migration create_modules_table --path=modules/CustomModuleName/database/migrations``
 
 - Good Luck
 
@@ -196,7 +196,7 @@ $this->app->scoped(Transistor::class, function ($app) {
    4. **PATCH** to update a field on an entity on backend, should return 200
    5. **DELETE** to remove an entity from DB and should return 204
 7. Use ``use Symfony\Component\HttpFoundation\Response`` for HTTP status codes
-   1. example: `Response::HTTP_OK` or `HTTP_CREATED` or `HTTP_ACCEPTED` or `HTTP_NO_CONTENT` or `HTTP_NO_CONTENT` etc.
+   1. example: `Response::HTTP_OK` or `HTTP_CREATED` or `HTTP_ACCEPTED` or `HTTP_NO_CONTENT` etc.
    2. Most commonly use status codes: 200, 201, 202, 203, 204, 208, 301, 302, 303, 307, 308, 400, 401, 402, 403, 404, 405, 408, 413, 415, 422, 429,
 8. All related packages should publish the config inside the corresponding module they belong to.
 
@@ -232,6 +232,3 @@ If you want a default value, null coalesce is a better choice:
 ```php
     return $user->profile->nickname ?? randomNickname();
 ```
-
-## @TODO
-- Add a Cache Layer when reading data.

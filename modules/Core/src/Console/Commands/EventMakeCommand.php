@@ -2,6 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputOption;
+
+#[AsCommand(name: 'module:make-event')]
 class EventMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -67,5 +71,17 @@ class EventMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\\Events';
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the event already exists'],
+        ];
     }
 }

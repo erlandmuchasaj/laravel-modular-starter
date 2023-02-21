@@ -3,13 +3,13 @@
 namespace Modules\User\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Laravel\Sanctum\SanctumServiceProvider;
 use Modules\Core\Providers\BaseAppServiceProvider;
 
 class AppServiceProvider extends BaseAppServiceProvider
 {
+
     /**
-     * The Module Name
+     * The CamelCased module name
      *
      * @var string
      */
@@ -18,13 +18,12 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array<int, class-string>
+     * @var array<int, class-string>
      */
     protected array $providers = [
         RouteServiceProvider::class,
         EventServiceProvider::class,
         SeedServiceProvider::class,
-        SanctumServiceProvider::class,
     ];
 
     /**
@@ -38,7 +37,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Boot module observers.
      *
-     * @return array<class-string, class-string>
+     * @var array<class-string, class-string>
      */
     protected array $observers = [
     ];
@@ -46,9 +45,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * register module aliases.
      *
-     * @example 'alias' => Model::class
-     *
-     * @return array<string, class-string>
+     * @var array<string, class-string>
      */
     protected array $aliases = [
     ];
@@ -75,7 +72,8 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * The application's route middleware.
-     * These middleware may be assigned to group or used individually.
+     * These middleware may be assigned
+     * to group or used individually
      *
      * @var array<string, class-string>
      */
@@ -91,16 +89,15 @@ class AppServiceProvider extends BaseAppServiceProvider
     ];
 
     /**
-     * Bootstrap services.
+     * Bootstrap your package's services.
      *
      * @return void
-     *
      * @throws BindingResolutionException
      */
     public function boot(): void
     {
-        logger('AppServiceProvider::boot => '.$this->module);
-
+        logger('AppServiceProvider::boot => '. $this->module);
+        //
         parent::boot();
     }
 
@@ -111,8 +108,9 @@ class AppServiceProvider extends BaseAppServiceProvider
      */
     public function register(): void
     {
-        logger('AppServiceProvider::register => '.$this->module);
-
+        logger('AppServiceProvider::register => '. $this->module);
+        //
         parent::register();
     }
+
 }

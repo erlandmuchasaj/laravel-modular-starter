@@ -5,12 +5,9 @@ namespace Modules\Core\Utils;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\Core\Exceptions\GeneralException;
-use Modules\User\Models\User\User;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -198,8 +195,12 @@ final class FileUploader
      *
      * @throws GeneralException
      */
-    public static function store(UploadedFile $file, string $disk = null, array $args = [], int $user_id =
-    null): array
+    public static function store(
+        UploadedFile $file,
+        string $disk = null,
+        array $args = [],
+        int $user_id = null
+    ): array
     {
         try {
             $data = self::upload($file, $disk, $args, $user_id);
@@ -293,7 +294,7 @@ final class FileUploader
                 'dimensions' => self::getDimensions($file, $type),
                 'name' => $filename,
                 'disk' => $disk,
-                'path' => $filePath, // was: $path
+                'path' => $filePath,
                 'alt' => $args['alt'] ?? null,
                 'description' => $args['description'] ?? null,
                 'visibility' => $args['visibility'], // indicate if file is public or private
@@ -411,7 +412,7 @@ final class FileUploader
      */
     public static function remove(string $path, bool $throwError = true): bool
     {
-        if (! Storage::disk(self::$disk)->exists($path) && $throwError) {
+        if ($throwError && ! Storage::disk(self::$disk)->exists($path)) {
             throw new GeneralException(__('File does not exist!'));
         }
 
@@ -846,16 +847,19 @@ final class FileUploader
      * @param  int  $decimal_places  The number of decimal places to return.
      * @return string Returns only the number of units, not the type letter. Returns 0 if the $to unit type is out of scope.
      *
-     * @example 1000 (KB) => 1
+     * @example 1024 (KB) => 1MB
      */
-    public static function convertBytesToSpecified(int $bytes, string $to, int $decimal_places = 2): string
+    public static function convertBytesToSpecified(int $bytes, string $to = 'MB', int $decimal_places = 2): string
     {
         $formulas = [
             'KB' => number_format($bytes / 1024, $decimal_places),
-            'MB' => number_format($bytes / 1048576, $decimal_places),
-            'GB' => number_format($bytes / 1073741824, $decimal_places),
-            'TB' => number_format($bytes / 1099511627776, $decimal_places),
-            'PB' => number_format($bytes / 1125899906842624, $decimal_places),
+            'MB' => number_format($bytes / pow(1024, 2), $decimal_places),
+            'GB' => number_format($bytes / pow(1024, 3), $decimal_places),
+            'TB' => number_format($bytes / pow(1024, 4), $decimal_places),
+            'PB' => number_format($bytes / pow(1024, 5), $decimal_places),
+            'EB' => number_format($bytes / pow(1024, 6), $decimal_places),
+            'ZB' => number_format($bytes / pow(1024, 7), $decimal_places),
+            'YB' => number_format($bytes / pow(1024, 8), $decimal_places),
         ];
 
         return isset($formulas[$to]) ? $formulas[$to].$to : 0 .$to;

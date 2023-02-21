@@ -2,6 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputOption;
+
+#[AsCommand(name: 'module:make-provider')]
 class ProviderMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -55,5 +59,17 @@ class ProviderMakeCommand extends BaseGeneratorCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\\Providers';
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the provider already exists'],
+        ];
     }
 }

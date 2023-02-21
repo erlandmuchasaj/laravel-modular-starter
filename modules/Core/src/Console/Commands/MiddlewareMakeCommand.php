@@ -2,6 +2,9 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+
+#[AsCommand(name: 'module:make-middleware')]
 class MiddlewareMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;

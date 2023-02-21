@@ -3,13 +3,14 @@
 namespace Modules\Core\Console\Commands;
 
 use Exception;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Database\Console\Migrations\TableGuesser;
 use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
 
-class MigrateMakeCommand extends BaseCommand
+class MigrateMakeCommand extends BaseCommand implements PromptsForMissingInput
 {
     /**
      * The console command signature.
@@ -67,7 +68,7 @@ class MigrateMakeCommand extends BaseCommand
      *
      * @throws Exception
      */
-    public function handle()
+    public function handle(): void
     {
         // It's possible for the developer to specify the tables to modify in this
         // schema operation. The developer may also specify if this table needs
@@ -140,7 +141,7 @@ class MigrateMakeCommand extends BaseCommand
             $file = pathinfo($file, PATHINFO_FILENAME);
         }
 
-        $this->line("<info>Created Migration:</info> {$file}");
+        $this->components->info(sprintf('Migration [%s] created successfully.', $file));
     }
 
     /**
@@ -168,4 +169,17 @@ class MigrateMakeCommand extends BaseCommand
     {
         return Str::of((string) $this->input->getArgument('module'))->trim()->studly();
     }
+
+    /**
+     * Prompt for missing input arguments using the returned questions.
+     *
+     * @return array
+     */
+    protected function promptForMissingArgumentsUsing(): array
+    {
+        return [
+            'name' => 'What should the migration be named?',
+        ];
+    }
+
 }

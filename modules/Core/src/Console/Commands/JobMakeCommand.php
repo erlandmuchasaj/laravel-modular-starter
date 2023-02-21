@@ -2,8 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-job')]
 class JobMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -71,6 +73,7 @@ class JobMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the job already exists'],
             ['sync', null, InputOption::VALUE_NONE, 'Indicates that job should be synchronous'],
         ];
     }

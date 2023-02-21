@@ -10,13 +10,6 @@
       'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
     ),
   ),
-  'laravel/fortify' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Fortify\\FortifyServiceProvider',
-    ),
-  ),
   'laravel/sail' => 
   array (
     'providers' => 
@@ -31,17 +24,6 @@
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
-  'laravel/socialite' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
-    ),
-  ),
   'laravel/tinker' => 
   array (
     'providers' => 
@@ -54,6 +36,16 @@
     'providers' => 
     array (
       0 => 'Modules\\Core\\Providers\\AppServiceProvider',
+    ),
+    'aliases' => 
+    array (
+    ),
+  ),
+  'modules/test' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Modules\\Test\\Providers\\AppServiceProvider',
     ),
     'aliases' => 
     array (
@@ -125,13 +117,6 @@
     'aliases' => 
     array (
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
-    ),
-  ),
-  'spatie/laravel-permission' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
 );

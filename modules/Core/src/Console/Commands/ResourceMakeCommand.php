@@ -4,8 +4,10 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-resource')]
 class ResourceMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -98,6 +100,7 @@ class ResourceMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the resource already exists'],
             ['collection', 'c', InputOption::VALUE_NONE, 'Create a resource collection'],
         ];
     }

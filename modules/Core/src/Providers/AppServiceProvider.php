@@ -36,7 +36,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array<int, class-string>
+     * @var array<int, class-string>
      */
     protected array $providers = [
         RouteServiceProvider::class,
@@ -57,7 +57,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Boot module observers.
      *
-     * @return array<class-string, class-string>
+     * @var array<class-string, class-string>
      */
     protected array $observers = [
         Announcement::class => AnnouncementObserver::class,
@@ -66,7 +66,7 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * register module aliases.
      *
-     * @return array<string, class-string>
+     * @var array<string, class-string>
      */
     protected array $aliases = [
         'announcement' => Announcement::class,
@@ -143,8 +143,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -167,8 +165,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * bootValidators
-     *
-     * @return void
      */
     protected function bootValidators(): void
     {
@@ -186,8 +182,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * bootBladeDirective
-     *
-     * @return void
      */
     protected function bootBladeDirective(): void
     {
@@ -226,9 +220,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * Get argument array from argument string.
-     *
-     * @param  string  $argumentString
-     * @return array
      */
     private function getArguments(string $argumentString): array
     {
@@ -237,8 +228,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 
     /**
      * Checks if the current url matches the configured backend uri
-     *
-     * @return bool
      */
     private function onBackend(): bool
     {

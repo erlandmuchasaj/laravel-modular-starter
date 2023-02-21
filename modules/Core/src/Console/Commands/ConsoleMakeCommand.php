@@ -2,8 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-command')]
 class ConsoleMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -83,6 +85,7 @@ class ConsoleMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the console command already exists'],
             ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned', 'command:name'],
         ];
     }

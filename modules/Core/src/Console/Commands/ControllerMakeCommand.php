@@ -4,8 +4,13 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use InvalidArgumentException;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 
+#[AsCommand(name: 'module:make-controller')]
 class ControllerMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -107,6 +112,10 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         if ($this->option('model')) {
             $replace = $this->buildModelReplacements($replace);
+        }
+
+        if ($this->option('creatable')) {
+            $replace['abort(404);'] = '//';
         }
 
         $replace["use {$controllerNamespace}\Controller;\n"] = '';
@@ -276,6 +285,62 @@ class ControllerMakeCommand extends BaseGeneratorCommand
             ['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
             ['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
             ['requests', 'R', InputOption::VALUE_NONE, 'Generate FormRequest classes for store and update.'],
+            ['singleton', 's', InputOption::VALUE_NONE, 'Generate a singleton resource controller class'],
+            ['creatable', null, InputOption::VALUE_NONE, 'Indicate that a singleton resource should be creatable'],
         ];
     }
+
+    /**
+     * Get a list of possible model names.
+     *
+     * @return array<int, string>
+     */
+    protected function possibleModels(): array
+    {
+        $modelPath = base_path() . DIRECTORY_SEPARATOR . "/modules";
+
+        return collect((new Finder)->files()->depth(0)->in($modelPath))
+            ->map(fn ($file) => $file->getBasename('.php'))
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Interact further with the user if they were prompted for missing arguments.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function afterPromptingForMissingArguments(InputInterface $input, OutputInterface $output): void
+    {
+        if ($this->didReceiveOptions($input)) {
+            return;
+        }
+
+        $type = $this->components->choice('Which type of controller would you like', [
+            'empty',
+            'api',
+            'invokable',
+            'resource',
+            'singleton',
+        ], default: 0);
+
+        if ($type !== 'empty') {
+            $input->setOption($type, true);
+        }
+
+        if (in_array($type, ['api', 'resource', 'singleton'])) {
+            $model = $this->components->askWithCompletion(
+                "What model should this $type controller be for?",
+                $this->possibleModels(),
+                'none'
+            );
+
+            if ($model && $model !== 'none') {
+                $input->setOption('model', $model);
+            }
+        }
+    }
+
 }

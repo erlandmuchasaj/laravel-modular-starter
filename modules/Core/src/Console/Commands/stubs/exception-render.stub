@@ -11,9 +11,6 @@ class DummyClass extends Exception
 {
     /**
      * Render the exception as an HTTP response.
-     *
-     * @param  Request  $request
-     * @return Response|JsonResponse
      */
     public function render(Request $request): Response|JsonResponse
     {

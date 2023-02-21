@@ -2,14 +2,14 @@
 
 namespace Modules\User\Providers;
 
-use Modules\Core\Providers\RouteServiceProvider as CoreRouteServiceProvider;
+use Modules\Core\Providers\BaseRouteServiceProvider;
 
-class RouteServiceProvider extends CoreRouteServiceProvider
+class RouteServiceProvider extends BaseRouteServiceProvider
 {
+
     /**
      * The root namespace to assume when generating URLs to actions.
-     *
-     * @var string
+     * @var string|null
      */
     protected $namespace = 'Modules\\User\\Http\\Controllers';
 
@@ -36,4 +36,5 @@ class RouteServiceProvider extends CoreRouteServiceProvider
     {
         return __DIR__.'/../../routes/channels.php';
     }
+
 }

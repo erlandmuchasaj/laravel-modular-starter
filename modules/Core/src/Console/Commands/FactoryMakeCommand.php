@@ -4,8 +4,10 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-factory')]
 class FactoryMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -60,13 +62,17 @@ class FactoryMakeCommand extends BaseGeneratorCommand
      */
     protected function buildClass($name): string
     {
+
         $factory = class_basename(Str::ucfirst(str_replace('Factory', '', $name)));
+
 
         $namespaceModel = $this->option('model')
                         ? $this->qualifyModel($this->option('model'))
                         : $this->qualifyModel($this->guessModelName($name));
 
+
         $model = class_basename($namespaceModel);
+
 
         if (Str::startsWith($namespaceModel, $this->rootNamespace().'Models')) {
             $namespace = Str::beforeLast($this->getDefaultNamespace(trim($this->rootNamespace(), '\\')).'\\'.Str::after($namespaceModel, $this->rootNamespace().'Models\\'), '\\');

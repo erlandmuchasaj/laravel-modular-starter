@@ -2,8 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-exception')]
 class ExceptionMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -86,8 +88,8 @@ class ExceptionMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the exception already exists'],
             ['render', null, InputOption::VALUE_NONE, 'Create the exception with an empty render method'],
-
             ['report', null, InputOption::VALUE_NONE, 'Create the exception with an empty report method'],
         ];
     }

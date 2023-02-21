@@ -1,22 +1,18 @@
 <?php
 
-namespace DummyNamespace;
+namespace {{ namespace }};
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class DummyClass implements CastsAttributes
+class {{ class }} implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
-     * @param Model  $model
-     * @param string $key
-     * @param mixed  $value
-     * @param array $attributes
-     * @return mixed
+     * @param  array<string, mixed>  $attributes
      */
-    public function get($model, string $key, $value, array $attributes): mixed
+    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         return $value;
     }
@@ -24,13 +20,9 @@ class DummyClass implements CastsAttributes
     /**
      * Prepare the given value for storage.
      *
-     * @param Model $model
-     * @param string $key
-     * @param array $value
-     * @param array $attributes
-     * @return array
+     * @param  array<string, mixed>  $attributes
      */
-    public function set($model, string $key, $value, array $attributes): array
+    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         return $value;
     }

@@ -12,7 +12,7 @@ trait CreatesMatchingTest
      *
      * @return void
      */
-    protected function addTestOptions()
+    protected function addTestOptions(): void
     {
         foreach (['test' => 'PHPUnit', 'pest' => 'Pest'] as $option => $name) {
             $this->getDefinition()->addOption(new InputOption(

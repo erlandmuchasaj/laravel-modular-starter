@@ -2,8 +2,9 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
-
+#[AsCommand(name: 'module:make-cast')]
 class CastMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -71,6 +72,7 @@ class CastMakeCommand extends BaseGeneratorCommand
     protected function getOptions(): array
     {
         return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the cast already exists'],
             ['inbound', null, InputOption::VALUE_OPTIONAL, 'Generate an inbound cast class'],
         ];
     }

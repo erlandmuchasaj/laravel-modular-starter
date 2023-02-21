@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController extends Controller
 {
@@ -15,7 +16,7 @@ class PasswordResetLinkController extends Controller
      *
      * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('user::pages.auth.forgot-password');
     }
@@ -26,9 +27,9 @@ class PasswordResetLinkController extends Controller
      * @param  Request  $request
      * @return RedirectResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => ['required', 'email'],

@@ -6,9 +6,11 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make')]
 class ModuleMakeCommand extends GeneratorCommand
 {
     /**
@@ -285,7 +287,7 @@ class ModuleMakeCommand extends GeneratorCommand
 
         $content = str_replace(['ModuleName', '{{ class }}', '{{class}}'], $moduleName, $content);
 
-        $this->files->put("modules/{$moduleName}/composer.json", $content);
+        $this->files->put("modules/$moduleName/composer.json", $content);
     }
 
     /**

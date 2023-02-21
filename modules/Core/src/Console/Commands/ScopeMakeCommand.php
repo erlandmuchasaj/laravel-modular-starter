@@ -2,6 +2,10 @@
 
 namespace Modules\Core\Console\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputOption;
+
+#[AsCommand(name: 'module:make-scope')]
 class ScopeMakeCommand extends BaseGeneratorCommand
 {
     /**
@@ -56,4 +60,17 @@ class ScopeMakeCommand extends BaseGeneratorCommand
     {
         return $rootNamespace.'\\Models\\Scopes';
     }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the scope already exists'],
+        ];
+    }
+
 }

@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Modules\Core\Database\Factories\AnnouncementFactory;
 use Modules\Core\Traits\DefaultActivityLogger;
 use Modules\User\Models\User\User;
+use Spatie\Activitylog\Models\Activity;
 
 
 /**
@@ -27,7 +28,7 @@ use Modules\User\Models\User\User;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection|\Spatie\Activitylog\Models\Activity[] $activities
+ * @property-read Collection|Activity[] $activities
  * @property-read int|null $activities_count
  * @property-read string $parsed_body
  * @property-read User|null $user
@@ -74,7 +75,7 @@ class Announcement extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'area',
@@ -86,7 +87,9 @@ class Announcement extends Model
     ];
 
     /**
-     * @var string[]
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
     protected $casts = [
         'enabled' => 'boolean',
@@ -99,7 +102,9 @@ class Announcement extends Model
      *
      * @var array<int, string>
      */
-    protected $appends = ['parsed_body'];
+    protected $appends = [
+        'parsed_body'
+    ];
 
     /**
      * Create a new factory instance for the model.

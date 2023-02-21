@@ -4,8 +4,10 @@ namespace Modules\Core\Console\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
+#[AsCommand(name: 'module:make-mail')]
 class MailMakeCommand extends BaseGeneratorCommand
 {
     use CreatesMatchingTest;
@@ -67,7 +69,7 @@ class MailMakeCommand extends BaseGeneratorCommand
      *
      * @return void
      */
-    protected function writeMarkdownTemplate()
+    protected function writeMarkdownTemplate(): void
     {
         $path = $this->viewPath(
             str_replace('.', '/', $this->getView()).'.blade.php'
@@ -152,7 +154,6 @@ class MailMakeCommand extends BaseGeneratorCommand
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the mailable already exists'],
-
             ['markdown', 'm', InputOption::VALUE_OPTIONAL, 'Create a new Markdown template for the mailable'],
         ];
     }
