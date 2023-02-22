@@ -41,8 +41,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "modules/core": "^1.0",
-        "modules/user": "^1.0",
-        "modules/test": "^1.0"
+        "modules/user": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

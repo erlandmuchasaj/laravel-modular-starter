@@ -123,9 +123,11 @@ class ComponentMakeCommand extends BaseGeneratorCommand
             );
         }
 
+        $moduleName = Str::snake($this->getModuleInput());
+
         return str_replace(
             ['DummyView', '{{ view }}'],
-            'view(\'components.'.$this->getView().'\')',
+            'view(\''.$moduleName.'::components.'.$this->getView().'\')',
             parent::buildClass($name)
         );
     }
