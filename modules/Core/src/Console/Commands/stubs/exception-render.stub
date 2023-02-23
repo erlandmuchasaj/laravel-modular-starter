@@ -3,7 +3,6 @@
 namespace DummyNamespace;
 
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,12 +11,8 @@ class DummyClass extends Exception
     /**
      * Render the exception as an HTTP response.
      */
-    public function render(Request $request): Response|JsonResponse
+    public function render(Request $request): Response
     {
-        if ($request->expectsJson()) {
-            return response()->json(['Error']);
-        }
-
-        return response('Error');
+        //
     }
 }

@@ -59,11 +59,16 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         if ($type = $this->option('type')) {
             $stub = "/stubs/controller.{$type}.stub";
         } elseif ($this->option('parent')) {
-            $stub = '/stubs/controller.nested.stub';
+            $stub = $this->option('singleton')
+                ? '/stubs/controller.nested.singleton.stub'
+                : '/stubs/controller.nested.stub';
+
         } elseif ($this->option('model')) {
             $stub = '/stubs/controller.model.stub';
         } elseif ($this->option('invokable')) {
             $stub = '/stubs/controller.invokable.stub';
+        } elseif ($this->option('singleton')) {
+            $stub = '/stubs/controller.singleton.stub';
         } elseif ($this->option('resource')) {
             $stub = '/stubs/controller.stub';
         }
@@ -75,6 +80,8 @@ class ControllerMakeCommand extends BaseGeneratorCommand
         }
 
         $stub ??= '/stubs/controller.plain.stub';
+
+//        dd($stub);
 
         return $this->resolveStubPath($stub);
     }

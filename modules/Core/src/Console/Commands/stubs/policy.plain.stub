@@ -8,11 +8,6 @@ class {{ class }}
 {
     /**
      * Create a new policy instance.
-     *
-     * @description Gates are most applicable to actions which are not related to any model or resource,
-     * such as viewing an administrator dashboard.
-     * In contrast, policies should be used when you wish to authorize an action for a particular model or resource.
-     * @return void
      */
     public function __construct()
     {

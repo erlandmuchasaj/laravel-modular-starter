@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ namespace }};
+namespace Modules\User\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\User\\Http\Controllers\Controller;
 
-class {{ class }} extends Controller
+class Validate extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -4,9 +4,6 @@ namespace {{ namespace }};
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class {{ class }}.
- */
 class {{ class }} extends FormRequest
 {
     /**

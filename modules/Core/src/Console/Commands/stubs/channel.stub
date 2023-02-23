@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use NamespacedDummyUserModel;
+use {{ namespacedUserModel }};
 
-class DummyClass
+class {{ class }}
 {
     /**
      * Create a new channel instance.
@@ -16,11 +16,8 @@ class DummyClass
 
     /**
      * Authenticate the user's access to the channel.
-     *
-     * @param  \NamespacedDummyUserModel $user
-     * @return void
      */
-    public function join(\NamespacedDummyUserModel $user): void
+    public function join({{ userModel }} $user): array|bool
     {
         //
     }

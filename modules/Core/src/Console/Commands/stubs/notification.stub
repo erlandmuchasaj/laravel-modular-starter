@@ -35,7 +35,7 @@ class {{ class }} extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
+                    ->line('The introduction to the  EMCMS notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using EMCMS application!');
     }

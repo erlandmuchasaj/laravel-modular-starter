@@ -2,6 +2,7 @@
     "name": "laravel/emcms",
     "type": "project",
     "description": "Laravel modular starter for any project, Big or Small.",
+    "homepage": "https://github.com/erlandmuchasaj",
     "keywords": [
         "framework",
         "laravel",
@@ -11,7 +12,6 @@
         "project"
     ],
     "license": "MIT",
-    "homepage": "https://erlandmuchasaj.tech",
     "authors": [
         {
             "name": "Erland Muchasaj",
@@ -32,6 +32,10 @@
         {
             "type": "Ko-fi",
             "url": "https://ko-fi.com/erlandmuchasaj"
+        },
+        {
+            "type": "PayPal",
+            "url": "https://paypal.me/emcms?country.x=AL&locale.x=en_US"
         }
     ],
     "require": {
