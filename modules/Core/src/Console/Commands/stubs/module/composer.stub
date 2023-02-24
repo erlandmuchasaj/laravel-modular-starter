@@ -2,12 +2,15 @@
     "name": "modules/SnakeModuleName",
     "type": "library",
     "description": "A Generic module for the EMCMS application functionalities",
+    "homepage": "https://github.com/erlandmuchasaj/laravel-modular-starter",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "version": "1.0.0",
     "license": "proprietary",
     "keywords": [
         "emcms",
+        "laravel",
+        "starter",
         "module",
         "SnakeModuleName"
     ],
@@ -20,7 +23,10 @@
         }
     ],
     "support": {
-        "email": "erland.muchasaj@gmail.com"
+        "issues": "https://github.com/erlandmuchasaj/laravel-modular-starter/issues",
+        "source": "https://github.com/erlandmuchasaj/laravel-modular-starter",
+        "email": "erland.muchasaj@gmail.com",
+        "irc": "irc://irc.freenode.org/composer"
     },
     "require": {
         "modules/core": "^1.0"

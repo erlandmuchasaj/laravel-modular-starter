@@ -2,11 +2,13 @@
     "name": "modules/core",
     "type": "library",
     "description": "A Generic module for the application Core functionalities",
+    "homepage": "https://github.com/erlandmuchasaj/laravel-modular-starter",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "version": "1.0.0",
     "license": "proprietary",
     "keywords": [
+        "laravel",
         "core",
         "module"
     ],
@@ -19,7 +21,10 @@
         }
     ],
     "support": {
-        "email": "erland.muchasaj@gmail.com"
+        "issues": "https://github.com/erlandmuchasaj/laravel-modular-starter/issues",
+        "source": "https://github.com/erlandmuchasaj/laravel-modular-starter",
+        "email": "erland.muchasaj@gmail.com",
+        "irc": "irc://irc.freenode.org/composer"
     },
     "require": {
         "illuminate/http": "^8|^9|^10",

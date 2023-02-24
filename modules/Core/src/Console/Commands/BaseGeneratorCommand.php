@@ -26,12 +26,13 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     {
         // check if module is already created and file exists
         if (! $this->moduleAlreadyExists()) {
-            $this->error('Module '.$this->getModuleInput().' does not exists, Please create a module first.');
-
+            $this->components->error(
+                sprintf('Module [%s] does not exists, Please create a module first.', $this->getModuleInput())
+            );
             return false;
         }
 
-        return  parent::handle();
+        return parent::handle();
     }
 
     /**
@@ -46,7 +47,11 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path()."/modules/{$moduleName}/src/".str_replace('\\', '/', $name).'.php';
+        // $path = "/modules/{$moduleName}/src/".str_replace('\\', '/', $name).'.php';
+        $path = DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . $moduleName .
+            DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
+
+        return  base_path() . $path;
     }
 
     /**
@@ -76,6 +81,36 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
             ? $customPath
             : __DIR__.$stub;
     }
+
+    /**
+     * Replace the namespace for the given stub.
+     *
+     * We overwrite this command in order to put laravel App root name dynamically.
+     * @example $this->rootNamespace() -> $this->laravel->getNamespace()
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return $this
+     */
+    protected function replaceNamespace(&$stub, $name): static
+    {
+        $searches = [
+            ['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],
+            ['{{ namespace }}', '{{ rootNamespace }}', '{{ namespacedUserModel }}'],
+            ['{{namespace}}', '{{rootNamespace}}', '{{namespacedUserModel}}'],
+        ];
+
+        foreach ($searches as $search) {
+            $stub = str_replace(
+                $search,
+                [$this->getNamespace($name), $this->laravel->getNamespace(), $this->userProviderModel()],
+                $stub
+            );
+        }
+
+        return $this;
+    }
+
 
     /**
      * Get the desired class name from the input.
@@ -112,7 +147,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         // If it doesn't, we don't want to create other related data.
         // So, we will bail out and  the code is untouched.
 
-        return $this->files->exists("modules/{$moduleName}");
+        return $this->files->exists("modules" . DIRECTORY_SEPARATOR . $moduleName);
         // return file_exists(base_path() . "/modules/{$moduleName}");
     }
 

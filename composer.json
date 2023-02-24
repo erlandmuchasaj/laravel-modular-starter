@@ -2,14 +2,15 @@
     "name": "laravel/emcms",
     "type": "project",
     "description": "Laravel modular starter for any project, Big or Small.",
-    "homepage": "https://github.com/erlandmuchasaj",
+    "homepage": "https://github.com/erlandmuchasaj/laravel-modular-starter",
     "keywords": [
         "framework",
         "laravel",
         "starter",
         "cms",
         "dashboard",
-        "project"
+        "project",
+        "module"
     ],
     "license": "MIT",
     "authors": [
@@ -21,6 +22,8 @@
         }
     ],
     "support": {
+        "issues": "https://github.com/erlandmuchasaj/laravel-modular-starter/issues",
+        "source": "https://github.com/erlandmuchasaj/laravel-modular-starter",
         "email": "erland.muchasaj@gmail.com",
         "irc": "irc://irc.freenode.org/composer"
     },

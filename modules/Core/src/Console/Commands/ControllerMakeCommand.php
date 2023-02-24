@@ -81,8 +81,6 @@ class ControllerMakeCommand extends BaseGeneratorCommand
 
         $stub ??= '/stubs/controller.plain.stub';
 
-//        dd($stub);
-
         return $this->resolveStubPath($stub);
     }
 
@@ -295,21 +293,6 @@ class ControllerMakeCommand extends BaseGeneratorCommand
             ['singleton', 's', InputOption::VALUE_NONE, 'Generate a singleton resource controller class'],
             ['creatable', null, InputOption::VALUE_NONE, 'Indicate that a singleton resource should be creatable'],
         ];
-    }
-
-    /**
-     * Get a list of possible model names.
-     *
-     * @return array<int, string>
-     */
-    protected function possibleModels(): array
-    {
-        $modelPath = base_path() . DIRECTORY_SEPARATOR . "/modules";
-
-        return collect((new Finder)->files()->depth(0)->in($modelPath))
-            ->map(fn ($file) => $file->getBasename('.php'))
-            ->values()
-            ->all();
     }
 
     /**
