@@ -37,6 +37,10 @@
             "url": "https://ko-fi.com/erlandmuchasaj"
         },
         {
+            "type": "Buy me a Coffe",
+            "url": "https://www.buymeacoffee.com/erland"
+        },
+        {
             "type": "PayPal",
             "url": "https://paypal.me/emcms?country.x=AL&locale.x=en_US"
         }
