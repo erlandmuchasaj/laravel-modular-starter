@@ -25,7 +25,8 @@ php artisan module:make <ModuleName>
 ```
 
 - The module is *auto-discovered* so there is no need to add it to *app/config.php* providers list.
-- Then run ``` composer update ``` and you are good to go!
+- Then run ``` composer update ``` and you are good to go (_even this is run automatically when you add module `via 
+ php artisan`_)!
 
 
 ## Artisan

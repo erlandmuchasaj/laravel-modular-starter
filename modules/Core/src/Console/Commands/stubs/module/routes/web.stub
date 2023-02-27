@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes [DummySnakeModuleName]
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application.
+| Here is where you can register web routes for your module.
 | These routes are loaded by the RouteServiceProvider
-| Loaded by DummySnakeModuleName module, within a group which
+| of DummySnakeModuleName module, within a group which
 | contains the "web" middleware group.
 | Now create something great!
 |

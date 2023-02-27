@@ -79,13 +79,15 @@ class ModuleMakeCommand extends GeneratorCommand
             return;
         }
 
-        // // Next, We will check to see if the Module folder already exists. If it does, we don't want
-        // // to create the Module and overwrite the user's code. So, we will bail out so the
-        // // code is untouched. Otherwise, we will continue generating this Module' files.
-        // if ($this->files->exists("modules/{$moduleName}")) {
-        //     $this->error($this->type . " {$moduleName}, already exists!");
-        //     return;
-        // }
+         // Next, We will check to see if the Module folder already exists. If it does, we don't want
+         // to create the Module and overwrite the user's code. So, we will bail out so the
+         // code is untouched. Otherwise, we will continue generating this Module' files.
+         if ($this->files->exists("modules" . DIRECTORY_SEPARATOR . $moduleName)) {
+             $this->components->error(
+                 sprintf('Module [%s] already exists.', $moduleName)
+             );
+             return;
+         }
 
         // Next we check that the name does not contain any non-supported values.
         if (preg_match('([^A-Za-z0-9_/\\\\])', $moduleName)) {
@@ -194,13 +196,17 @@ class ModuleMakeCommand extends GeneratorCommand
         $this->files->put("modules/{$moduleName}/src/helpers.php", "<?php \n\n/*\n * You can place your custom helper functions.\n */");
 
         $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\AppServiceProvider", $this->getStub().'/Providers/AppServiceProvider.stub');
+        // $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\BroadcastServiceProvider", $this->getStub().'/Providers/BroadcastServiceProvider.stub');
         $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\EventServiceProvider", $this->getStub().'/Providers/EventServiceProvider.stub');
         $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\RouteServiceProvider", $this->getStub().'/Providers/RouteServiceProvider.stub');
         $this->buildProviderClass("Modules\\{$moduleName}\\Providers\\SeedServiceProvider", $this->getStub().'/Providers/SeedServiceProvider.stub');
 
         $this->files->put("modules/{$moduleName}/CHANGELOG.md", $this->files->get($this->getStub().'/CHANGELOG.stub'));
+        $this->files->put("modules/{$moduleName}/CODE_OF_CONDUCT.md", $this->files->get($this->getStub().'/CODE_OF_CONDUCT.stub'));
         $this->files->put("modules/{$moduleName}/README.md", $this->files->get($this->getStub().'/README.stub'));
-        $this->files->put("modules/{$moduleName}/LICENSE", $this->files->get($this->getStub().'/LICENSE.stub'));
+        $this->files->put("modules/{$moduleName}/CONTRIBUTING.md", $this->files->get($this->getStub().'/CONTRIBUTING.stub'));
+        $this->files->put("modules/{$moduleName}/LICENSE.md", $this->files->get($this->getStub().'/LICENSE.stub'));
+        $this->files->put("modules/{$moduleName}/SECURITY.md", $this->files->get($this->getStub().'/SECURITY.stub'));
 
         $this->writeComposerFile($moduleName);
 
