@@ -1,11 +1,9 @@
-# [About ME](https://erlandmuchasaj.tech)
+# [About me](https://erlandmuchasaj.tech)
 
-[Laravel](https://laravel.com/) enthusiast and [PHP](https://www.php.net/) Guru.
-I believe development must be an enjoyable and creative experience to be truly fulfilling.
+[Laravel](https://laravel.com/) developer, [PHP](https://www.php.net/) guru and [Angular](https://angular.io/) 
+enthusiast. I believe development must be an enjoyable and creative experience to be truly fulfilling.
 
 # Getting Started
-
----
 
 ## About Laravel Modular Starter 
 Laravel modular starter for any project, Big or Small. 
