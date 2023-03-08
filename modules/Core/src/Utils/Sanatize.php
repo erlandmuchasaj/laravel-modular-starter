@@ -257,6 +257,7 @@ class Sanatize
         }
 
         $string = self::lowercase(strip_tags($string));
+
         $string = html_entity_decode($string, ENT_NOQUOTES, 'utf-8');
 
         $string = (string) preg_replace('/(['.self::PREG_CLASS_NUMBERS.']+)['.self::PREG_CLASS_PUNCTUATION.']+(?=['.self::PREG_CLASS_NUMBERS.'])/u', '\1', $string);

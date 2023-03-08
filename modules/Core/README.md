@@ -1,8 +1,6 @@
 # Important
 Add these packages once they have been updated to support laravel 10.
 `"albertcht/invisible-recaptcha": "^1.9"`
-`"arcanedev/log-viewer": "^9.0"`,
-
 
 ## SETUP
   - Add ``Modules\Core\Exceptions\GeneralException::class`` on ``app/Exception/Handler.php``

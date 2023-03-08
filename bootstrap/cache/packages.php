@@ -1,4 +1,12 @@
 <?php return array (
+  'arcanedev/log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
+      1 => 'Arcanedev\\LogViewer\\Providers\\DeferredServicesProvider',
+    ),
+  ),
   'jenssegers/agent' => 
   array (
     'providers' => 

@@ -23,7 +23,7 @@ final class FileUploader
     private static string $disk = 'public';
 
     /**
-     * constants used to build file image path
+     * constants used to build file path
      */
     const UPLOAD_PATH = 'uploads/{user_id}/{type}/{filename}';
 
@@ -189,9 +189,9 @@ final class FileUploader
      *
      * @param  UploadedFile  $file
      * @param  string|null  $disk
-     * @param  array  $args
+     * @param  array<string, string>  $args
      * @param  int|null  $user_id Who this file belongs to
-     * @return array File
+     * @return array<string, string>
      *
      * @throws GeneralException
      */
@@ -216,9 +216,9 @@ final class FileUploader
      *
      * @param  UploadedFile  $file
      * @param  string|null  $disk
-     * @param  array  $args
+     * @param  array<string, string> $args
      * @param  int|null  $user_id
-     * @return array
+     * @return array<string, string>
      *
      * @throws GeneralException
      */
@@ -235,7 +235,6 @@ final class FileUploader
         try {
             // here you can put as many default values as you want.
             $defaults = [
-                'folder' => '',
                 'alt' => '',
                 'description' => '',
                 'visibility' => self::VISIBILITY_PUBLIC, // public | private
@@ -248,10 +247,7 @@ final class FileUploader
                 $disk = self::$disk;
             }
 
-            $folder = '';
-            if (! empty($args['folder']) && is_string($args['folder'])) {
-                $folder = rtrim($args['folder'], '/\\').'/';
-            }
+            $disk = $disk ?: self::$disk;
 
             if (! in_array($args['visibility'], self::$validOptions)) {
                 $args['visibility'] = self::VISIBILITY_PUBLIC;
@@ -287,7 +283,7 @@ final class FileUploader
 
             $data = [
                 'user_id' => $user_id,
-                'type' => $type, // was: $file->getType(),
+                'type' => $type,
                 'size' => $file->getSize(),
                 'mime_type' => $file->getClientMimeType(),
                 'extension' => $file->getClientOriginalExtension(),
@@ -298,8 +294,6 @@ final class FileUploader
                 'alt' => $args['alt'] ?? null,
                 'description' => $args['description'] ?? null,
                 'visibility' => $args['visibility'], // indicate if file is public or private
-
-                // !! extras
                 'url' => Storage::disk(self::$disk)->url($filePath),
                 'original_name' => $file->getClientOriginalName(),
                 'hash_file' => self::getHashFile($file),
@@ -585,132 +579,30 @@ final class FileUploader
      */
     public static function getIconPath(string $mimeType): string
     {
-        $file_type_icons_path = 'img/file-type-icons/';
+        $file_type_icons_path = 'img'.DIRECTORY_SEPARATOR.'file-type-icons'.DIRECTORY_SEPARATOR;
 
-        switch($mimeType) {
-            case 'image/jpeg':
-            case 'image/pjpeg':
-            case 'image/x-jps':
-                $icon_file = 'jpeg.png';
-                break;
-
-            case 'image/png':
-                $icon_file = 'png.png';
-                break;
-
-            case 'image/gif':
-                $icon_file = 'gif.png';
-                break;
-
-            case 'image/bmp':
-            case 'image/x-windows-bmp':
-                $icon_file = 'bmp.png';
-                break;
-
-            case 'text/html':
-            case 'text/asp':
-            case 'text/javascript':
-            case 'text/ecmascript':
-            case 'application/x-javascript':
-            case 'application/javascript':
-            case 'application/ecmascript':
-                $icon_file = 'html.png';
-                break;
-
-            case 'text/plain':
-                $icon_file = 'conf.png';
-                break;
-
-            case 'text/css':
-                $icon_file = 'css.png';
-                break;
-
-            case 'audio/aiff':
-            case 'audio/x-aiff':
-            case 'audio/midi':
-                $icon_file = 'midi.png';
-                break;
-
-            case 'application/x-troff-msvideo':
-            case 'video/avi':
-            case 'video/msvideo':
-            case 'video/x-msvideo':
-            case 'video/avs-video':
-                $icon_file = 'avi.png';
-                break;
-
-            case 'video/animaflex':
-                $icon_file = 'fla.png';
-                break;
-
-            case 'application/msword':
-            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-            case 'application/vnd.ms-word.document.macroEnabled.12':
-            case 'application/vnd.ms-word.template.macroEnabled.12':
-            case 'application/vnd.oasis.opendocument.text':
-            case 'application/vnd.apple.pages':
-            case 'application/vnd.ms-xpsdocument':
-            case 'application/oxps':
-            case 'application/rtf':
-            case 'application/wordperfect':
-            case 'application/octet-stream':
-                $icon_file = 'docx.png';
-                break;
-
-            case 'application/x-compressed':
-            case 'application/x-7z-compressed':
-            case 'application/x-gzip':
-            case 'application/zip':
-            case 'multipart/x-gzip':
-            case 'multipart/x-zip':
-                $icon_file = 'zip.png';
-                break;
-
-            case 'application/x-gtar':
-            case 'application/rar':
-            case 'application/x-tar':
-                $icon_file = 'rar.png';
-                break;
-
-            case 'video/mpeg':
-            case 'audio/mpeg':
-                $icon_file = 'mpeg.png';
-                break;
-
-            case 'application/pdf':
-                $icon_file = 'pdf.png';
-                break;
-
-            case 'application/mspowerpoint':
-            case 'application/vnd.ms-powerpoint':
-            case 'application/powerpoint':
-                $icon_file = 'ms-pptx.png';
-                break;
-
-            case 'application/excel':
-            case 'application/x-excel':
-            case 'application/x-msexcel':
-            case 'application/vnd.apple.numbers':
-            case 'application/application/vnd.oasis.opendocument.spreadsheet':
-            case 'application/vnd.ms-excel.sheet.macroEnabled.12':
-            case 'application/vnd.ms-excel.sheet.binary.macroEnabled.12':
-            case 'application/vnd.ms-excel':
-            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                $icon_file = 'ms-xlsx.png';
-                break;
-
-            case 'image/vnd.adobe.photoshop':
-                $icon_file = 'psd.png';
-                break;
-
-            case 'not-found':
-                $icon_file = 'not-found.png';
-                break;
-
-            default:
-                $icon_file = 'unknown.png';
-                break;
-        }
+        $icon_file = match ($mimeType) {
+            'image/jpeg', 'image/pjpeg', 'image/x-jps' => 'jpeg.png',
+            'image/png' => 'png.png',
+            'image/gif' => 'gif.png',
+            'image/bmp', 'image/x-windows-bmp' => 'bmp.png',
+            'text/html', 'text/asp', 'text/javascript', 'text/ecmascript', 'application/x-javascript', 'application/javascript', 'application/ecmascript' => 'html.png',
+            'text/plain' => 'conf.png',
+            'text/css' => 'css.png',
+            'audio/aiff', 'audio/x-aiff', 'audio/midi' => 'midi.png',
+            'application/x-troff-msvideo', 'video/avi', 'video/msvideo', 'video/x-msvideo', 'video/avs-video' => 'avi.png',
+            'video/animaflex' => 'fla.png',
+            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-word.document.macroEnabled.12', 'application/vnd.ms-word.template.macroEnabled.12', 'application/vnd.oasis.opendocument.text', 'application/vnd.apple.pages', 'application/vnd.ms-xpsdocument', 'application/oxps', 'application/rtf', 'application/wordperfect', 'application/octet-stream' => 'docx.png',
+            'application/x-compressed', 'application/x-7z-compressed', 'application/x-gzip', 'application/zip', 'multipart/x-gzip', 'multipart/x-zip' => 'zip.png',
+            'application/x-gtar', 'application/rar', 'application/x-tar' => 'rar.png',
+            'video/mpeg', 'audio/mpeg' => 'mpeg.png',
+            'application/pdf' => 'pdf.png',
+            'application/mspowerpoint', 'application/vnd.ms-powerpoint', 'application/powerpoint' => 'ms-pptx.png',
+            'application/excel', 'application/x-excel', 'application/x-msexcel', 'application/vnd.apple.numbers', 'application/application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.ms-excel.sheet.macroEnabled.12', 'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'ms-xlsx.png',
+            'image/vnd.adobe.photoshop' => 'psd.png',
+            'not-found' => 'not-found.png',
+            default => 'unknown.png',
+        };
 
         return $file_type_icons_path.$icon_file;
     }
@@ -718,7 +610,6 @@ final class FileUploader
     /**
      * getFileType
      * Return file mimetype default: 'application/octet-stream'
-     *
      *
      * @param  string  $filename
      * @return bool|string
@@ -817,12 +708,12 @@ final class FileUploader
     /**
      * converts KB,MB,GB,TB,PB,EB,ZB,YB to bytes
      *
-     * @example 1KB => 1000 (bytes)
-     *
-     * @param $from
+     * @param string $from
      * @return float|int|string
+     *
+     * @example 1KB => 1000 (bytes)
      */
-    public static function convertToBytes($from): float|int|string
+    public static function convertToBytes(string $from): float|int|string
     {
         $number = (int) substr($from, 0, -2);
 

@@ -32,6 +32,7 @@
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-honeypot": "^4.3",
         "erusev/parsedown": "^1.7",
+        "arcanedev/log-viewer": "^10.0",
         "sentry/sentry-laravel": "^3.2",
         "jenssegers/agent": "^2.6"
     },
