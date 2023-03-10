@@ -98,12 +98,11 @@ class ModuleMakeCommand extends GeneratorCommand
          * Create Module Folder Structures
          */
         $this->makeDirectory("modules/{$moduleName}");
-        $this->makeDirectory("modules/{$moduleName}/bootstrap");
-        $this->makeDirectory("modules/{$moduleName}/config");
-        $this->makeDirectory("modules/{$moduleName}/database");
-        $this->makeDirectory("modules/{$moduleName}/database/factories");
-        $this->makeDirectory("modules/{$moduleName}/database/migrations");
-        $this->makeDirectory("modules/{$moduleName}/database/seeders");
+        $this->makeDirectory("modules/{$moduleName}/bootstrap", true);
+        $this->makeDirectory("modules/{$moduleName}/config", true);
+        $this->makeDirectory("modules/{$moduleName}/database/factories", true);
+        $this->makeDirectory("modules/{$moduleName}/database/migrations", true);
+        $this->makeDirectory("modules/{$moduleName}/database/seeders", true);
 
         // Add a default seeder on all modules
         // this will be used as an entry
@@ -126,29 +125,32 @@ class ModuleMakeCommand extends GeneratorCommand
             $this->files->put("modules/{$moduleName}/resources/lang/en/messages.php", "<?php \n\n/*\n * You can place your custom module messages in here.\n */\n \nreturn [\n\n];\n");
         }
 
-        $this->makeDirectory("modules/{$moduleName}/resources/views/components");
-        $this->makeDirectory("modules/{$moduleName}/resources/views/errors");
-        $this->makeDirectory("modules/{$moduleName}/resources/views/layouts");
-        $this->makeDirectory("modules/{$moduleName}/resources/views/layouts/includes");
-        $this->makeDirectory("modules/{$moduleName}/resources/views/pages");
-        $this->makeDirectory("modules/{$moduleName}/resources/views/partials");
+        $this->makeDirectory("modules/{$moduleName}/resources/views/components", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/views/errors", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/views/pages", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/views/partials", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/views/layouts/includes", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/css", true);
+        $this->makeDirectory("modules/{$moduleName}/resources/js", true);
+        $this->makeDirectory("modules/{$moduleName}/tests/Feature", true);
+        $this->makeDirectory("modules/{$moduleName}/tests/Unit", true);
         $this->makeDirectory("modules/{$moduleName}/routes");
-        $this->makeDirectory("modules/{$moduleName}/tests");
+
 
         $this->makeDirectory("modules/{$moduleName}/src");
         $this->makeDirectory("modules/{$moduleName}/src/Http");
         $this->makeDirectory("modules/{$moduleName}/src/Console");
-        $this->makeDirectory("modules/{$moduleName}/src/Models");
         $this->makeDirectory("modules/{$moduleName}/src/Providers");
-        $this->makeDirectory("modules/{$moduleName}/src/Exceptions");
-        $this->makeDirectory("modules/{$moduleName}/src/Console/Commands");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware");
-        $this->makeDirectory("modules/{$moduleName}/src/Http/Requests");
+        $this->makeDirectory("modules/{$moduleName}/src/Models", true);
+        $this->makeDirectory("modules/{$moduleName}/src/Console/Commands", true);
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers", true);
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware", true);
+        $this->makeDirectory("modules/{$moduleName}/src/Http/Requests", true);
 
         if ($this->option('all')) {
             $this->makeDirectory("modules/{$moduleName}/src/Enums");
             $this->makeDirectory("modules/{$moduleName}/src/Broadcasting");
+            $this->makeDirectory("modules/{$moduleName}/src/Exceptions");
             $this->makeDirectory("modules/{$moduleName}/src/Events");
             $this->makeDirectory("modules/{$moduleName}/src/Http/Controllers/Api");
             $this->makeDirectory("modules/{$moduleName}/src/Http/Middleware/Api");
@@ -173,18 +175,7 @@ class ModuleMakeCommand extends GeneratorCommand
          *
          * @note if we do not add .gitkeep the folder won't be pushed on repository.
          */
-        $this->files->put("modules/{$moduleName}/bootstrap/.gitkeep", '');
         $this->files->put("modules/{$moduleName}/config/config.php", "<?php \n\n/*\n * You can place your custom module configuration in here.\n */\n \nreturn [\n\n];\n");
-
-        $this->files->put("modules/{$moduleName}/database/factories/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/database/migrations/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/database/seeders/.gitkeep", '');
-
-        $this->files->put("modules/{$moduleName}/resources/views/components/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/resources/views/errors/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/resources/views/layouts/includes/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/resources/views/pages/.gitkeep", '');
-        $this->files->put("modules/{$moduleName}/resources/views/partials/.gitkeep", '');
 
         $stubWebRoute = $this->files->get($this->getStub().'/routes/web.stub');
         $stubApiRoute = $this->files->get($this->getStub().'/routes/api.stub');
@@ -212,7 +203,9 @@ class ModuleMakeCommand extends GeneratorCommand
 
         $this->requireModule($moduleName);
 
-        $this->info($this->type.' created successfully.');
+        $this->components->info(
+            sprintf('Module [%s] created successfully.', $moduleName)
+        );
 
         exec('composer update');
     }
@@ -230,13 +223,19 @@ class ModuleMakeCommand extends GeneratorCommand
     /**
      * Build the directory for the class if necessary.
      *
-     * @param  string  $path
+     * @param string $path
+     * @param bool $gitKeep
+     *
      * @return string
      */
-    protected function makeDirectory($path): string
+    protected function makeDirectory($path, bool $gitKeep = false): string
     {
         if (! $this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
+        }
+
+        if ($gitKeep) {
+            $this->files->put("$path/.gitkeep", '');
         }
 
         return $path;
