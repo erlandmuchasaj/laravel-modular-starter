@@ -34,7 +34,13 @@ use Modules\Core\Console\Commands\TraitMakeCommand;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
-    protected bool $defer = false;
+
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected bool $defer = true;
 
     /**
      * The available commands
@@ -73,7 +79,7 @@ class ConsoleServiceProvider extends ServiceProvider
     /**
      * Register the commands.
      */
-    public function register()
+    public function register(): void
     {
         $this->registerMigrator();
 
@@ -87,9 +93,6 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     public function provides(): array
     {
-        // $this->commands[] = 'migrator';
-        // $this->commands[] = 'modules.migration.creator';
-        // $this->commands[] = 'modules.command.migrate.make';
         return $this->commands;
     }
 

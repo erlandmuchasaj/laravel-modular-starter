@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Providers;
 
+use Closure;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
@@ -126,10 +127,6 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
-        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
-        Blade::componentNamespace('\\Modules\\'.$this->module().'\\View\\Components', $this->module(true));
-
         // publish migrations
         $this->bootMigrations();
 
@@ -190,10 +187,24 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     protected function registerBindings(): void
     {
-        // $this->app->bind(
+        // $this->bind(
         //     CoreRepositoryInterface::class,
         //     CoreEloquentRepository::class
         // );
+    }
+
+
+    /**
+     * Register a binding with the container.
+     *
+     * @param string $abstract
+     * @param Closure|string|null $concrete
+     * @param bool $shared
+     */
+    protected function bind(string $abstract, Closure|string $concrete = null, bool $shared = false)
+    {
+        $this->app->bind($abstract, $concrete, $shared);
+        // $this->app->singleton($abstract, $concrete);
     }
 
     /**
@@ -348,16 +359,62 @@ abstract class BaseAppServiceProvider extends ServiceProvider
      */
     protected function bootViews(): void
     {
-        $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views');
+        // This will allow the usage of package components by their vendor namespace using the package-name:: syntax.
+        // ex: <x-core::calendar /> <x-core::alert /> <x-core::forms.input /> # for sub directories.
+        Blade::componentNamespace('\\Modules\\'.$this->module().'\\View\\Components', $this->module(true));
 
-        $this->loadViewsFrom($path, $this->module(true));
+        $basePath = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR);
+
+        $viewPath = $basePath.'resources'.DIRECTORY_SEPARATOR.'views';
+
+        $assetsPath = $basePath.'resources'.DIRECTORY_SEPARATOR.'assets';
+
+        $componentPath = $basePath.'src' .DIRECTORY_SEPARATOR.'View'.DIRECTORY_SEPARATOR.'Components';
+
+        $this->loadViewsFrom($viewPath, $this->module(true));
 
         if ($this->app->runningInConsole()) {
+            // Publish views
             $this->publishes([
-                $path => resource_path("views/vendor/$this->base/{$this->module(true)}"),
+                $viewPath => resource_path("views/vendor/$this->base/{$this->module(true)}"),
             ], 'views');
+
+            // Publish view components
+            $this->publishes([
+                $componentPath => app_path('View/Components'),
+                $viewPath . DIRECTORY_SEPARATOR . 'components' => resource_path('views/components'),
+            ], 'view-components');
+
+            // Publish assets
+            $this->publishes([
+                $assetsPath => public_path($this->module(true)),
+            ], 'assets');
         }
     }
+
+
+    /**
+     * Register views & Publish views.
+     */
+    protected function bootComponents(): void
+    {
+
+
+//        $path = base_path('modules'.DIRECTORY_SEPARATOR.$this->module().DIRECTORY_SEPARATOR.'resources'
+//            .DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'components');
+//
+//        $this->loadViewsFrom($path, $this->module(true));
+//
+//        if ($this->app->runningInConsole()) {
+//            $this->publishes([
+//                $path => resource_path("views/vendor/$this->base/{$this->module(true)}"),
+//            ], 'views');
+//        }
+
+
+
+    }
+
 
     /**
      * Register & Publish translations.

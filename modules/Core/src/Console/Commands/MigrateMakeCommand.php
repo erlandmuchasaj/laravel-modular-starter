@@ -81,8 +81,8 @@ class MigrateMakeCommand extends BaseCommand implements PromptsForMissingInput
 
         $moduleName = $this->getModuleInput();
 
-        if (! file_exists(base_path()."/modules/{$moduleName}")) {
-            $this->error("Module {$moduleName} does not exists, You need to create a module first.");
+        if (! file_exists(base_path("modules/$moduleName"))) {
+            $this->error("Module $moduleName does not exists, You need to create a module first.");
 
             return;
         }

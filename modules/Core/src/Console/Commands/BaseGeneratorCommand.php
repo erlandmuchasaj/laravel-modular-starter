@@ -48,10 +48,10 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         $moduleName = $this->getModuleInput();
 
         // $path = "/modules/{$moduleName}/src/".str_replace('\\', '/', $name).'.php';
-        $path = DIRECTORY_SEPARATOR . "modules" . DIRECTORY_SEPARATOR . $moduleName .
+        $path = "modules" . DIRECTORY_SEPARATOR . $moduleName .
             DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $name) . '.php';
 
-        return  base_path() . $path;
+        return  base_path($path);
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     {
         $moduleName = $this->getModuleInput();
 
-        $views = base_path()."/modules/{$moduleName}/resources/views";
+        $views = base_path("modules/$moduleName/resources/views");
 
         return $views.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -148,7 +148,6 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
         // So, we will bail out and  the code is untouched.
 
         return $this->files->exists("modules" . DIRECTORY_SEPARATOR . $moduleName);
-        // return file_exists(base_path() . "/modules/{$moduleName}");
     }
 
     /**

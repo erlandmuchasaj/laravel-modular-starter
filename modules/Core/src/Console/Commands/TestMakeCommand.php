@@ -69,7 +69,7 @@ class TestMakeCommand extends BaseGeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path()."/modules/$moduleName/tests/".str_replace('\\', '/', $name).'.php';
+        return base_path("modules/$moduleName/tests/".str_replace('\\', '/', $name).'.php');
     }
 
     /**

@@ -111,7 +111,7 @@ class FactoryMakeCommand extends BaseGeneratorCommand
 
         $moduleName = $this->getModuleInput();
 
-        return base_path()."/modules/{$moduleName}/database/factories/".str_replace('\\', '/', $name).'.php';
+        return base_path("modules/{$moduleName}/database/factories/".str_replace('\\', '/', $name).'.php');
     }
 
     /**
@@ -132,7 +132,7 @@ class FactoryMakeCommand extends BaseGeneratorCommand
             return $modelName;
         }
 
-        $modelPath = base_path()."/modules/{$this->getModuleInput()}/src/Models/";
+        $modelPath = base_path("modules/{$this->getModuleInput()}/src/Models/");
         if (is_dir($modelPath)) {
             return $this->rootNamespace().'Models\Model';
         }
