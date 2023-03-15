@@ -9,10 +9,8 @@ trait AccessorTrait
 {
     /**
      * The USer agent
-     *
-     * @var Agent | null
      */
-    protected Agent | null $agent = null;
+    protected Agent|null $agent = null;
 
     public function getLogMessageAttribute(): string
     {

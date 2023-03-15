@@ -23,7 +23,6 @@ return [
     */
     'CoreModules' => [
         'core',
-        'media',
         'user',
     ],
 

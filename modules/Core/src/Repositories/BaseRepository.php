@@ -15,64 +15,46 @@ abstract class BaseRepository implements RepositoryContract
 {
     /**
      * The repository model.
-     *
-     * @var Model
      */
     protected Model $model;
 
     /**
      * The query builder.
-     *
-     * @var Builder
      */
     protected Builder $query;
 
     /**
      * Alias for the query limit.
-     *
-     * @var int|null
      */
     protected int|null $take;
 
     /**
      * Array of related models to eager load.
-     *
-     * @var array
      */
     protected array $with = [];
 
     /**
      * Array of one or more where clause parameters.
-     *
-     * @var array
      */
     protected array $wheres = [];
 
     /**
      * Array of one or more where in clause parameters.
-     *
-     * @var array
      */
     protected array $whereIns = [];
 
     /**
      * Array of one or more ORDER BY column/value pairs.
-     *
-     * @var array
      */
     protected array $orderBys = [];
 
     /**
      * Array of scope methods to call on the model.
-     *
-     * @var array
      */
     protected array $scopes = [];
 
     /**
      * Get all the model records in the database.
-     *
-     * @return Collection
      */
     public function all(): Collection
     {
@@ -87,8 +69,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Count the number of specified model records in the database.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -97,8 +77,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Get the first specified model record from the database.
-     *
-     * @return Model
      */
     public function first(): Model
     {
@@ -113,8 +91,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Get all the specified model records in the database.
-     *
-     * @return Collection
      */
     public function get(): Collection
     {
@@ -129,9 +105,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Get the specified model record from the database.
-     *
-     * @param  int  $id
-     * @return Model
      */
     public function getById(int $id): Model
     {
@@ -142,12 +115,6 @@ abstract class BaseRepository implements RepositoryContract
         return $this->query->findOrFail($id);
     }
 
-    /**
-     * @param  mixed  $item
-     * @param  string  $column
-     * @param  array  $columns
-     * @return Builder|Model|null
-     */
     public function getByColumn(mixed $item, string $column, array $columns = ['*']): Model|Builder|null
     {
         $this->unsetClauses();
@@ -160,8 +127,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Delete the specified model record from the database.
      *
-     * @param  int  $id
-     * @return bool|null
      *
      * @throws Exception
      */
@@ -175,7 +140,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set the query limit.
      *
-     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit): static
@@ -188,8 +152,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set an ORDER BY clause.
      *
-     * @param  string  $column
-     * @param  string  $direction
      * @return $this
      */
     public function orderBy(string $column, string $direction = 'asc'): static
@@ -199,13 +161,6 @@ abstract class BaseRepository implements RepositoryContract
         return $this;
     }
 
-    /**
-     * @param  int|null  $limit
-     * @param  array  $columns
-     * @param  string  $pageName
-     * @param  int|null  $page
-     * @return LengthAwarePaginator
-     */
     public function paginate(int $limit = null, array $columns = ['*'], string $pageName = 'page', int $page = null): LengthAwarePaginator
     {
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
@@ -220,9 +175,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where clause to the query.
      *
-     * @param  string  $column
-     * @param  mixed  $value
-     * @param  string  $operator
      * @return $this
      */
     public function where(string $column, mixed $value, string $operator = '='): static
@@ -235,8 +187,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where in clause to the query.
      *
-     * @param  string  $column
-     * @param  mixed  $values
      * @return $this
      */
     public function whereIn(string $column, mixed $values): static
@@ -251,7 +201,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set Eloquent relationships to eager load.
      *
-     * @param  array|string  $relations
      * @return $this
      */
     public function with(array|string $relations): static

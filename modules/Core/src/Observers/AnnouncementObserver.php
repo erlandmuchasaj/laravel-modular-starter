@@ -11,9 +11,6 @@ class AnnouncementObserver
 {
     /**
      * Handle the Model "retrieved" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function retrieved(Announcement $announcement): void
     {
@@ -23,9 +20,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "creating" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function creating(Announcement $announcement): void
     {
@@ -35,9 +29,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "created" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function created(Announcement $announcement): void
     {
@@ -47,9 +38,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "updating" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function updating(Announcement $announcement): void
     {
@@ -59,9 +47,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "updated" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function updated(Announcement $announcement): void
     {
@@ -71,9 +56,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "saving" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function saving(Announcement $announcement): void
     {
@@ -83,9 +65,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "saved" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function saved(Announcement $announcement): void
     {
@@ -95,9 +74,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "deleting" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function deleting(Announcement $announcement): void
     {
@@ -107,9 +83,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "deleted" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function deleted(Announcement $announcement): void
     {
@@ -119,9 +92,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "restoring" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function restoring(Announcement $announcement): void
     {
@@ -131,9 +101,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "restored" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function restored(Announcement $announcement): void
     {
@@ -143,9 +110,6 @@ class AnnouncementObserver
 
     /**
      * Handle the Model "force deleted" event.
-     *
-     * @param  Announcement  $announcement
-     * @return void
      */
     public function forceDeleted(Announcement $announcement): void
     {

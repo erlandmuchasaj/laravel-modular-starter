@@ -16,7 +16,6 @@ class Captcha implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
      *
      * @throws GuzzleException
      */
@@ -41,8 +40,6 @@ class Captcha implements Rule
 
     /**
      * Get the validation error message.
-     *
-     * @return string|array|null
      */
     public function message(): string|array|null
     {

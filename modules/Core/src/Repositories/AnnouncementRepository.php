@@ -3,7 +3,6 @@
 namespace Modules\Core\Repositories;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -25,8 +24,6 @@ class AnnouncementRepository extends BaseRepository
 {
     /**
      * AnnouncementRepository constructor.
-     *
-     * @param  Announcement  $announcement
      */
     public function __construct(Announcement $announcement)
     {
@@ -34,9 +31,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  array  $data
-     * @return Announcement
-     *
      * @throws Exception
      * @throws Throwable
      */
@@ -59,10 +53,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  Announcement  $announcement
-     * @param  array  $data
-     * @return Announcement
-     *
      * @throws Exception
      * @throws Throwable
      */
@@ -80,10 +70,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  Announcement  $announcement
-     * @param  int  $status
-     * @return Announcement
-     *
      * @throws Exception
      * @throws Throwable
      */
@@ -110,9 +96,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  Announcement  $announcement
-     * @return bool
-     *
      * @throws Exception
      * @throws Throwable
      */
@@ -132,9 +115,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param Announcement $announcement
-     * @return Announcement
-     *
      * @throws GeneralException
      * @throws Throwable
      */
@@ -156,9 +136,6 @@ class AnnouncementRepository extends BaseRepository
     }
 
     /**
-     * @param  Announcement  $announcement
-     * @return Announcement
-     *
      * @throws GeneralException
      * @throws Exception
      * @throws Throwable
@@ -189,8 +166,6 @@ class AnnouncementRepository extends BaseRepository
      * if there is a start and end date, make sure the current time is in between that or
      * if there is only a start date, make sure the current time is past that or
      * if there is only an end date, make sure the current time is before that.
-     *
-     * @return Collection
      */
     public function getForFrontend(): Collection
     {
@@ -213,8 +188,6 @@ class AnnouncementRepository extends BaseRepository
      * if there is a start and end date, make sure the current time is in between that or
      * if there is only a start date, make sure the current time is past that or
      * if there is only an end date, make sure the current time is before that.
-     *
-     * @return Collection
      */
     public function getForBackend(): Collection
     {

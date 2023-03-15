@@ -9,8 +9,6 @@ class NotFoundController extends Controller
 {
     /**
      * Show the application dashboard.
-     *
-     * @return Response
      */
     public function __invoke(): Response
     {

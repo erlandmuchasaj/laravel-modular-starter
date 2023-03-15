@@ -7,6 +7,24 @@
       1 => 'Arcanedev\\LogViewer\\Providers\\DeferredServicesProvider',
     ),
   ),
+  'erlandmuchasaj/laravel-file-uploader' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ErlandMuchasaj\\LaravelFileUploader\\FileUploaderServiceProvider',
+    ),
+  ),
+  'erlandmuchasaj/laravel-modules' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ErlandMuchasaj\\Modules\\Providers\\ModulesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Module' => 'ErlandMuchasaj\\Modules\\Facades\\Module',
+    ),
+  ),
   'jenssegers/agent' => 
   array (
     'providers' => 

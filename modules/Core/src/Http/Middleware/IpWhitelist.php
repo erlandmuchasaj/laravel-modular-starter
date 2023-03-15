@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class IpWhitelist
 {
@@ -19,9 +20,7 @@ class IpWhitelist
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
      * @param Closure(Request): (Response|RedirectResponse) $next
-     * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
@@ -30,7 +29,7 @@ class IpWhitelist
         }
 
         if (! in_array(request()->ip(), $this->whitelistIps)) {
-            abort(Response::HTTP_FORBIDDEN, __('Forbidden'));
+            abort(ResponseAlias::HTTP_FORBIDDEN, __('Forbidden'));
         }
 
         return $next($request);

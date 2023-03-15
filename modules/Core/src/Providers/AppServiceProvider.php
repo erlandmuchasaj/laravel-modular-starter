@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Providers;
 
+use ErlandMuchasaj\Modules\Providers\BaseAppServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
@@ -9,8 +10,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Modules\Core\Console\Commands\AppVersion;
-use Modules\Core\Console\Commands\Install;
 use Modules\Core\Http\Middleware\AddXHeader;
 use Modules\Core\Http\Middleware\Api\IdempotencyMiddleware;
 use Modules\Core\Http\Middleware\CheckForDemoMode;
@@ -28,8 +27,6 @@ class AppServiceProvider extends BaseAppServiceProvider
 {
     /**
      * The CamelCased module name
-     *
-     * @var string
      */
     protected string $module = 'Core';
 
@@ -42,7 +39,6 @@ class AppServiceProvider extends BaseAppServiceProvider
         RouteServiceProvider::class,
         EventServiceProvider::class,
         SeedServiceProvider::class,
-        ConsoleServiceProvider::class,
     ];
 
     /**
@@ -115,15 +111,11 @@ class AppServiceProvider extends BaseAppServiceProvider
      *
      * @var array<int, class-string>
      */
-    protected array $commands = [
-        AppVersion::class,
-        Install::class,
-    ];
+    protected array $commands = [];
 
     /**
      * Bootstrap your package's services.
      *
-     * @return void
      *
      * @throws BindingResolutionException
      */

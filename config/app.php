@@ -1,5 +1,6 @@
 <?php
 
+use ErlandMuchasaj\Modules\Utils\EmCms;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -19,7 +20,7 @@ return [
 
     'version' => env('APP_VERSION', 'Laravel '.app()->version()),
 
-    'slug' => \Modules\Core\Utils\EmCms::NAME,
+    'slug' => EmCms::NAME,
 
     /*
     |--------------------------------------------------------------------------

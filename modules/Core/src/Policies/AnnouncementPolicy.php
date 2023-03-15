@@ -26,9 +26,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can view any Announcements.
-     *
-     * @param  User  $user
-     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -37,10 +34,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can view the Announcement.
-     *
-     * @param  User|null  $user
-     * @param  Announcement  $announcement
-     * @return bool
      */
     public function view(?User $user, Announcement $announcement): bool
     {
@@ -64,9 +57,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can create Announcements.
-     *
-     * @param  User  $user
-     * @return bool
      */
     public function create(User $user): bool
     {
@@ -79,10 +69,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can update the Announcement.
-     *
-     * @param  User  $user
-     * @param  Announcement  $announcement
-     * @return bool
      */
     public function update(User $user, Announcement $announcement): bool
     {
@@ -99,10 +85,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can delete the Announcement.
-     *
-     * @param  User  $user
-     * @param  Announcement  $announcement
-     * @return bool
      */
     public function delete(User $user, Announcement $announcement): bool
     {
@@ -119,10 +101,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can restore the Announcement.
-     *
-     * @param  User  $user
-     * @param  Announcement  $announcement
-     * @return bool
      */
     public function restore(User $user, Announcement $announcement): bool
     {
@@ -131,10 +109,6 @@ class AnnouncementPolicy
 
     /**
      * Determine whether the user can permanently delete the Announcement.
-     *
-     * @param  User  $user
-     * @param  Announcement  $announcement
-     * @return bool
      */
     public function forceDelete(User $user, Announcement $announcement): bool
     {

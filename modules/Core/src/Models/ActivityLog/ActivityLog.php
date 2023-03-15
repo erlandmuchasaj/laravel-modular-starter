@@ -41,6 +41,7 @@ use Spatie\Activitylog\Models\Activity;
  * @property-read mixed $model
  * @property-read string|null $subject_name
  * @property-read User|null $user
+ *
  * @method static Builder|Activity causedBy(\Illuminate\Database\Eloquent\Model $causer)
  * @method static Builder|Activity forBatch(string $batchUuid)
  * @method static Builder|Activity forEvent(string $event)
@@ -62,6 +63,7 @@ use Spatie\Activitylog\Models\Activity;
  * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereSubjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereSubjectType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ActivityLog extends Activity implements ActivityContract

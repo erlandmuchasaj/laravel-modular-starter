@@ -19,15 +19,10 @@ use Throwable;
  */
 class AnnouncementController extends Controller
 {
-    /**
-     * @var AnnouncementRepository
-     */
     protected AnnouncementRepository $announcementRepository;
 
     /**
      * UserController constructor.
-     *
-     * @param  AnnouncementRepository  $announcementRepository
      */
     public function __construct(AnnouncementRepository $announcementRepository)
     {
@@ -37,8 +32,6 @@ class AnnouncementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ManageAnnouncementRequest  $request
-     * @return RedirectResponse|JsonResponse
      *
      * @throws GeneralException
      * @throws Throwable

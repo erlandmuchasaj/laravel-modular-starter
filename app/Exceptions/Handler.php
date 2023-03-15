@@ -6,7 +6,6 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Modules\Core\Exceptions\GeneralException;
 use Throwable;
 
-
 class Handler extends ExceptionHandler
 {
     /**

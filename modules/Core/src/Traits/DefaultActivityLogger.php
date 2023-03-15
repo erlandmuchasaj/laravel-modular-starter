@@ -83,9 +83,6 @@ trait DefaultActivityLogger
         return config('activitylog.default_log_name');
     }
 
-    /**
-     * @return string|null
-     */
     private function getClass(): ?string
     {
         try {

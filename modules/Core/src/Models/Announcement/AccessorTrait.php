@@ -8,8 +8,6 @@ trait AccessorTrait
 {
     /**
      * Get the parsed body of the announcement.
-     *
-     * @return string
      */
     public function getParsedBodyAttribute(): string
     {

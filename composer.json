@@ -47,6 +47,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "erlandmuchasaj/laravel-modules": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

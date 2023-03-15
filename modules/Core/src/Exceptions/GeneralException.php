@@ -24,7 +24,6 @@ class GeneralException extends Exception
      *
      * @param  string  $message Bad request
      * @param  int  $code 400
-     * @param  Throwable|null  $previous
      */
     public function __construct(string $message = 'Bad Request', int $code = 400, Throwable $previous = null)
     {
@@ -41,9 +40,6 @@ class GeneralException extends Exception
 
     /**
      * Render the exception into an HTTP response.
-     *
-     * @param  Request  $request
-     * @return JsonResponse|RedirectResponse
      */
     public function render(Request $request): JsonResponse|RedirectResponse
     {

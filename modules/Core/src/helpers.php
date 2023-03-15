@@ -32,8 +32,6 @@ if (! function_exists('setAllLocale')) {
     /**
      * setAllLocale
      * Set application global locale
-     *
-     * @param  string  $locale
      */
     function setAllLocale(string $locale): void
     {
@@ -74,9 +72,6 @@ if (! function_exists('gravatar')) {
     /**
      * Gravatar URL
      * Generate a gravatar for a user
-     *
-     * @param  string  $name
-     * @return string
      */
     function gravatar(string $name): string
     {
@@ -91,9 +86,6 @@ if (! function_exists('display_price')) {
      * display_price
      * convert price with decimals and separator
      *
-     * @param  int|string  $price
-     * @param  int  $decimals
-     * @return string
      *
      * @$price - Added hack in for when the variants are being created it passes over the new ISO currency code
      * which breaks number_format
@@ -124,7 +116,6 @@ if (! function_exists('convertToLocal')) {
      *
      * @param  mixed|null  $date - practically the date in UTC timezone or coming from DB
      * @param  string  $fromFormat - the default format in our DB
-     * @return Carbon|null
      *
      * @throws InvalidFormatException
      *
@@ -162,9 +153,6 @@ if (! function_exists('convertFromLocal')) {
      * Saving the users input (Local time) to the database in UTC - Convert user time to UTC
      * This will take a date/time, set it to the users' timezone then return it as UTC in a Carbon instance.
      *
-     * @param  mixed|null  $date
-     * @param  string  $fromFormat
-     * @return Carbon|null
      *
      * @throws InvalidFormatException
      */
@@ -193,34 +181,10 @@ if (! function_exists('convertFromLocal')) {
     }
 }
 
-if (! function_exists('home_route')) {
-    /**
-     * Return the route to the "/" page depending on authentication/authorization status.
-     *
-     * @param  string  $default
-     * @return string
-     */
-    function home_route(string $default = '/'): string
-    {
-//        if (auth()->check()) {
-//            if (auth()->user()->isAdmin()) {
-//                return config('app.route.backend_redirect');
-//            }
-//
-//            if (auth()->user()->isUser()) {
-//                return config('app.route.frontend_redirect');
-//            }
-//        }
-
-        return $default;
-    }
-}
-
 if (! function_exists('storage_asset')) {
     /**
      * Check if a storage file exists and return its URL.
      *
-     * @param  string|null  $path
      * @param  string|null  $disk local|public|s3
      * @param  string  $type type of default image image|file|document|audio|video|avatar|not-available
      * @return string file path
@@ -252,11 +216,6 @@ if (! function_exists('storage_asset')) {
 if (! function_exists('getNWords')) {
     /**
      * Limit content with number of words
-     *
-     * @param  string  $string
-     * @param  int  $n
-     * @param  bool  $withDots
-     * @return string
      */
     function getNWords(string $string, int $n = 5, bool $withDots = true): string
     {
@@ -277,10 +236,6 @@ if (! function_exists('getNWords')) {
 if (! function_exists('getFacebookShareLink')) {
     /**
      * Get Facebook share link
-     *
-     * @param  string  $url
-     * @param  string  $title
-     * @return string
      */
     function getFacebookShareLink(string $url, string $title): string
     {
@@ -291,10 +246,6 @@ if (! function_exists('getFacebookShareLink')) {
 if (! function_exists('getTwitterShareLink')) {
     /**
      * Get Twitter share link
-     *
-     * @param  string  $url
-     * @param  string  $title
-     * @return string
      */
     function getTwitterShareLink(string $url, string $title): string
     {
@@ -344,9 +295,6 @@ if (! function_exists('humanFilesize')) {
     /**
      * Show Human readable file size
      *
-     * @param  int  $size
-     * @param  int  $precision
-     * @return string
      *
      * @oaram int $precision
      */
@@ -372,11 +320,6 @@ if (! function_exists('str_tease')) {
      * longer than the specified $length it will be shortened. The end
      * of the string is always a full word concatenated with the
      * specified moreTextIndicator.
-     *
-     * @param  string  $string
-     * @param  int  $length
-     * @param  string  $moreTextIndicator
-     * @return string
      */
     function str_tease(string $string, int $length = 200, string $moreTextIndicator = '...'): string
     {
@@ -406,10 +349,6 @@ if (! function_exists('class_has_trait')) {
     /**
      * Check if a class has a specific trait
      * This can be sed when we create global traits that have scopes for example: draft
-     *
-     * @param  object|string  $className
-     * @param  string  $traitName
-     * @return bool
      */
     function class_has_trait(object|string $className, string $traitName): bool
     {
@@ -424,8 +363,6 @@ if (! function_exists('class_has_trait')) {
 if (! function_exists('checkDatabaseConnection')) {
     /**
      * Check if connection to DB is successfully
-     *
-     * @return bool
      */
     function checkDatabaseConnection(): bool
     {
@@ -457,10 +394,6 @@ if (! function_exists('escapeSlashes')) {
 if (! function_exists('validate')) {
     /**
      * Validate some data.
-     *
-     * @param  array|string  $fields
-     * @param  array|string  $rules
-     * @return bool
      */
     function validate(array|string $fields, array|string $rules): bool
     {
@@ -479,8 +412,6 @@ if (! function_exists('validate')) {
 if (! function_exists('isSSL')) {
     /**
      * Check if the site is using SSL
-     *
-     * @return bool
      */
     function isSSL(): bool
     {
@@ -548,7 +479,6 @@ if (! function_exists('isTruthy')) {
     /**
      * Determine if a variable is Truthy or Falsy
      *
-     * @param  mixed  $value
      * @param  bool  $checkTruthy - if we are checking for truthy or falsy value
      *
      * @example
@@ -557,8 +487,6 @@ if (! function_exists('isTruthy')) {
      * isTruthy('1') => true
      * isTruthy('on') => true
      * isTruthy('yes') => true
-     *
-     * @return bool
      */
     function isTruthy(mixed $value, bool $checkTruthy = true): bool
     {
@@ -577,9 +505,6 @@ if (! function_exists('isTruthy')) {
 if (! function_exists('isFalsy')) {
     /**
      * Determine if a variable is Falsy
-     *
-     * @param  mixed  $value
-     * @return bool
      */
     function isFalsy(mixed $value): bool
     {
@@ -611,5 +536,35 @@ if (! function_exists('glob_recursive')) {
                 glob_recursive($dir.'/'.basename($pattern), $flags)
             );
         }, $files);
+    }
+}
+
+if (! function_exists('generateSerialNumber')) {
+    /**
+     * @example generateSerialNumber(1, 'RC', 'TR') // RC-TR-AAA-001
+     * @example generateSerialNumber(1, 'RC', 'F') // RC-F-AAA-001
+     */
+    function generateSerialNumber(int $id, string $prefix = 'RC', ?string $type = 'TR'): string
+    {
+        $start = 703; // 0 = A, 703 = AAA, adjust accordingly
+        $letters_value = $start + (ceil($id / 999) - 1);
+        $numbers = ($id % 999 === 0) ? 999 : $id % 999;
+
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $base = strlen($characters);
+        $letters = '';
+
+        // while there are still positive integers to divide
+        while ($letters_value) {
+            $current = $letters_value % $base - 1; // We use -1 because we want to start at 0 index
+            $letters = $characters[$current].$letters;
+            $letters_value = floor($letters_value / $base);
+        }
+
+        if ($type == null) {
+            return $prefix.'-'.$letters.'-'.sprintf('%03d', $numbers);
+        }
+
+        return $prefix.'-'.$type.'-'.$letters.'-'.sprintf('%03d', $numbers);
     }
 }

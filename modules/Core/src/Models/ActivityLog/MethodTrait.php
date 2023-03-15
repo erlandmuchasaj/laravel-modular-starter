@@ -9,13 +9,6 @@ use ReflectionException;
 
 trait MethodTrait
 {
-    /**
-     * @param $description
-     * @param $subject
-     * @param $causer
-     * @param $causer_type
-     * @return string|null
-     */
     private function getTranslationMessage($description, $subject, $causer, $causer_type): string|null
     {
         if ($description === null) {
@@ -60,11 +53,6 @@ trait MethodTrait
         return null;
     }
 
-    /**
-     * @param  string  $description
-     * @param  mixed  $model
-     * @return array|null
-     */
     private function getClassNameAndEvent(string $description, mixed $model): ?array
     {
         try {
@@ -95,9 +83,6 @@ trait MethodTrait
         }
     }
 
-    /**
-     * @return array
-     */
     private function allowedEvents(): array
     {
         return [

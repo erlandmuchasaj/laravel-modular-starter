@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3bbb107d1ec3f20652ac8f9648374d3",
+    "content-hash": "c0863e96fd238e4d96492e640fd437b9",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -638,6 +638,244 @@
             "time": "2023-01-14T14:17:03+00:00"
         },
         {
+            "name": "erlandmuchasaj/laravel-file-uploader",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erlandmuchasaj/laravel-file-uploader.git",
+                "reference": "4be9575c192829577e2928871a08e887baa67c92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-file-uploader/zipball/4be9575c192829577e2928871a08e887baa67c92",
+                "reference": "4be9575c192829577e2928871a08e887baa67c92",
+                "shasum": ""
+            },
+            "require": {
+                "ext-exif": "*",
+                "ext-fileinfo": "*",
+                "ext-json": "*",
+                "illuminate/contracts": "^8|^9|^10",
+                "illuminate/filesystem": "^8|^9|^10",
+                "illuminate/http": "^8|^9|^10",
+                "illuminate/support": "^8|^9|^10",
+                "nesbot/carbon": "^2",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ErlandMuchasaj\\LaravelFileUploader\\FileUploaderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ErlandMuchasaj\\LaravelFileUploader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erland Muchasaj",
+                    "email": "erland.muchasaj@gmail.com",
+                    "homepage": "https://erlandmuchasaj.tech/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple package to help you easily upload files to your laravel project.",
+            "homepage": "https://github.com/erlandmuchasaj/laravel-file-uploader",
+            "keywords": [
+                "cms",
+                "emcms",
+                "file",
+                "images",
+                "laravel",
+                "library",
+                "media",
+                "package",
+                "upload"
+            ],
+            "support": {
+                "email": "erland.muchasaj@gmail.com",
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/erlandmuchasaj/laravel-file-uploader/issues",
+                "source": "https://github.com/erlandmuchasaj/laravel-file-uploader"
+            },
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/erlandmuchasaj",
+                    "type": "Ko-fi"
+                },
+                {
+                    "url": "https://paypal.me/emcms?country.x=AL&locale.x=en_US",
+                    "type": "PayPal"
+                },
+                {
+                    "url": "https://www.patreon.com/erlandmuchasaj",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-03-15T09:28:16+00:00"
+        },
+        {
+            "name": "erlandmuchasaj/laravel-modules",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erlandmuchasaj/laravel-modules.git",
+                "reference": "4a6dff687d273fad77c3abed6dd793f4070221af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-modules/zipball/4a6dff687d273fad77c3abed6dd793f4070221af",
+                "reference": "4a6dff687d273fad77c3abed6dd793f4070221af",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^8.0|^8.1|^8.2"
+            },
+            "require-dev": {
+                "laravel/framework": "^8.0|^9.0|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ErlandMuchasaj\\Modules\\Providers\\ModulesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Module": "ErlandMuchasaj\\Modules\\Facades\\Module"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "ErlandMuchasaj\\Modules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erland Muchasaj",
+                    "email": "erland.muchasaj@gmail.com",
+                    "homepage": "https://erlandmuchasaj.tech/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel modules management.",
+            "homepage": "https://github.com/erlandmuchasaj/laravel-modules",
+            "keywords": [
+                "ddd",
+                "erland",
+                "hmvc",
+                "laravel",
+                "modular",
+                "module",
+                "modules",
+                "package"
+            ],
+            "support": {
+                "email": "erland.muchasaj@gmail.com",
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/erlandmuchasaj/laravel-modules/issues",
+                "source": "https://github.com/erlandmuchasaj/laravel-modules"
+            },
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/erlandmuchasaj",
+                    "type": "Ko-fi"
+                },
+                {
+                    "url": "https://paypal.me/emcms?country.x=AL&locale.x=en_US",
+                    "type": "PayPal"
+                },
+                {
+                    "url": "https://www.patreon.com/erlandmuchasaj",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-03-15T08:41:43+00:00"
+        },
+        {
+            "name": "erlandmuchasaj/sanitize",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erlandmuchasaj/sanitize.git",
+                "reference": "36943cd1fe021dbbff12bbd325cd91101e2c156a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erlandmuchasaj/sanitize/zipball/36943cd1fe021dbbff12bbd325cd91101e2c156a",
+                "reference": "36943cd1fe021dbbff12bbd325cd91101e2c156a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^7.4|^8.0|^8.1|^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ErlandMuchasaj\\Sanitize\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erland Muchasaj",
+                    "email": "erland.muchasaj@gmail.com",
+                    "homepage": "https://erlandmuchasaj.tech/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package to sanitize your input.",
+            "homepage": "https://github.com/erlandmuchasaj/sanitize",
+            "keywords": [
+                "Escape",
+                "clean",
+                "input",
+                "library",
+                "package",
+                "sanitize"
+            ],
+            "support": {
+                "email": "erland.muchasaj@gmail.com",
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/erlandmuchasaj/sanitize/issues",
+                "source": "https://github.com/erlandmuchasaj/sanitize"
+            },
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/erlandmuchasaj",
+                    "type": "Ko-fi"
+                },
+                {
+                    "url": "https://paypal.me/emcms?country.x=AL&locale.x=en_US",
+                    "type": "PayPal"
+                },
+                {
+                    "url": "https://www.patreon.com/erlandmuchasaj",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-03-15T09:30:16+00:00"
+        },
+        {
             "name": "erusev/parsedown",
             "version": "1.7.4",
             "source": {
@@ -1034,16 +1272,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.3",
+            "version": "2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "67c26b443f348a51926030c83481b85718457d3d"
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/67c26b443f348a51926030c83481b85718457d3d",
-                "reference": "67c26b443f348a51926030c83481b85718457d3d",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
                 "shasum": ""
             },
             "require": {
@@ -1133,7 +1371,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.3"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
             },
             "funding": [
                 {
@@ -1149,7 +1387,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-26T14:07:24+00:00"
+            "time": "2023-03-09T13:19:02+00:00"
         },
         {
             "name": "guzzlehttp/uri-template",
@@ -1489,16 +1727,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.3.1",
+            "version": "v10.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "57cc50d762360edac1c68e37435b193ff2135a36"
+                "reference": "90f24d9e2860ecf6b5492e966956270ceb98c03d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/57cc50d762360edac1c68e37435b193ff2135a36",
-                "reference": "57cc50d762360edac1c68e37435b193ff2135a36",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/90f24d9e2860ecf6b5492e966956270ceb98c03d",
+                "reference": "90f24d9e2860ecf6b5492e966956270ceb98c03d",
                 "shasum": ""
             },
             "require": {
@@ -1685,7 +1923,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-03-08T02:43:56+00:00"
+            "time": "2023-03-09T14:00:53+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2276,14 +2514,14 @@
             "version": "1.0.0",
             "dist": {
                 "type": "path",
-                "url": "./modules/Core",
-                "reference": "e3a514dd75051bc5b6dbec4f37393665aadce573"
+                "url": "modules/Core",
+                "reference": "1eef979a7e40bd9f4300d8c298793daa3b215e49"
             },
             "require": {
                 "arcanedev/log-viewer": "^10.0",
+                "erlandmuchasaj/laravel-file-uploader": "^1.0",
+                "erlandmuchasaj/sanitize": "^1.0",
                 "erusev/parsedown": "^1.7",
-                "illuminate/http": "^8|^9|^10",
-                "illuminate/support": "^8.0 || ^9.0 || ^10.0",
                 "jenssegers/agent": "^2.6",
                 "sentry/sentry-laravel": "^3.2",
                 "spatie/laravel-activitylog": "^4.7",
@@ -2346,7 +2584,7 @@
             "version": "1.0.0",
             "dist": {
                 "type": "path",
-                "url": "./modules/User",
+                "url": "modules/User",
                 "reference": "f05cb5d4dfed9a10ca7fe0c244c6968fdb5e6cd4"
             },
             "require": {
@@ -4163,16 +4401,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.14.0",
+            "version": "3.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "60dd3f74ab21cc2bf53f39bf7c342798bc185c23"
+                "reference": "c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/60dd3f74ab21cc2bf53f39bf7c342798bc185c23",
-                "reference": "60dd3f74ab21cc2bf53f39bf7c342798bc185c23",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5",
+                "reference": "c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5",
                 "shasum": ""
             },
             "require": {
@@ -4251,7 +4489,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.14.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.15.0"
             },
             "funding": [
                 {
@@ -4263,7 +4501,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-05T21:31:25+00:00"
+            "time": "2023-03-13T11:45:26+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
@@ -4527,16 +4765,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.14.1",
+            "version": "1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df"
+                "reference": "bab62023a4745a61170ad5424184533685e73c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
-                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/bab62023a4745a61170ad5424184533685e73c2d",
+                "reference": "bab62023a4745a61170ad5424184533685e73c2d",
                 "shasum": ""
             },
             "require": {
@@ -4575,7 +4813,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.1"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.2"
             },
             "funding": [
                 {
@@ -4583,7 +4821,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-27T15:33:45+00:00"
+            "time": "2023-03-14T16:41:21+00:00"
         },
         {
             "name": "symfony/console",
@@ -8615,16 +8853,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.11.0",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
+                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
+                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
                 "shasum": ""
             },
             "require": {
@@ -8662,7 +8900,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.1"
             },
             "funding": [
                 {
@@ -8670,39 +8908,42 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-03T13:19:32+00:00"
+            "time": "2023-03-08T13:26:56+00:00"
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v7.1.0",
+            "version": "v7.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "2b97fed4950cf0ff148c18b853975ec8ea135e90"
+                "reference": "f502ff3b2051124c89b4dd3a8a497ca65f3ce26c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/2b97fed4950cf0ff148c18b853975ec8ea135e90",
-                "reference": "2b97fed4950cf0ff148c18b853975ec8ea135e90",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/f502ff3b2051124c89b4dd3a8a497ca65f3ce26c",
+                "reference": "f502ff3b2051124c89b4dd3a8a497ca65f3ce26c",
                 "shasum": ""
             },
             "require": {
-                "filp/whoops": "^2.14.6",
+                "filp/whoops": "^2.15.1",
                 "nunomaduro/termwind": "^1.15.1",
                 "php": "^8.1.0",
                 "symfony/console": "^6.2.7"
             },
+            "conflict": {
+                "phpunit/phpunit": "<10.0.16"
+            },
             "require-dev": {
-                "brianium/paratest": "^7.1.0",
-                "laravel/framework": "^10.2.0",
+                "brianium/paratest": "^7.1.1",
+                "laravel/framework": "^10.3.3",
                 "laravel/pint": "^1.6.0",
-                "laravel/sail": "^1.21.1",
+                "laravel/sail": "^1.21.2",
                 "laravel/sanctum": "^3.2.1",
                 "laravel/tinker": "^2.8.1",
-                "nunomaduro/larastan": "^2.4.1",
-                "orchestra/testbench-core": "^8.0.3",
+                "nunomaduro/larastan": "^2.5.1",
+                "orchestra/testbench-core": "^8.0.5",
                 "pestphp/pest": "^2.0.0",
-                "phpunit/phpunit": "^10.0.14",
+                "phpunit/phpunit": "^10.0.16",
                 "sebastian/environment": "^6.0.0",
                 "spatie/laravel-ignition": "^2.0.0"
             },
@@ -8763,7 +9004,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-03T10:00:22+00:00"
+            "time": "2023-03-14T14:34:49+00:00"
         },
         {
             "name": "nunomaduro/larastan",
@@ -9169,16 +9410,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.5",
+            "version": "1.10.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1fb6f494d82455151ecf15c5c191923f5d84324e"
+                "reference": "50d089a3e0904b0fe7e2cf2d4fd37d427d64235a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1fb6f494d82455151ecf15c5c191923f5d84324e",
-                "reference": "1fb6f494d82455151ecf15c5c191923f5d84324e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/50d089a3e0904b0fe7e2cf2d4fd37d427d64235a",
+                "reference": "50d089a3e0904b0fe7e2cf2d4fd37d427d64235a",
                 "shasum": ""
             },
             "require": {
@@ -9208,7 +9449,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.10.5"
+                "source": "https://github.com/phpstan/phpstan/tree/1.10.6"
             },
             "funding": [
                 {
@@ -9224,7 +9465,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-07T16:48:45+00:00"
+            "time": "2023-03-09T16:55:12+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -9546,16 +9787,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.0.14",
+            "version": "10.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7065dbebcb0f66cf16a45fc9cfc28c2351e06169"
+                "reference": "07d386a11ac7094032900f07cada1c8975d16607"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7065dbebcb0f66cf16a45fc9cfc28c2351e06169",
-                "reference": "7065dbebcb0f66cf16a45fc9cfc28c2351e06169",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/07d386a11ac7094032900f07cada1c8975d16607",
+                "reference": "07d386a11ac7094032900f07cada1c8975d16607",
                 "shasum": ""
             },
             "require": {
@@ -9587,7 +9828,7 @@
                 "sebastian/version": "^4.0"
             },
             "suggest": {
-                "ext-soap": "*"
+                "ext-soap": "To be able to generate mocks based on WSDL files"
             },
             "bin": [
                 "phpunit"
@@ -9626,7 +9867,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.0.14"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.0.16"
             },
             "funding": [
                 {
@@ -9642,7 +9883,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-01T05:37:49+00:00"
+            "time": "2023-03-13T09:02:40+00:00"
         },
         {
             "name": "psr/cache",
@@ -9760,12 +10001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "79408c4514c73048f390982372ca364384157c35"
+                "reference": "b001be05b80bfa38fb266b30ec3108607af6ccd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/79408c4514c73048f390982372ca364384157c35",
-                "reference": "79408c4514c73048f390982372ca364384157c35",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/b001be05b80bfa38fb266b30ec3108607af6ccd6",
+                "reference": "b001be05b80bfa38fb266b30ec3108607af6ccd6",
                 "shasum": ""
             },
             "conflict": {
@@ -9775,7 +10016,7 @@
                 "aheinze/cockpit": "<=2.2.1",
                 "akaunting/akaunting": "<2.1.13",
                 "akeneo/pim-community-dev": "<5.0.119|>=6,<6.0.53",
-                "alextselegidis/easyappointments": "<=1.4.3",
+                "alextselegidis/easyappointments": "<1.5",
                 "alterphp/easyadmin-extension-bundle": ">=1.2,<1.2.11|>=1.3,<1.3.1",
                 "amazing/media2click": ">=1,<1.3.3",
                 "amphp/artax": "<1.0.6|>=2,<2.0.6",
@@ -9823,11 +10064,11 @@
                 "catfan/medoo": "<1.7.5",
                 "centreon/centreon": "<22.10-beta.1",
                 "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
-                "cockpit-hq/cockpit": "<=2.3.9",
+                "cockpit-hq/cockpit": "<2.4.1",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<=3.0.6",
                 "codeigniter4/framework": "<4.2.11",
-                "codeigniter4/shield": "= 1.0.0-beta",
+                "codeigniter4/shield": "<1-beta.4|= 1.0.0-beta",
                 "codiad/codiad": "<=2.8.4",
                 "composer/composer": "<1.10.26|>=2-alpha.1,<2.2.12|>=2.3,<2.3.5",
                 "concrete5/concrete5": "<=9.1.3|>= 9.0.0RC1, < 9.1.3",
@@ -9867,6 +10108,7 @@
                 "ectouch/ectouch": "<=2.7.2",
                 "elefant/cms": "<1.3.13",
                 "elgg/elgg": "<3.3.24|>=4,<4.0.5",
+                "encore/laravel-admin": "<=1.8.19",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.15",
                 "erusev/parsedown": "<1.7.2",
@@ -9881,11 +10123,11 @@
                 "ezsystems/ezplatform-admin-ui": ">=1.3,<1.3.5|>=1.4,<1.4.6|>=1.5,<1.5.29|>=2.3,<2.3.26",
                 "ezsystems/ezplatform-admin-ui-assets": ">=4,<4.2.1|>=5,<5.0.1|>=5.1,<5.1.1",
                 "ezsystems/ezplatform-graphql": ">=1-rc.1,<1.0.13|>=2-beta.1,<2.3.12",
-                "ezsystems/ezplatform-kernel": "<=1.2.5|>=1.3,<1.3.26",
+                "ezsystems/ezplatform-kernel": "<1.2.5.1|>=1.3,<1.3.26",
                 "ezsystems/ezplatform-rest": ">=1.2,<=1.2.2|>=1.3,<1.3.8",
                 "ezsystems/ezplatform-richtext": ">=2.3,<=2.3.7",
                 "ezsystems/ezplatform-user": ">=1,<1.0.1",
-                "ezsystems/ezpublish-kernel": "<=6.13.8.1|>=7,<7.5.30",
+                "ezsystems/ezpublish-kernel": "<6.13.8.2|>=7,<7.5.30",
                 "ezsystems/ezpublish-legacy": "<=2017.12.7.3|>=2018.6,<=2019.3.5.1",
                 "ezsystems/platform-ui-assets-bundle": ">=4.2,<4.2.3",
                 "ezsystems/repository-forms": ">=2.3,<2.3.2.1|>=2.5,<2.5.15",
@@ -9899,7 +10141,7 @@
                 "firebase/php-jwt": "<6",
                 "fixpunkt/fp-masterquiz": "<2.2.1|>=3,<3.5.2",
                 "fixpunkt/fp-newsletter": "<1.1.1|>=2,<2.1.2|>=2.2,<3.2.6",
-                "flarum/core": "<1.6.3",
+                "flarum/core": "<1.7",
                 "flarum/mentions": "<1.6.3",
                 "flarum/sticky": ">=0.1-beta.14,<=0.1-beta.15",
                 "flarum/tags": "<=0.1-beta.13",
@@ -9910,13 +10152,15 @@
                 "forkcms/forkcms": "<5.11.1",
                 "fossar/tcpdf-parser": "<6.2.22",
                 "francoisjacquet/rosariosis": "<10.8.2",
+                "frappant/frp-form-answers": "<3.1.2|>=4,<4.0.2",
                 "friendsofsymfony/oauth2-php": "<1.3",
                 "friendsofsymfony/rest-bundle": ">=1.2,<1.2.2",
                 "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "froala/wysiwyg-editor": "<3.2.7",
-                "froxlor/froxlor": "<2.0.11",
+                "froxlor/froxlor": "<2.0.13",
                 "fuel/core": "<1.8.1",
+                "funadmin/funadmin": "<=3.2",
                 "gaoming13/wechat-php-sdk": "<=1.10.2",
                 "genix/cms": "<=1.1.11",
                 "getgrav/grav": "<1.7.34",
@@ -9927,7 +10171,7 @@
                 "globalpayments/php-sdk": "<2",
                 "google/protobuf": "<3.15",
                 "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
-                "gree/jose": "<=2.2",
+                "gree/jose": "<2.2.1",
                 "gregwar/rst": "<1.0.3",
                 "grumpydictator/firefly-iii": "<5.8",
                 "guzzlehttp/guzzle": "<6.5.8|>=7,<7.4.5",
@@ -10080,7 +10324,7 @@
                 "phpxmlrpc/extras": "<0.6.1",
                 "phpxmlrpc/phpxmlrpc": "<4.9.2",
                 "pimcore/data-hub": "<1.2.4",
-                "pimcore/pimcore": "<10.5.18",
+                "pimcore/pimcore": "<11",
                 "pixelfed/pixelfed": "<=0.11.4",
                 "pocketmine/bedrock-protocol": "<8.0.2",
                 "pocketmine/pocketmine-mp": "<4.12.5|>= 4.0.0-BETA5, < 4.4.2",
@@ -10089,7 +10333,7 @@
                 "prestashop/blockwishlist": ">=2,<2.1.1",
                 "prestashop/contactform": ">=1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
-                "prestashop/prestashop": "<1.7.8.8",
+                "prestashop/prestashop": "<8.0.1",
                 "prestashop/productcomments": "<5.0.2",
                 "prestashop/ps_emailsubscription": "<2.6.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
@@ -10325,6 +10569,9 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
+            "keywords": [
+                "dev"
+            ],
             "support": {
                 "issues": "https://github.com/Roave/SecurityAdvisories/issues",
                 "source": "https://github.com/Roave/SecurityAdvisories/tree/latest"
@@ -10339,7 +10586,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-08T01:32:26+00:00"
+            "time": "2023-03-13T21:04:29+00:00"
         },
         {
             "name": "sebastian/cli-parser",

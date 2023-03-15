@@ -2,6 +2,8 @@
 
 namespace Modules\Core\Providers;
 
+use ErlandMuchasaj\Modules\Providers\BaseSeedServiceProvider;
+
 class SeedServiceProvider extends BaseSeedServiceProvider
 {
     /**
@@ -9,8 +11,6 @@ class SeedServiceProvider extends BaseSeedServiceProvider
      * Inside the DatabaseSeeder folder you can create as many
      * as you want seeders and call them inside it.
      * $this->call(ModelTableSeeder::class);
-     *
-     * @var string
      */
     protected string $namespace = 'Modules\\Core\\Database\\Seeders\\DatabaseSeeder';
 }

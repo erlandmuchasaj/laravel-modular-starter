@@ -13,11 +13,6 @@ use Modules\Core\Enums\Notification;
  */
 class LanguageController extends Controller
 {
-    /**
-     * @param  Request  $request
-     * @param  string  $locale
-     * @return RedirectResponse|JsonResponse
-     */
     public function swap(Request $request, string $locale): RedirectResponse|JsonResponse
     {
         // if (config('app.locale_status') && array_key_exists($locale, config('app.locales'))) {

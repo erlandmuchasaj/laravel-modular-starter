@@ -17,18 +17,12 @@ class IPFireWall
 {
     /**
      * $url
-     *
-     * @var string
      */
     private static string $url = 'https://api.ipapi.com/api/{ip}?access_key={token}&security=1';
     // private static string $url = "https://api.ipstack.com/api/{ip}?access_key={token}&security=1"; # alias
 
     /**
      * Handle an incoming request.
-     *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {

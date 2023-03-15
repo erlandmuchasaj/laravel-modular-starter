@@ -8,12 +8,6 @@ class DomainName
 {
     /**
      * Validates whether it is a valid domain name.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @param  array  $parameters
-     * @param  Validator  $validator
-     * @return bool
      */
     public function validate(string $attribute, mixed $value, array $parameters, Validator $validator): bool
     {

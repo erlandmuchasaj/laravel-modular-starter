@@ -1,6 +1,6 @@
 <?php
 
-namespace  Modules\User\Http\Controllers\Auth;
+namespace Modules\User\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -11,11 +11,8 @@ class EmailVerificationNotificationController extends Controller
 {
     /**
      * Send a new email verification notification.
-     *
-     * @param  Request  $request
-     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME);

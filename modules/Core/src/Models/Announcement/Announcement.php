@@ -13,7 +13,6 @@ use Modules\Core\Traits\DefaultActivityLogger;
 use Modules\User\Models\User\User;
 use Spatie\Activitylog\Models\Activity;
 
-
 /**
  * Modules\Core\Models\Announcement\Announcement
  *
@@ -32,6 +31,7 @@ use Spatie\Activitylog\Models\Activity;
  * @property-read int|null $activities_count
  * @property-read string $parsed_body
  * @property-read User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement enabled()
  * @method static \Modules\Core\Database\Factories\AnnouncementFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement forArea(string $area)
@@ -49,6 +49,7 @@ use Spatie\Activitylog\Models\Activity;
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class Announcement extends Model
@@ -103,7 +104,7 @@ class Announcement extends Model
      * @var array<int, string>
      */
     protected $appends = [
-        'parsed_body'
+        'parsed_body',
     ];
 
     /**

@@ -29,7 +29,6 @@ return static function (RectorConfig $rectorConfig): void {
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
 
-
     $rectorConfig->sets([
         LevelSetList::UP_TO_PHP_81,
         SetList::DEAD_CODE,
@@ -38,11 +37,10 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->skip([
-        __DIR__ . '/modules/*/tests/*',
+        __DIR__.'/modules/*/tests/*',
         // ...
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
         // SimplifyIfReturnBoolRector::class,
     ]);
-
 };

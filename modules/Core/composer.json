@@ -27,8 +27,8 @@
         "irc": "irc://irc.freenode.org/composer"
     },
     "require": {
-        "illuminate/http": "^8|^9|^10",
-        "illuminate/support": "^8.0 || ^9.0 || ^10.0",
+        "erlandmuchasaj/laravel-file-uploader": "^1.0",
+        "erlandmuchasaj/sanitize": "^1.0",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-honeypot": "^4.3",
         "erusev/parsedown": "^1.7",

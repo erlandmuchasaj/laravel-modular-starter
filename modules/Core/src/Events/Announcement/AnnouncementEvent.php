@@ -12,14 +12,8 @@ use Modules\Core\Models\Announcement\Announcement;
  */
 class AnnouncementEvent extends Event
 {
-    /**
-     * @var Announcement|Model
-     */
     public Announcement|Model $announcement;
 
-    /**
-     * @param  Announcement|Model  $announcement
-     */
     public function __construct(Announcement|Model $announcement)
     {
         $this->$announcement = $announcement;
@@ -27,8 +21,6 @@ class AnnouncementEvent extends Event
 
     /**
      * Get the channels the event should broadcast on.
-     *
-     * @return PrivateChannel
      */
     public function broadcastOn(): PrivateChannel
     {

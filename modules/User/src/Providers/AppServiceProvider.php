@@ -2,16 +2,13 @@
 
 namespace Modules\User\Providers;
 
+use ErlandMuchasaj\Modules\Providers\BaseAppServiceProvider;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Modules\Core\Providers\BaseAppServiceProvider;
 
 class AppServiceProvider extends BaseAppServiceProvider
 {
-
     /**
      * The CamelCased module name
-     *
-     * @var string
      */
     protected string $module = 'User';
 
@@ -91,26 +88,22 @@ class AppServiceProvider extends BaseAppServiceProvider
     /**
      * Bootstrap your package's services.
      *
-     * @return void
      * @throws BindingResolutionException
      */
     public function boot(): void
     {
-        logger('AppServiceProvider::boot => '. $this->module);
+        logger('AppServiceProvider::boot => '.$this->module);
         //
         parent::boot();
     }
 
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register(): void
     {
-        logger('AppServiceProvider::register => '. $this->module);
+        logger('AppServiceProvider::register => '.$this->module);
         //
         parent::register();
     }
-
 }

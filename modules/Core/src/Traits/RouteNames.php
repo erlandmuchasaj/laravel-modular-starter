@@ -10,9 +10,6 @@ trait RouteNames
     /**
      * Group route names array by prefix
      * Excepts is used if we don't want to get particular route(s) prefix
-     *
-     * @param  array|null  $except
-     * @return array
      */
     public function getRoutesExcept(array $except = null): array
     {
@@ -25,8 +22,6 @@ trait RouteNames
 
     /**
      * Get route names array
-     *
-     * @return array
      */
     public function getRouteNames(): array
     {
@@ -42,10 +37,6 @@ trait RouteNames
 
     /**
      * Sort routes by their prefixes
-     *
-     * @param  array  $routeNames
-     * @param  array|null  $except
-     * @return array
      */
     public function sortRoutesByPrefix(array $routeNames, array $except = null): array
     {
@@ -66,10 +57,6 @@ trait RouteNames
 
     /**
      * Sort routes by name
-     *
-     * @param  array  $routeNames
-     * @param  array|null  $except
-     * @return array
      */
     private function sortRoutesByName(array $routeNames, array $except = null): array
     {

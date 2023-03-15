@@ -6,20 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait ScopesTrait
 {
-    /**
-     * @param  Builder  $query
-     * @return Builder
-     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->whereEnabled(true);
     }
 
-    /**
-     * @param  Builder  $query
-     * @param  string  $area
-     * @return Builder
-     */
     public function scopeForArea(Builder $query, string $area): Builder
     {
         return $query->where(function ($query) use ($area) {
@@ -28,10 +19,6 @@ trait ScopesTrait
         });
     }
 
-    /**
-     * @param  Builder  $query
-     * @return Builder
-     */
     public function scopeInTimeFrame(Builder $query): Builder
     {
         return $query->where(function ($query) {

@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class AddXHeader
 {
-    /**
-     * @var array
-     */
     private array $unwantedHeaderList = [
         'X-Powered-By',
         'Server',
@@ -17,10 +14,6 @@ class AddXHeader
 
     /**
      * Handle an incoming request.
-     *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
@@ -36,10 +29,6 @@ class AddXHeader
         });
     }
 
-    /**
-     * @param  Request  $request
-     * @param  array  $headerList
-     */
     private function removeUnwantedHeaders(Request $request, array $headerList): void
     {
         foreach ($headerList as $header) {
@@ -47,10 +36,6 @@ class AddXHeader
         }
     }
 
-    /**
-     * @param  mixed  $response
-     * @return void
-     */
     private function decorateResponse(mixed $response): void
     {
         // Check if we should/can add header

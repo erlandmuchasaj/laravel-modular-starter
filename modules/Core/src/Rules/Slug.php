@@ -11,7 +11,6 @@ class Slug implements Rule
      *
      * @param  string  $attribute
      * @param  string  $value
-     * @return bool
      */
     public function passes($attribute, $value): bool
     {
@@ -20,8 +19,6 @@ class Slug implements Rule
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {
