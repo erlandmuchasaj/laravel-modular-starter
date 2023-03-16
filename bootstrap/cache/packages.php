@@ -18,7 +18,7 @@
   array (
     'providers' => 
     array (
-      0 => 'ErlandMuchasaj\\Modules\\Providers\\ModulesServiceProvider',
+      0 => 'ErlandMuchasaj\\Modules\\ModulesServiceProvider',
     ),
     'aliases' => 
     array (

@@ -639,16 +639,16 @@
         },
         {
             "name": "erlandmuchasaj/laravel-file-uploader",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erlandmuchasaj/laravel-file-uploader.git",
-                "reference": "4be9575c192829577e2928871a08e887baa67c92"
+                "reference": "f19a338bd3597ee0006742085c9e7d867cb1dba3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-file-uploader/zipball/4be9575c192829577e2928871a08e887baa67c92",
-                "reference": "4be9575c192829577e2928871a08e887baa67c92",
+                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-file-uploader/zipball/f19a338bd3597ee0006742085c9e7d867cb1dba3",
+                "reference": "f19a338bd3597ee0006742085c9e7d867cb1dba3",
                 "shasum": ""
             },
             "require": {
@@ -720,20 +720,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-15T09:28:16+00:00"
+            "time": "2023-03-16T08:59:58+00:00"
         },
         {
             "name": "erlandmuchasaj/laravel-modules",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erlandmuchasaj/laravel-modules.git",
-                "reference": "4a6dff687d273fad77c3abed6dd793f4070221af"
+                "reference": "224e3dc81330d137bad2421a339ce798cd9c928e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-modules/zipball/4a6dff687d273fad77c3abed6dd793f4070221af",
-                "reference": "4a6dff687d273fad77c3abed6dd793f4070221af",
+                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-modules/zipball/224e3dc81330d137bad2421a339ce798cd9c928e",
+                "reference": "224e3dc81330d137bad2421a339ce798cd9c928e",
                 "shasum": ""
             },
             "require": {
@@ -747,7 +747,7 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "ErlandMuchasaj\\Modules\\Providers\\ModulesServiceProvider"
+                        "ErlandMuchasaj\\Modules\\ModulesServiceProvider"
                     ],
                     "aliases": {
                         "Module": "ErlandMuchasaj\\Modules\\Facades\\Module"
@@ -806,20 +806,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-15T08:41:43+00:00"
+            "time": "2023-03-16T08:58:48+00:00"
         },
         {
             "name": "erlandmuchasaj/sanitize",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erlandmuchasaj/sanitize.git",
-                "reference": "36943cd1fe021dbbff12bbd325cd91101e2c156a"
+                "reference": "5521398ce3d47f6ffdc5c4e827ad6199a04fbf7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erlandmuchasaj/sanitize/zipball/36943cd1fe021dbbff12bbd325cd91101e2c156a",
-                "reference": "36943cd1fe021dbbff12bbd325cd91101e2c156a",
+                "url": "https://api.github.com/repos/erlandmuchasaj/sanitize/zipball/5521398ce3d47f6ffdc5c4e827ad6199a04fbf7f",
+                "reference": "5521398ce3d47f6ffdc5c4e827ad6199a04fbf7f",
                 "shasum": ""
             },
             "require": {
@@ -873,7 +873,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-15T09:30:16+00:00"
+            "time": "2023-03-16T09:01:16+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -10001,12 +10001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "b001be05b80bfa38fb266b30ec3108607af6ccd6"
+                "reference": "0aad20933686be0e30c54a0e1adf36b3b6dc7173"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/b001be05b80bfa38fb266b30ec3108607af6ccd6",
-                "reference": "b001be05b80bfa38fb266b30ec3108607af6ccd6",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0aad20933686be0e30c54a0e1adf36b3b6dc7173",
+                "reference": "0aad20933686be0e30c54a0e1adf36b3b6dc7173",
                 "shasum": ""
             },
             "conflict": {
@@ -10375,7 +10375,7 @@
                 "silverstripe/comments": ">=1.3,<1.9.99|>=2,<2.9.99|>=3,<3.1.1",
                 "silverstripe/forum": "<=0.6.1|>=0.7,<=0.7.3",
                 "silverstripe/framework": "<4.11.14",
-                "silverstripe/graphql": "<3.5.2|>=4-alpha.1,<4-alpha.2|= 4.0.0-alpha1",
+                "silverstripe/graphql": "<3.5.2|>=4-alpha.1,<4-alpha.2|>=4.1.1,<4.1.2|>=4.2.2,<4.2.3|= 4.0.0-alpha1",
                 "silverstripe/hybridsessions": ">=1,<2.4.1|>=2.5,<2.5.1",
                 "silverstripe/registry": ">=2.1,<2.1.2|>=2.2,<2.2.1",
                 "silverstripe/restfulserver": ">=1,<1.0.9|>=2,<2.0.4",
@@ -10586,7 +10586,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-13T21:04:29+00:00"
+            "time": "2023-03-15T23:04:16+00:00"
         },
         {
             "name": "sebastian/cli-parser",
