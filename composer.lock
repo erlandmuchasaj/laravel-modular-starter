@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0863e96fd238e4d96492e640fd437b9",
+    "content-hash": "bf451ab017501d84e173c70cae52b3c6",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -724,16 +724,16 @@
         },
         {
             "name": "erlandmuchasaj/laravel-modules",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erlandmuchasaj/laravel-modules.git",
-                "reference": "224e3dc81330d137bad2421a339ce798cd9c928e"
+                "reference": "34118e41a6714408a1d07892f7e64e8ff44deec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-modules/zipball/224e3dc81330d137bad2421a339ce798cd9c928e",
-                "reference": "224e3dc81330d137bad2421a339ce798cd9c928e",
+                "url": "https://api.github.com/repos/erlandmuchasaj/laravel-modules/zipball/34118e41a6714408a1d07892f7e64e8ff44deec5",
+                "reference": "34118e41a6714408a1d07892f7e64e8ff44deec5",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-16T08:58:48+00:00"
+            "time": "2023-03-16T14:58:14+00:00"
         },
         {
             "name": "erlandmuchasaj/sanitize",
@@ -2514,8 +2514,8 @@
             "version": "1.0.0",
             "dist": {
                 "type": "path",
-                "url": "modules/Core",
-                "reference": "1eef979a7e40bd9f4300d8c298793daa3b215e49"
+                "url": "./modules/Core",
+                "reference": "91982bce56401ab9c2eed62929f8e1904c8fbb61"
             },
             "require": {
                 "arcanedev/log-viewer": "^10.0",
@@ -2576,6 +2576,7 @@
                 "irc": "irc://irc.freenode.org/composer"
             },
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2584,8 +2585,8 @@
             "version": "1.0.0",
             "dist": {
                 "type": "path",
-                "url": "modules/User",
-                "reference": "f05cb5d4dfed9a10ca7fe0c244c6968fdb5e6cd4"
+                "url": "./modules/User",
+                "reference": "285cc16c49f6f978b5c155c31e9ed6af7409c9a2"
             },
             "require": {
                 "modules/core": "^1.0"
@@ -2639,6 +2640,7 @@
                 "irc": "irc://irc.freenode.org/composer"
             },
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -4401,16 +4403,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.15.0",
+            "version": "3.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5"
+                "reference": "5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5",
-                "reference": "c6a0e24d2f8da8d8f57cdcc87ca635248c1a91c5",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779",
+                "reference": "5326a8786b8c7c3a51ea0c6d06e6cb6a9dfa6779",
                 "shasum": ""
             },
             "require": {
@@ -4489,7 +4491,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.15.0"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.16.0"
             },
             "funding": [
                 {
@@ -4501,20 +4503,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-13T11:45:26+00:00"
+            "time": "2023-03-16T10:37:16+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "55ad9bd47766cec2d8978b8487c40e81a5a87d76"
+                "reference": "e9c87d6580fc56147f580e1d714d8eb4e06d2752"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/55ad9bd47766cec2d8978b8487c40e81a5a87d76",
-                "reference": "55ad9bd47766cec2d8978b8487c40e81a5a87d76",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/e9c87d6580fc56147f580e1d714d8eb4e06d2752",
+                "reference": "e9c87d6580fc56147f580e1d714d8eb4e06d2752",
                 "shasum": ""
             },
             "require": {
@@ -4522,7 +4524,7 @@
                 "nyholm/psr7": "^1.0",
                 "php": "^7.2 | ^8.0",
                 "sentry/sdk": "^3.3",
-                "sentry/sentry": "^3.12",
+                "sentry/sentry": "^3.16",
                 "symfony/psr-http-message-bridge": "^1.0 | ^2.0"
             },
             "conflict": {
@@ -4560,7 +4562,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
@@ -4582,7 +4584,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/3.2.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/3.3.0"
             },
             "funding": [
                 {
@@ -4594,7 +4596,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-02-01T10:56:52+00:00"
+            "time": "2023-03-16T12:25:43+00:00"
         },
         {
             "name": "spatie/laravel-activitylog",

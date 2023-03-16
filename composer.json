@@ -116,7 +116,7 @@
             "./vendor/bin/phpstan analyse --memory-limit=2G"
         ],
         "pint": [
-            "./vendor/bin/pint"
+            "./vendor/bin/pint modules"
         ],
         "rector": [
             "./vendor/bin/rector --memory-limit=2G"
@@ -150,7 +150,10 @@
     "repositories": [
         {
             "type": "path",
-            "url": "modules/*"
+            "url": "./modules/*",
+            "options": {
+                "symlink": true
+            }
         }
     ]
 }
