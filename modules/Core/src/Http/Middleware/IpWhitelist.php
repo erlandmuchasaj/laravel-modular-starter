@@ -19,8 +19,6 @@ class IpWhitelist
 
     /**
      * Handle an incoming request.
-     *
-     * @param Closure(Request): (Response|RedirectResponse) $next
      */
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {

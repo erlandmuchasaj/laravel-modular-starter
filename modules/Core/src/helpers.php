@@ -524,7 +524,7 @@ if (! function_exists('glob_recursive')) {
             $files = [];
         }
 
-        $directories = glob(dirname($pattern).'/*', GLOB_ONLYDIR | GLOB_NOSORT) ?? [];
+        $directories = glob(dirname($pattern).'/*', GLOB_ONLYDIR | GLOB_NOSORT);
 
         if (! $directories) {
             $directories = [];

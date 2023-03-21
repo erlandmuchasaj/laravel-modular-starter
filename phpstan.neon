@@ -8,14 +8,10 @@ parameters:
         - modules
 
     # The level 9 is the highest level
-    level: 3
+    level: 5
 
     ignoreErrors:
-        - '#PHPDoc tag @var#'
         - '#Unsafe usage of new static#'
-        - '#Access to an undefined property [a-zA-Z0-9\_]+::\$.*#'
-        - '#Parameter \#1 \$value of static method PhpParser\\BuilderHelpers\:\:normalizeValue\(\) expects array\|bool\|float\|int\|PhpParser\\Node\\Expr\|string\|null, mixed given#'
-
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php
@@ -27,4 +23,5 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     noUnnecessaryCollectionCall: false
     checkGenericClassInNonGenericObjectType: false
+    treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
