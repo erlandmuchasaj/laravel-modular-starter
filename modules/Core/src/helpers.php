@@ -22,9 +22,14 @@ if (! function_exists('locale')) {
 }
 
 if (! function_exists('locales')) {
+    /**
+     * @return Collection<string, array>
+     */
     function locales(): Collection
     {
-        return collect(config('app.locales', []));
+        /** @var array<string, array> $locales */
+        $locales = config('app.locales', []);
+        return collect($locales);
     }
 }
 
@@ -394,6 +399,8 @@ if (! function_exists('escapeSlashes')) {
 if (! function_exists('validate')) {
     /**
      * Validate some data.
+     * @param array<string, string>|string $fields
+     * @param array<string, string>|string $rules
      */
     function validate(array|string $fields, array|string $rules): bool
     {
@@ -431,7 +438,7 @@ if (! function_exists('isSSL')) {
 }
 
 if (! function_exists('number_format_short')) {
-    function number_format_short($value, $precision = 1): string|array
+    function number_format_short(float $value, int $precision = 1): string
     {
         if (! is_numeric($value)) {
             return $value;
@@ -465,12 +472,6 @@ if (! function_exists('number_format_short')) {
             $n_format = str_replace($dotZero, '', $n_format);
         }
 
-        //if ($asArray) {
-        //    return [
-        //        'value' => $n_format ?? 0,
-        //        'suffix' => $suffix ?? ''
-        //    ];
-        //}
         return ! empty($n_format.$suffix) ? $n_format.$suffix : 0;
     }
 }
