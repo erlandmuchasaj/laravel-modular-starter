@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         // on the requests and responses
         if ($this->app->isProduction() && config('app.ssl')) {
             URL::forceScheme('https');
+            URL::forceRootUrl(config('app.url'));
         }
 
         // prevent user to send accidental arrays
@@ -108,7 +109,7 @@ class AppServiceProvider extends ServiceProvider
                     Log::warning('A request took longer than 5 seconds.', [
                         'startedAt' => $startedAt,
                         'request' => $request,
-                        'response' => $response,
+                        // 'response' => $response,
                     ]);
                 }
             );
